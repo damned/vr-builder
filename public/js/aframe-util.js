@@ -40,6 +40,7 @@ function getResizeVector(resizeFactor, resizerRelativePosition) {
 
 function entityInfo(entity) {
   let pos = entity.object3D.position;
+  let position = (entity) => {}
   return `${entity.tagName}\npos: ${pos.x.toFixed(2)} ${pos.y.toFixed(2)} ${pos.z.toFixed(2)}`;
 }
 
