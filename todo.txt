@@ -22,10 +22,9 @@
 [x] local catch to log
 [x] watch touched object on console
 [x] allow grab console, retaining watch link
-[ ] exclude monitor consoles from plan save
-[/] fix debug
-[/] fix streching
+[x] exclude monitor consoles from plan save
 [ ] change colour
+[x] fix streching
 [ ] fix TODOs
 [ ] move code around
     - extract collider wrapper for aabb-collider
@@ -57,6 +56,7 @@
     - intention is to bring in more options and data as focus increases
 [ ] monitor points to thing being monitored (on focus / touch monitor?)
 [ ] remote chrome debugging?
+[/] fix debug
 [ ] decent log console
   - like files in a cabinet - see start of each as you flick hand through
   - can move and bin off groups
