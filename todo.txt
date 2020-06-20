@@ -25,6 +25,7 @@
 [x] exclude monitor consoles from plan save
 [ ] change colour
 [x] fix streching
+[ ] fix plan / build preserve rotation
 [ ] fix TODOs
 [ ] move code around
     - extract collider wrapper for aabb-collider

@@ -34,7 +34,6 @@ AFRAME.registerComponent('monitor', {
     }
     self.monitor = function(tomonitor) {
       self.monitored = tomonitor
-      tomonitor.setAttribute('color', 'lightgreen')
     }
     self.getMonitored = function() {
       return self.monitored

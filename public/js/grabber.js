@@ -159,8 +159,8 @@ AFRAME.registerComponent('grabber', {
         this.grabbed.removeAttribute('follows')        
       }
     }
+    removeDebugColor(this.grabbed)
     this.grabbed = null
     this.el.setAttribute('opacity', 1)
-    removeDebugColor(this.el)
   }
 });
