@@ -1,14 +1,30 @@
 /* global AFRAME entityInfo catching */
-
+let MonitorPart = function(component, host) {
+  let $host = $(host)
+  
+  function enableColliderTrackingWhenMoves() {
+    $host.attr('omit-from-plan')    
+  }
+  function doNotSaveMonitorToPlan() {
+    $host.attr('data-aabb-collider-dynamic')
+  }
+  return {
+    init: function() {
+      enableColliderTrackingWhenMoves()
+      doNotSaveMonitorToPlan()
+    }
+  }
+}
 AFRAME.registerComponent('monitor', {
   init: function() {
     let self = this
-    self.ticks = 0
     let host = self.el
+    let part = MonitorPart(self, host)
+    part.init()
+    self.ticks = 0
     let $host = $(host)
     $host.addClass('touchable')
-    $host.attr('data-aabb-collider-dynamic')
-    let $text = $(`<a-text omit-from-plan font="monoid" color="black" baseline="top" width="1" wrap-count="25" position="-0.5 0.5 0.51" value="-monitor output-">`)
+    let $text = $(`<a-text font="monoid" color="black" baseline="top" width="1" wrap-count="25" position="-0.5 0.5 0.51" value="-monitor output-">`)
     $host.append($text)
     self.textEl = $text.get(0)
     self.setOutput = function(output) {
