@@ -40,10 +40,13 @@ AFRAME.registerComponent('monitor', {
       return self.monitored
     }
   },
-  tick: function() {
+  tick: function(time, timeDelta) {
     let self = this
+    self.ticks++
+    if (self.ticks % 10 != 0) {
+      return
+    }
     catching(() => {
-      self.ticks++
       if (self.ticks % 100 == 0) {
         self.setOutput(self.getOutput() + '.')
       }

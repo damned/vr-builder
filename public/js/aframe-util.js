@@ -40,8 +40,10 @@ function getResizeVector(resizeFactor, resizerRelativePosition) {
 
 function entityInfo(entity) {
   let pos = entity.object3D.position;
-  let position = (entity) => {}
-  return `${entity.tagName}\npos: ${pos.x.toFixed(2)} ${pos.y.toFixed(2)} ${pos.z.toFixed(2)}`;
+  let position = () => { return `pos: ${pos.x.toFixed(2)} ${pos.y.toFixed(2)} ${pos.z.toFixed(2)}` }
+  let rotation = () => { return `rot: ${safeStringify(entity.getAttribute('rotation'))}` }
+  let scale = () => { return `scale: ${safeStringify(entity.getAttribute('scale'))}` }
+  return [entity.tagName, position(), rotation(), scale()].join('\n')
 }
 
 var clogPrefix = null
