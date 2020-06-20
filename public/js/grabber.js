@@ -79,7 +79,7 @@ AFRAME.registerComponent('grabber', {
 
         let posInGrabbedSpace = positionRelativeTo(parent, self.grabbed)
         // clog(`resizer pos in space of grabbed:\n${posInGrabbedSpace.x.toFixed(2)} ${posInGrabbedSpace.y.toFixed(2)} ${posInGrabbedSpace.z.toFixed(2)}`)
-
+        self.resizingComponent.updateInfo({'resizer pos': })
         let newScale = self.resizeInitialScale.clone().multiplyVectors(self.resizeInitialScale, getResizeVector(resizeFactor, posInGrabbedSpace))
         self.grabbed.object3D.scale.copy(newScale) 
         return
@@ -89,6 +89,7 @@ AFRAME.registerComponent('grabber', {
   grasp: function(event) {
     catching(function (){
       let host = this.el
+      let self = this
       debugColor(host, 'black')
       host.setAttribute('debugged', 'oh come on')
       clog('starting grasp')
@@ -105,6 +106,9 @@ AFRAME.registerComponent('grabber', {
           this.currentlyResizing = true
           this.grabbed = tograb
           this.grabbed.setAttribute('resizing', '')
+          setTimeout(() => {
+            self.resizingComponent = self.grabbed.components.resizing
+          }, 0)
           return
         }
         debugColor(host, 'white')
