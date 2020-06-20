@@ -104,6 +104,7 @@ AFRAME.registerComponent('grabber', {
           this.resizeInitialDistance = distanceBetween(host, otherGrabber)
           this.currentlyResizing = true
           this.grabbed = tograb
+          this.grabbed.setAttribute('resizing', '')
           return
         }
         debugColor(host, 'white')
