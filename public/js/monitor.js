@@ -41,13 +41,15 @@ AFRAME.registerComponent('monitor', {
     }
   },
   tick: function(time, timeDelta) {
+    const RUN_INTERVAL = 10
+    const WAITING_INTERVAL = RUN_INTERVAL * 10
     let self = this
     self.ticks++
-    if (self.ticks % 10 != 0) {
+    if (self.ticks % RUN_INTERVAL != 0) {
       return
     }
     catching(() => {
-      if (self.ticks % 100 == 0) {
+      if (self.ticks % WAITING_INTERVAL == 0) {
         self.setOutput(self.getOutput() + '.')
       }
       if (self.monitored) {

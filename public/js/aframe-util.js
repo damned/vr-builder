@@ -38,11 +38,14 @@ function getResizeVector(resizeFactor, resizerRelativePosition) {
   return new THREE.Vector3(xFactor, yFactor, zFactor);
 }
 
+function xyzToFixed(vector, places = 2) {
+  return `${vector.x.toFixed(places)} ${vector.y.toFixed(places)} ${vector.z.toFixed(places)}`
+}
+
 function entityInfo(entity) {
-  let pos = entity.object3D.position;
-  let position = () => { return `pos: ${pos.x.toFixed(2)} ${pos.y.toFixed(2)} ${pos.z.toFixed(2)}` }
-  let rotation = () => { return `rot: ${safeStringify(entity.getAttribute('rotation'))}` }
-  let scale = () => { return `scale: ${safeStringify(entity.getAttribute('scale'))}` }
+  let position = () => { return `pos: ${xyzToFixed(entity.object3D.position)}` }
+  let rotation = () => { return `rot: ${xyzToFixed(entity.getAttribute('rotation'))}` }
+  let scale = () => { return `scale: ${xyzToFixed(entity.getAttribute('scale'))}` }
   return [entity.tagName, position(), rotation(), scale()].join('\n')
 }
 
