@@ -4,7 +4,19 @@ var options = { colorTwist: false }
 
 function debugColor(el, color) {
   if (debug.useColor) {
+    if (!el.hasAttribute('data-original-color')) {
+      let originalColor = el.getAttribute('color')
+      if (originalColor) {
+        el.setAttribute('data-original-color', originalColor)
+      }
+    }
     el.setAttribute('color', color)    
+  }
+}
+
+function removeDebugColor(el) {
+  if (el.hasAttribute('data-original-color')) {
+    el.setAttribute('color', el.getAttribute('data-original-color'))
   }
 }
 
@@ -149,5 +161,6 @@ AFRAME.registerComponent('grabber', {
     }
     this.grabbed = null
     this.el.setAttribute('opacity', 1)
+    removeDebugColor(this.el)
   }
 });
