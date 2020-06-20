@@ -1,0 +1,96 @@
+## TODO
+
+[x] add a sleeve to hand
+[x] hang stock off sleeve
+[x] move stock wherever
+[x] clone stock to built
+[x] drop built
+[x] fix white-screen
+[x] use spawn entity
+[x] save built as plan on server
+[x] rebuild from server plan
+[x] add some more cloneables
+[x] turn off re-clone by default
+[x] reshape hands to be sharper
+[x] clean up to components
+[x] scaling/resize
+[x] axis stretching
+[x] save plan with scale and rotation too
+[x] add console to sleeve
+[x] move up hands into view if not in quest
+[x] global error handler
+[x] local catch to log
+[ ] watch touched object on console
+[ ] allow grab console, retaining watch link
+[/] fix debug
+[/] fix streching
+[ ] change colour
+[ ] fix TODOs
+[ ] move code around
+    - extract collider wrapper for aabb-collider
+    - extract toucher component - esp. from grabber - hands off events e.g. to grabber, monitor
+[ ] easier stretching
+    - make axis lock margin greater at more distance
+[ ] delete object
+    - make v small
+    - splat it
+    - tear it up
+[ ] recorder component
+[ ] playback - 
+[ ] multiple plans
+    - use shapes as names and slots
+    - drag on/off like glasses?
+[ ] improve grab location - re-parent or track orientation / vector offset?
+[ ] control clone vs move ??
+    - single grab == move
+    - double grab = stretch
+    - touch and grab = clone
+[ ] split out lower doc pieces (testing) in this todo to readme/doc
+[ ] properly shape hands
+[ ] split resize out of grabber
+[ ] have proper focus events
+    - focus as scalar quantity
+    - based on looking at something
+    - greater value more directly you're looking at it
+    - ramps up with time, up to a limit based on centrality
+    - intention is to bring in more options and data as focus increases
+[ ] monitor points to thing being monitored (on focus / touch monitor?)
+[ ] remote chrome debugging?
+[ ] decent log console
+  - like files in a cabinet - see start of each as you flick hand through
+  - can move and bin off groups
+  - maybe with filtering (select fixed bit of text to group)
+  - group with tabs maybe
+[ ] stretch axis lock affordance
+
+### unit testing components
+
+[ ] try ngokevin pattern
+[ ] split out 'part' - and part-component adapter - to simply unit test part
+
+
+### in-vr testing
+
+isolated unit testing are basically already covered, e.g. mocha tests in
+browser, and accessing or integrating into vr environment isn't bringing
+anything extra at this level (though in trying to understand interaction 
+unit tests might, vr visualisations might be useful)
+
+so it's really about integration and functional testing, so how cool would
+it be to:
+
+[ ] create plan basis for test
+[ ] record actions (of actors e.g. hands)
+[ ] capture result state (final plan + actor state)
+[ ] reload plan and playback actions
+[ ] assert on aspects of result state
+  - codeless
+    - match selected attributes, perhaps with range (e.g. x matches +- 0.01)
+    - wait for asserts to pass, or timeout
+  - with code
+    - load named plan
+    - play named action recording
+    - use specific coded asserts
+    - replace or augment named plan with scene building
+    - replace or augment actions with code-specified actions e.g. leftHand.moveTo(cube1, rate: 1).grab()
+    
