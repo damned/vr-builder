@@ -105,8 +105,8 @@ AFRAME.registerComponent('grabber', {
           let monitored
           if (sourceMonitor) {
             clog('grasp', 'there is a source monitor')
-            // monitored = sourceMonitor.getMonitored()
-            // clog('grasp', 'got monitored', monitored)
+            monitored = sourceMonitor.getMonitored()
+            clog('grasp', 'got monitored', monitored)
           }
           else {
             clog('grasp', 'there is no source monitor')            
