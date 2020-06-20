@@ -20,8 +20,8 @@
 [x] move up hands into view if not in quest
 [x] global error handler
 [x] local catch to log
-[ ] watch touched object on console
-[ ] allow grab console, retaining watch link
+[x] watch touched object on console
+[x] allow grab console, retaining watch link
 [/] fix debug
 [/] fix streching
 [ ] change colour

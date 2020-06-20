@@ -40,7 +40,7 @@ function getResizeVector(resizeFactor, resizerRelativePosition) {
 
 function entityInfo(entity) {
   let pos = entity.object3D.position;
-  return `pos: ${pos.x.toFixed(2)} ${pos.y.toFixed(2)} ${pos.z.toFixed(2)}`;
+  return `${entity.tagName}\npos: ${pos.x.toFixed(2)} ${pos.y.toFixed(2)} ${pos.z.toFixed(2)}`;
 }
 
 var clogPrefix = null
@@ -56,7 +56,12 @@ function clog(...args) {
       formatted.push(arg.toString() + '\n' + arg.stack);
     }
     else if (argType == 'object') {
-      formatted.push(safeStringify(arg));
+      if (arg.tagName) {
+        formatted.push(entityInfo(arg))
+      }
+      else {
+        formatted.push(safeStringify(arg))
+      }
     }
     else {
       formatted.push(arg);
@@ -110,7 +115,11 @@ function setupGlobalErrorLogging() {
 // from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Errors/Cyclic_object_value
 const getCircularReplacer = () => {
   const seen = new WeakSet();
+  let count = 0
   return (key, value) => {
+    if (++count > 20) {
+      return
+    }
     if (typeof value === "object" && value !== null) {
       if (seen.has(value)) {
         return;
