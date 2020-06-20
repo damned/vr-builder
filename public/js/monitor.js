@@ -1,12 +1,11 @@
 /* global AFRAME entityInfo catching */
 let MonitorPart = function(component, host) {
-  let $host = $(host)
   
   function enableColliderTrackingWhenMoves() {
-    $host.attr('omit-from-plan')    
+    host.setAttribute('omit-from-plan', '')    
   }
   function doNotSaveMonitorToPlan() {
-    $host.attr('data-aabb-collider-dynamic')
+    host.setAttribute('data-aabb-collider-dynamic', '')
   }
   return {
     init: function() {
