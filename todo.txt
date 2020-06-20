@@ -22,6 +22,7 @@
 [x] local catch to log
 [x] watch touched object on console
 [x] allow grab console, retaining watch link
+[ ] exclude monitor consoles from plan save
 [/] fix debug
 [/] fix streching
 [ ] change colour

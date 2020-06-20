@@ -12,7 +12,10 @@ AFRAME.registerComponent('planner', {
       let plan = { items: []}
       $spawn.get(0).flushToDOM(true)
       $spawn.children().each(function() {
-        let built3d = this.object3D        
+        let built3d = this.object3D
+        if (this.hasAttribute('omit-from-plan')) {
+          return
+        }
         let positionValue = `${built3d.position.x} ${built3d.position.y} ${built3d.position.z}`
         let rotationValue = `${built3d.rotation.x} ${built3d.rotation.y} ${built3d.rotation.z}`
         let scaleValue = `${built3d.scale.x} ${built3d.scale.y} ${built3d.scale.z}`

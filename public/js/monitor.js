@@ -8,7 +8,7 @@ AFRAME.registerComponent('monitor', {
     let $host = $(host)
     $host.addClass('touchable')
     $host.attr('data-aabb-collider-dynamic')
-    let $text = $(`<a-text font="monoid" color="black" baseline="top" width="1" wrap-count="25" position="-0.5 0.5 0.51" value="-monitor output-">`)
+    let $text = $(`<a-text omit-from-plan font="monoid" color="black" baseline="top" width="1" wrap-count="25" position="-0.5 0.5 0.51" value="-monitor output-">`)
     $host.append($text)
     self.textEl = $text.get(0)
     self.setOutput = function(output) {
