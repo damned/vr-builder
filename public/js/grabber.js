@@ -31,8 +31,10 @@ AFRAME.registerComponent('grabber', {
     let $host = $(this.el)
     let host = this.el
     host.setAttribute('toucher', '')
-    self.grabberCollider = collider(host)
-    self.toucher = host.components.toucher
+    setTimeout(() => {
+      self.grabberCollider = collider(host)
+      self.toucher = host.components.toucher
+    }, 0)
     this.ticks = 0
     this.grabbed = null
   },

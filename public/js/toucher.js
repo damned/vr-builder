@@ -1,4 +1,4 @@
-/* global AFRAME clog */
+/* global AFRAME clog collider */
 
 // TODO this thing is separate to touch-source because of the hand-model-parent-child thing
 // should really be merged - and of course this taken out of grabber
@@ -10,8 +10,10 @@ AFRAME.registerComponent('toucher', {
     host.setAttribute('aabb-collider', 'objects: .touchable; collideNonVisible: true' 
                          // + '; debug: true'
                          )
-    let collider = collider(host)
-    clog('collider on toucher: ' + collider)
+    setTimeout(() => {
+      self.collider = collider(host)
+      clog('collider on toucher: ' + self.collider)
+    })
     let touchSourceHost = host.parentNode
     touchSourceHost.setAttribute('touch-source', '')
     let touchSource
@@ -22,10 +24,10 @@ AFRAME.registerComponent('toucher', {
       touchSource.touchStart(self.closest())
     })
     self.isTouching = function() {
-      return collider.intersectedEls.length > 0
+      return self.collider.intersectedEls.length > 0
     }
     self.closest = function() {
-      return collider.closesIntersectedEl
+      return self.collider.closestIntersectedEl
     }
   }
 });
