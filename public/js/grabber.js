@@ -1,4 +1,4 @@
-/* global AFRAME THREE colorFromEntityRotation collider getResizeVector clog catching */
+/* global AFRAME THREE colorFromEntityRotation collider getResizeVector clog catching xyzToFixed */
 let debug = { useColor: true }
 var options = { colorTwist: false }
 
@@ -79,7 +79,7 @@ AFRAME.registerComponent('grabber', {
 
         let posInGrabbedSpace = positionRelativeTo(parent, self.grabbed)
         // clog(`resizer pos in space of grabbed:\n${posInGrabbedSpace.x.toFixed(2)} ${posInGrabbedSpace.y.toFixed(2)} ${posInGrabbedSpace.z.toFixed(2)}`)
-        self.resizingComponent.updateInfo({'resizer pos': })
+        self.resizingComponent.updateInfo({'resizer pos': xyzToFixed(posInGrabbedSpace)})
         let newScale = self.resizeInitialScale.clone().multiplyVectors(self.resizeInitialScale, getResizeVector(resizeFactor, posInGrabbedSpace))
         self.grabbed.object3D.scale.copy(newScale) 
         return
