@@ -33,9 +33,16 @@ AFRAME.registerComponent('grabber', {
                         )
     var $host = $(this.el)
     var host = this.el
+    let $touchSourceHost = $host.parent()
+    $touchSourceHost.attr('touch-source', '')
+    let touchSource
+    setTimeout(() => {
+      touchSource = $touchSourceHost.components['touch-source']
+    }, 0)
     $host.on('hitstart', function() {
       // todo this is a bit chonky finding this through parent!
-      let $monitor = $host.parent().find('[monitor]')
+      // invert this so that the monitor looks upwards until in finds a touch-source
+      let $monitor = $touchSource.find('[monitor]')
       if ($monitor.length > 0)
       $monitor.get(0).components['monitor'].monitor(host.components['aabb-collider'].closestIntersectedEl)
     })
