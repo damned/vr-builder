@@ -26,14 +26,15 @@ function distanceBetween(grabber1, grabber2) {
 
 function positionRelativeTo(entity, referenceEntity) {
   let relativePositionInLocalScale = referenceEntity.object3D.worldToLocal(entity.object3D.getWorldPosition())
+  let scale = referenceEntity.object3D.scale
   return {
     // scale? errors on x on undefined
-    // x: relativePositionInLocalScale.x / referenceEntity.scale.x,
-    // y: relativePositionInLocalScale.y / referenceEntity.scale.y,
-    // z: relativePositionInLocalScale.z / referenceEntity.scale.z
-    x: relativePositionInLocalScale.x,
-    y: relativePositionInLocalScale.y,
-    z: relativePositionInLocalScale.z
+    x: relativePositionInLocalScale.x * scale.x,
+    y: relativePositionInLocalScale.y * scale.y,
+    z: relativePositionInLocalScale.z * scale.z
+    // x: relativePositionInLocalScale.x,
+    // y: relativePositionInLocalScale.y,
+    // z: relativePositionInLocalScale.z
   };
 }
 
