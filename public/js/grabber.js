@@ -27,23 +27,13 @@ function positionRelativeTo(entity, referenceEntity) {
 AFRAME.registerComponent('grabber', {
   schema: {type: 'string'},
   init: function() {
-    // needs splitting out into a toucher component passing on events to grabber etc.
-    this.el.setAttribute('aabb-collider', 'objects: .touchable; collideNonVisible: true' 
-                         // + '; debug: true'
-                        )
-    var $host = $(this.el)
-    var host = this.el
-    let $touchSourceHost = $host.parent()
-    $touchSourceHost.attr('touch-source', '')
-    let touchSource
-    setTimeout(() => {
-      touchSource = $touchSourceHost.get(0).components['touch-source']
-    }, 0)
-    $host.on('hitstart', function() {
-      let touched = host.components['aabb-collider'].closestIntersectedEl
-      touchSource.touchStart(touched)
-    })
+    let self = this                 
+    let $host = $(this.el)
+    let host = this.el
+    host.setAttribute('toucher', '')
     
+    self.grabberCollider = collider(host)
+
     this.ticks = 0
     this.grabbed = null
   },
@@ -83,7 +73,7 @@ AFRAME.registerComponent('grabber', {
       host.setAttribute('debugged', 'oh come on')
       clog('starting grasp')
       clog('grasp', 'grasping...')
-      var grabberCollider = collider(host)
+      self.grabberCollider = collider(host)
       if (grabberCollider.intersectedEls.length > 0) {
         clog('grasp', 'there are some intersected els, using closestIntersectedEl...')
         let tograb = grabberCollider.closestIntersectedEl
