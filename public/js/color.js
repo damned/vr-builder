@@ -11,3 +11,20 @@ function rotationToColor(rotation) {
 function colorFromEntityRotation(entity) {
   return rotationToColor(entity.object3D.rotation) 
 }
+
+function addDebugColor(el, color) {
+  if (!el.hasAttribute('data-original-color')) {
+    let originalColor = el.getAttribute('color')
+    if (originalColor) {
+      el.setAttribute('data-original-color', originalColor)
+    }
+  }
+  el.setAttribute('color', color)      
+}
+
+function removeDebugColor(el) {
+  if (el.hasAttribute('data-original-color')) {
+    el.setAttribute('color', el.getAttribute('data-original-color'))
+  }
+}
+

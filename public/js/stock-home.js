@@ -22,7 +22,10 @@ AFRAME.registerComponent('stock-home', {
     let $self = $(this.el)
     addColor($self, 'green', 0, -0.1)
     addColor($self, 'red', 0, 0.05)
+    addColor($self, 'white', 0, 0.2)
     addColor($self, 'blue', 0.06 * direction, -0.1)
+    addColor($self, 'brown', 0.06 * direction, 0.05)
+    addColor($self, 'black', 0.06 * direction, 0.2)
   }
 
 });

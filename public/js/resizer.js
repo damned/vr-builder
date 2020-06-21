@@ -1,22 +1,10 @@
-/* global AFRAME THREE colorFromEntityRotation collider getResizeVector clog catching xyzToFixed debugColor removeDebugColor */
+/* global AFRAME THREE colorFromEntityRotation collider getResizeVector clog catching xyzToFixed */
 let debug = { useColor: true }
 var options = { colorTwist: false }
 
 function debugColor(el, color) {
   if (debug.useColor) {
-    if (!el.hasAttribute('data-original-color')) {
-      let originalColor = el.getAttribute('color')
-      if (originalColor) {
-        el.setAttribute('data-original-color', originalColor)
-      }
-    }
-    el.setAttribute('color', color)    
-  }
-}
-
-function removeDebugColor(el) {
-  if (el.hasAttribute('data-original-color')) {
-    el.setAttribute('color', el.getAttribute('data-original-color'))
+    addDebugColor(el, color)
   }
 }
 
