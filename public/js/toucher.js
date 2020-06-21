@@ -10,7 +10,8 @@ AFRAME.registerComponent('toucher', {
     host.setAttribute('aabb-collider', 'objects: .touchable; collideNonVisible: true' 
                          // + '; debug: true'
                          )
-
+    let collider = collider(host)
+    clog('collider on toucher: ' + collider)
     let touchSourceHost = host.parentNode
     touchSourceHost.setAttribute('touch-source', '')
     let touchSource
@@ -18,8 +19,13 @@ AFRAME.registerComponent('toucher', {
       touchSource = touchSourceHost.components['touch-source']
     }, 0)
     $(host).on('hitstart', function() {
-      let touched = host.components['aabb-collider'].closestIntersectedEl
-      touchSource.touchStart(touched)
+      touchSource.touchStart(self.closest())
     })
+    self.isTouching = function() {
+      return collider.intersectedEls.length > 0
+    }
+    self.closest = function() {
+      return collider.closesIntersectedEl
+    }
   }
 });

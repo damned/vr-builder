@@ -31,9 +31,8 @@ AFRAME.registerComponent('grabber', {
     let $host = $(this.el)
     let host = this.el
     host.setAttribute('toucher', '')
-    
     self.grabberCollider = collider(host)
-
+    self.toucher = host.components.toucher
     this.ticks = 0
     this.grabbed = null
   },
@@ -73,10 +72,9 @@ AFRAME.registerComponent('grabber', {
       host.setAttribute('debugged', 'oh come on')
       clog('starting grasp')
       clog('grasp', 'grasping...')
-      self.grabberCollider = collider(host)
-      if (grabberCollider.intersectedEls.length > 0) {
-        clog('grasp', 'there are some intersected els, using closestIntersectedEl...')
-        let tograb = grabberCollider.closestIntersectedEl
+      if (self.toucher.isTouching()) {
+        clog('grasp', 'touching something, getting closestIntersectedEl...')
+        let tograb = self.toucher.closest()
         clog('grasp', tograb.outerHTML)
         if (tograb.currentlyGrabbed) {
           let otherGrabber = tograb.currentGrabber
