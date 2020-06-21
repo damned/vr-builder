@@ -1,5 +1,5 @@
 /* global AFRAME */
-AFRAME.registerComponent('monitor-home', {
+AFRAME.registerComponent('tweaker-home', {
   schema: {type: 'string', default: 'x'},
   init: function() {
   },
@@ -8,7 +8,7 @@ AFRAME.registerComponent('monitor-home', {
     console.log('this.data (side)', side)
     let direction = (side == 'left') ? -1 : 1
     let $self = $(this.el)
-    $self.append($(`<a-box tweaker cloneable position="${0.2 * direction} 0 0" scale="0.2 0.2 0.02" color="white">`))
+    $self.append($(`<a-box color-tweaker cloneable position="${-0.1 * direction} 0 0" scale="0.02 0.02 0.02" color="white">`))
   }
 
 });
