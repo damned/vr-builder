@@ -4,7 +4,7 @@ function collider(collidee) {
   return collidee.components["aabb-collider"];
 }
 
-const axisLockMarginFactor = 0.15;
+const axisLockMarginFactor = 0.3;
 
 function withinAxisLockMargin(n, distance) {
   let margin = axisLockMarginFactor * distance;
