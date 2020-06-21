@@ -41,7 +41,8 @@ var Hand = function($hand) {
       radius: '0.04',
       position: '0 0 0.25',
       rotation: '90 0 0',
-      stockist: side,
+      'stock-home': side,
+      'monitor-home': side,
       tweaker: ''
     })
     return sleeve

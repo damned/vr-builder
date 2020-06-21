@@ -68,8 +68,8 @@ describe('Hand', () => {
       expect(sleeve.hasAttribute('tweaker')).to.be.true
     })
 
-    it('is a stockist (has component)', () => {
-      expect(sleeve.hasAttribute('stockist')).to.be.true
+    it('is a stock home (has component)', () => {
+      expect(sleeve.hasAttribute('stock-home')).to.be.true
     })
 
   })
