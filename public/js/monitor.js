@@ -38,6 +38,7 @@ AFRAME.registerComponent('monitor', {
     self.getMonitored = function() {
       return self.monitored
     }
+    $host.closest('touch-source').components[]
   },
   tick: function(time, timeDelta) {
     const RUN_INTERVAL = 10
