@@ -43,7 +43,7 @@ var Hand = function($hand) {
       rotation: '90 0 0',
       'stock-home': side,
       'monitor-home': side,
-      tweaker: ''
+      'tweaker-home': side
     })
     return sleeve
   }

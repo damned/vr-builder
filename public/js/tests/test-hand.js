@@ -64,11 +64,11 @@ describe('Hand', () => {
       expect($sleeve.hasClass('sleeve')).to.be.true
     })
 
-    it('WIP is a tweaker (has component)', () => {
-      expect(sleeve.hasAttribute('tweaker')).to.be.true
+    it('is a home for tweakers', () => {
+      expect(sleeve.hasAttribute('tweaker-home')).to.be.true
     })
 
-    it('is a stock home (has component)', () => {
+    it('is a home for spare stock', () => {
       expect(sleeve.hasAttribute('stock-home')).to.be.true
     })
 

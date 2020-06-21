@@ -23,7 +23,6 @@ AFRAME.registerComponent('stock-home', {
     addColor($self, 'green', 0, -0.1)
     addColor($self, 'red', 0, 0.05)
     addColor($self, 'blue', 0.06 * direction, -0.1)
-    $self.append($(`<a-box monitor cloneable position="0 0 0.2" rotation="0 ${-90 * direction} ${90 * direction}" scale="0.2 0.2 0.02" color="white">`))
   }
 
 });
