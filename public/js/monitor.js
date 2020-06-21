@@ -52,7 +52,14 @@ AFRAME.registerComponent('monitor', {
         self.setOutput(self.getOutput() + '.')
       }
       if (self.monitored) {
-        self.setOutput(entityInfo(self.monitored))      
+        let infos = [entityInfo(self.monitored)]
+        let extraInfo = self.monitored.getAttribute('data-monitor-info')
+        if (extraInfo) {
+          for (let name in extraInfo) {
+            infos.push(name + extraInfo[name])
+          }
+        }
+        self.setOutput(infos.join('\n'))
       }      
     })
   }
