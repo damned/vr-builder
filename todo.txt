@@ -30,7 +30,7 @@
 [ ] move code around
     - extract collider wrapper for aabb-collider
     - extract toucher component - esp. from grabber - hands off events e.g. to grabber, monitor
-[ ] easier stretching
+[x] easier stretching
     - make axis lock margin greater at more distance
 [ ] delete object
     - make v small
@@ -63,7 +63,10 @@
   - can move and bin off groups
   - maybe with filtering (select fixed bit of text to group)
   - group with tabs maybe
-[ ] stretch axis lock affordance
+[ ] stretch improvements
+    - axis lock affordance
+    - finer grained control at small margins
+
 
 ### unit testing components
 
