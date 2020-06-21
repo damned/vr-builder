@@ -53,7 +53,7 @@ AFRAME.registerComponent('monitor', {
       }
       if (self.monitored) {
         let infos = [entityInfo(self.monitored)]
-        let extraInfo = self.monitored.getAttribute('data-monitor-info')
+        let extraInfo = self.monitored.monitorExtraInfo
         if (extraInfo) {
           for (let name in extraInfo) {
             infos.push(name + extraInfo[name])

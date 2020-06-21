@@ -5,7 +5,7 @@ AFRAME.registerComponent('resizing', {
     let self = this
     let host = self.el
     self.updateInfo = function(info) {
-      host.setAttribute('data-monitor-info', info)
+      host.monitorExtraInfo = info
     }
   }
 });
