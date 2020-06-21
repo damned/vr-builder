@@ -53,9 +53,9 @@ AFRAME.registerComponent('grabber', {
         self.el.setAttribute('color', colorFromEntityRotation(parent))
       }
       if (self.grabbed && self.currentlyResizing) {
-        self.secondGrabHandlers.forEach((handler) => { handler(self.grabbed) })
-        
         let otherGrabber = self.grabbed.currentGrabber
+        self.secondGrabHandlers.forEach((handler) => { handler(self.grabbed, otherGrabber) })
+        
         let grabDistance = distanceBetween(self.el, otherGrabber)
         let resizeFactor = grabDistance / self.resizeInitialDistance
 
