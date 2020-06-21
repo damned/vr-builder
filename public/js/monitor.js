@@ -1,4 +1,4 @@
-/* global AFRAME entityInfo catching */
+/* global AFRAME entityInfo catching clog */
 let MonitorPart = function(component, host) {
   
   function enableColliderTrackingWhenMoves() {
@@ -38,7 +38,15 @@ AFRAME.registerComponent('monitor', {
     self.getMonitored = function() {
       return self.monitored
     }
-    $host.closest('touch-source').components[]
+    setTimeout(() => {
+      let $touchSourceAncestor = $host.closest('[touch-source]')
+      if ($touchSourceAncestor.length == 0) {
+        return
+      }
+      $touchSourceAncestor.get(0).components['touch-source'].onTouchStart((touched) => {
+        clog('touch', 'in monitor i got a touch start for: ' + touched.tagName)
+      })      
+    }, 0)
   },
   tick: function(time, timeDelta) {
     const RUN_INTERVAL = 10

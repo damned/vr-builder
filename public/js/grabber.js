@@ -37,7 +37,7 @@ AFRAME.registerComponent('grabber', {
     $touchSourceHost.attr('touch-source', '')
     let touchSource
     setTimeout(() => {
-      touchSource = $touchSourceHost.components['touch-source']
+      touchSource = $touchSourceHost.get(0).components['touch-source']
     }, 0)
     $host.on('hitstart', function() {
       // todo this is a bit chonky finding this through parent!
