@@ -37,8 +37,8 @@ AFRAME.registerComponent('grabber', {
     }, 0)
     self.ticks = 0
     self.grabbed = null
-    self.graspHandlers = []
-    self.releaseHandlers = []
+    self.secondGrabHandlers = []
+    self.onSecondGrab = (handler) => { self.secondGrabHandlers.push(handler) }
   },
   update: function(oldData) {
     console.log('this.data', this.data)
@@ -53,6 +53,8 @@ AFRAME.registerComponent('grabber', {
         self.el.setAttribute('color', colorFromEntityRotation(parent))
       }
       if (self.grabbed && self.currentlyResizing) {
+        self.secondGrabHandlers.forEach((handler) => { handler(self.grabbed) })
+        
         let otherGrabber = self.grabbed.currentGrabber
         let grabDistance = distanceBetween(self.el, otherGrabber)
         let resizeFactor = grabDistance / self.resizeInitialDistance

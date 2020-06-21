@@ -5,15 +5,13 @@ AFRAME.registerComponent('resizer', {
     let self = this
     let host = self.el
     setTimeout(() => {
-      let toucher = host.components.toucher
-      if (!toucher) {
-        clog('')
+      let grabber = host.components.grabber
+      if (!grabber) {
+        clog('oops - resizer needs a grabber on this element!!')
         return
       }
-      let toucher = host.components.toucher
-      $touchSourceAncestor.get(0).components['touch-source'].onTouchStart((touched) => {
-        clog('touch', 'in monitor i got a touch start for: ' + touched.tagName)
-        self.monitor(touched)
+      grabber.onSecondGrab((grabbed) => {
+        clog('resizer', 'in resizer i got a second grab event for: ' + grabbed.tagName)
       })      
     }, 0)
   }
