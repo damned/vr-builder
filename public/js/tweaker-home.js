@@ -8,7 +8,6 @@ AFRAME.registerComponent('tweaker-home', {
     console.log('this.data (side)', side)
     let direction = (side == 'left') ? -1 : 1
     let $self = $(this.el)
-    let $main = ($(`<a-box color-tweaker cloneable position="${-0.1 * direction} -0.1 0" scale="0.02 0.02 0.02" color="white">`)).appendTo($self)
-    
+    let $colorTweaker = ($(`<a-box color-tweaker cloneable position="${-0.1 * direction} -0.1 0" scale="0.02 0.02 0.02" color="white">`)).appendTo($self)
   }
 });
