@@ -35,8 +35,10 @@ AFRAME.registerComponent('grabber', {
       self.grabberCollider = collider(host)
       self.toucher = host.components.toucher
     }, 0)
-    this.ticks = 0
-    this.grabbed = null
+    self.ticks = 0
+    self.grabbed = null
+    self.graspHandlers = []
+    self.releaseHandlers = []
   },
   update: function(oldData) {
     console.log('this.data', this.data)

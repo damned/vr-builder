@@ -23,6 +23,7 @@ AFRAME.registerComponent('toucher', {
     $(host).on('hitstart', function() {
       touchSource.touchStart(self.closest())
     })
+    
     self.isTouching = function() {
       return self.collider.intersectedEls.length > 0
     }
