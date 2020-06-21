@@ -23,15 +23,18 @@
 [x] watch touched object on console
 [x] allow grab console, retaining watch link
 [x] exclude monitor consoles from plan save
-[ ] change colour
 [x] fix streching
+[x] easier stretching
+    - make axis lock margin greater at more distance
+[ ] change colour - inside sleeve
+[ ] align to axis - inside sleeve
+[ ] group and ungroup
+[ ] align to objects
 [ ] fix plan / build preserve rotation
 [ ] fix TODOs
 [ ] move code around
     - extract collider wrapper for aabb-collider
     - extract toucher component - esp. from grabber - hands off events e.g. to grabber, monitor
-[x] easier stretching
-    - make axis lock margin greater at more distance
 [ ] delete object
     - make v small
     - splat it

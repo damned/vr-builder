@@ -14,15 +14,16 @@ let addColor = function($parent, color, x, y) {
 AFRAME.registerComponent('stockist', {
   schema: {type: 'string', default: 'x'},
   init: function() {
-    let $self = $(this.el)
-    addColor($self, 'green', 0, -0.1)
-    addColor($self, 'red', 0, 0.1)
-    addColor($self, 'blue', 0.1, -0.1)
-    $self.append($('<a-box monitor cloneable position="0 0 0.2" rotation="0 -90 90" scale="0.2 0.2 0.02" color="white">'))
   },
   update: function(oldData) {
-    console.log('this.data ()', this.data)
-    this.textEl.setAttribute('value', this.data)  
+    let side = this.data
+    console.log('this.data (side)', side)
+    let direction = (side == 'left') ? -1 : 1
+    let $self = $(this.el)
+    addColor($self, 'green', 0, -0.1)
+    addColor($self, 'red', 0, 0.05)
+    addColor($self, 'blue', 0.06 * direction, -0.1)
+    $self.append($(`<a-box monitor cloneable position="0 0 0.2" rotation="0 ${-90 * direction} ${90 * direction}" scale="0.2 0.2 0.02" color="white">`))
   }
 
 });
