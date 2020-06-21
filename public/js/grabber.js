@@ -143,7 +143,7 @@ AFRAME.registerComponent('grabber', {
             }, 0)
           }
         }
-        tograb.setAttribute('follows', this.grabbedLeaderSpec)
+        tograb.setAttribute('follower', 'leader: ' + this.grabbedLeaderSpec)
         this.grabbed = tograb
         this.grabbed.currentlyGrabbed = true
         this.grabbed.currentGrabber = host
@@ -159,7 +159,7 @@ AFRAME.registerComponent('grabber', {
       }
       else {
         this.grabbed.currentlyGrabbed = false
-        this.grabbed.removeAttribute('follows')        
+        this.grabbed.removeAttribute('follower')        
       }
     }
     removeDebugColor(this.grabbed)
