@@ -1,4 +1,7 @@
 /* global AFRAME clog */
+
+// TODO this thing is separate to touch-source because of the hand-model-parent-child thing
+// should really be merged - and of course this taken out of grabber
 AFRAME.registerComponent('toucher', {
   init: function() {
     let self = this
