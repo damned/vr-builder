@@ -2,6 +2,7 @@
 
 AFRAME.registerComponent('color-tweaker', {
   init: function() {
+    this.el.setAttribute('follower', 'lock: position; leader: #left-hand')
   },
   update: function(oldData) {
     // console.log('this.data', this.data)

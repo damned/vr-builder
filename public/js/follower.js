@@ -1,16 +1,20 @@
-/* global AFRAME */
+/* global AFRAME clog */
 
 AFRAME.registerComponent('follower', {
-  schema: {type: 'string', default: ''},
+  schema: {
+    leader: {type: 'string', default: ''},
+    lock: {type: 'string', default: ''}
+  },
   init: function() {
     this.leader = this.el.followComponentLeader || null
+    this.lock = ''
     // this.el.setAttribute('debugged', 'follower: init')
     this.updateCount = 0
     this.tickCount = 0
   },
   update: function(oldData) {
     this.updateCount++
-    console.log('this.data', this.data)
+    clog('follower update', this.data)
     // this.el.setAttribute('debugged', 'follower: update ' + this.updateCount)
     if (this.data == '' || Object.keys(this.data).length == 0) {
       return
@@ -20,12 +24,13 @@ AFRAME.registerComponent('follower', {
     }
     let leaderSpec = this.data.leader
     // this.el.setAttribute('debugged', `follower: leaderSpec = ${leaderSpec}`)
-    console.log(leaderSpec)
+    clog('follower update', leaderSpec)
     this.leader = $(leaderSpec).get(0)
     // this.el.setAttribute('debugged', 'follower: leader = ' + leaderSpec)
   },
-  follow: function(leader) {
+  follow: function(leader, lock='') {
     this.leader = leader
+    this.lock = lock
   },
   tick: function() {
     this.tickCount++
@@ -38,8 +43,12 @@ AFRAME.registerComponent('follower', {
       // this.el.setAttribute('debugged', 'follower: tick')
       // this.el.setAttribute('debugged', this.leader.tagName)
       // this.el.setAttribute('debugged', 'follower: position: ' + leaderPos)
-      this.el.object3D.position.set(leaderPos.x, leaderPos.y, leaderPos.z)          
-      this.el.object3D.rotation.copy(leaderRot)
+      if (this.lock != 'position') {
+        this.el.object3D.position.set(leaderPos.x, leaderPos.y, leaderPos.z)             
+      }
+      if (this.lock != 'rotation') {
+        this.el.object3D.rotation.copy(leaderRot)
+      }
     }
     catch (e) {
       // this.el.setAttribute('debugged', 'oops - error')

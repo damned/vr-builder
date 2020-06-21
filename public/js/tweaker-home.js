@@ -10,5 +10,4 @@ AFRAME.registerComponent('tweaker-home', {
     let $self = $(this.el)
     $self.append($(`<a-box color-tweaker cloneable position="${-0.1 * direction} 0 0" scale="0.02 0.02 0.02" color="white">`))
   }
-
 });
