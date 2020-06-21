@@ -23,7 +23,7 @@ var Hand = function($hand) {
   let side = $hand.attr('hand-side')
   let hand = $hand.get(0)
   let handId = $hand.attr('id')
-  let modelSize = 0.05
+  let modelSize = 0.03
   function createHandModel(side) {
     let model = createEntity('a-box', 'hand-model', modelSize, modelSize, modelSize)
     addProps(model, {
@@ -34,20 +34,20 @@ var Hand = function($hand) {
     })
     return model
   }
-  function createSleeve() {
+  function createSleeve(side) {
     let sleeve = createEntity('a-cylinder', 'sleeve', 1, 1, 1)    
     addProps(sleeve, {
       height: '0.3',
-      radius: '0.05',
+      radius: '0.04',
       position: '0 0 0.25',
       rotation: '90 0 0',
-      stockist: '',
+      stockist: side,
       tweaker: ''
     })
     return sleeve
   }
   
-  let sleeve = createSleeve()
+  let sleeve = createSleeve(side)
   let $sleeve = $(sleeve)
   $sleeve.appendTo($hand)
 
