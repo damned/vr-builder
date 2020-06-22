@@ -23,7 +23,9 @@ AFRAME.registerComponent('grabber', {
     self.ticks = 0
     self.grabbed = null
     self.secondGrabHandlers = []
-    self.onSecondGrab = (handler) => { self.secondGrabHandlers.push(handler) }
+    catching(() => {
+      self.onSecondGrab = (handler) => { self.secondGrabHandlers.push(handler) }      
+    })
   },
   update: function(oldData) {
     console.log('this.data', this.data)

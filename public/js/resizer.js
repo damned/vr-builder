@@ -22,47 +22,53 @@ AFRAME.registerComponent('resizer', {
     let parent = self.el.parentNode // use localToWorld() rather than specifically using parent??
 
     setTimeout(() => {
-      catching(() => {
-        
-      })
-      let grabber = host.components.grabber
-      if (!grabber) {
-        let err = 'oops - resizer needs a grabber on this element!!'
-        clog(err)
-        this.el.setAttribute('opacity', 0.5)
-        $(this.el).append(`<a-text color="black" value="${err}"`)
-        return
-      }
-      grabber.onSecondGrab((grabbed, otherGrabber) => {
-        clog('resizer', 'in resizer i got a second grab event for: ' + grabbed.tagName)
-        
-        self.grabbed = grabbed
-        self.otherGrabber = otherGrabber
-        
-        self.resizeInitialScale = grabbed.object3D.scale.clone()
-        self.resizeInitialDistance = distanceBetween(host, otherGrabber)
-        self.currentlyResizing = true
-        self.grabbed.setAttribute('resizing', '')
-        setTimeout(() => {
-          self.resizingComponent = self.grabbed.components.resizing
-        }, 0)
+      catching(() => {        
+        let grabber = host.components.grabber
+        if (!grabber) {
+          let err = 'oops - resizer needs a grabber on this element!!'
+          clog(err)
+          this.el.setAttribute('opacity', 0.5)
+          $(this.el).append(`<a-text color="black" value="${err}"`)
+          return
+        }
+        grabber.onSecondGrab((grabbed, otherGrabber) => {
+          clog('resizer', 'in resizer i got a second grab event for: ' + grabbed.tagName)
+
+          self.grabbed = grabbed
+          self.otherGrabber = otherGrabber
+
+          self.resizeInitialScale = grabbed.object3D.scale.clone()
+          clog('resizer', 'got initial scale')
+          self.resizeInitialDistance = distanceBetween(host, otherGrabber)
+          clog('resizer', 'got initial distance')
+          self.currentlyResizing = true
+          clog('resizer', 'now currently resizing')
+          self.grabbed.setAttribute('resizing', '')
+          setTimeout(() => {
+            self.resizingComponent = self.grabbed.components.resizing
+          }, 0)
+        })
       })
     }, 0)
   },
   tick: function() {
-    if (!self.currentlyResizing) {
-      return
-    }
-    let grabDistance = distanceBetween(self.el, self.otherGrabber)
-    let resizeFactor = grabDistance / self.resizeInitialDistance
+    let self = this
+    let parent = self.el.parentNode
+    catching(() => {
+      if (!self.currentlyResizing) {
+        return
+      }
+      clog('resizer', 'resizing - in tick')
+      let grabDistance = distanceBetween(self.el, self.otherGrabber)
+      let resizeFactor = grabDistance / self.resizeInitialDistance
 
-    // clog(`grabDistance ${grabDistance} initial ${self.resizeInitialDistance}`)
+      // clog(`grabDistance ${grabDistance} initial ${self.resizeInitialDistance}`)
 
-    let posInGrabbedSpace = positionRelativeTo(parent, self.grabbed)
-    // clog(`resizer pos in space of grabbed:\n${posInGrabbedSpace.x.toFixed(2)} ${posInGrabbedSpace.y.toFixed(2)} ${posInGrabbedSpace.z.toFixed(2)}`)
-    self.resizingComponent.updateInfo({'resizer pos': xyzToFixed(posInGrabbedSpace)})
-    let newScale = self.resizeInitialScale.clone().multiplyVectors(self.resizeInitialScale, getResizeVector(resizeFactor, posInGrabbedSpace))
-    self.grabbed.object3D.scale.copy(newScale) 
-
+      let posInGrabbedSpace = positionRelativeTo(parent, self.grabbed)
+      // clog(`resizer pos in space of grabbed:\n${posInGrabbedSpace.x.toFixed(2)} ${posInGrabbedSpace.y.toFixed(2)} ${posInGrabbedSpace.z.toFixed(2)}`)
+      self.resizingComponent.updateInfo({'resizer pos': xyzToFixed(posInGrabbedSpace)})
+      let newScale = self.resizeInitialScale.clone().multiplyVectors(self.resizeInitialScale, getResizeVector(resizeFactor, posInGrabbedSpace))
+      self.grabbed.object3D.scale.copy(newScale) 
+    })
   }
 });
