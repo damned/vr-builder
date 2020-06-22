@@ -34,7 +34,7 @@ AFRAME.registerComponent('resizer', {
         clog('resizer', 'in resizer i got a second grab event for: ' + grabbed.tagName)
         
         self.grabbed = grabbed
-        self.otherGrabber = grabbed.currentGrabber
+        self.otherGrabber =otherGrabber
         
         self.resizeInitialScale = grabbed.object3D.scale.clone()
         self.resizeInitialDistance = distanceBetween(host, otherGrabber)
@@ -48,6 +48,7 @@ AFRAME.registerComponent('resizer', {
   },
   tick: function() {
     if (!self.currentlyResizing) {
+      clog('resizer', 'not currently resizing')
       return
     }
     let grabDistance = distanceBetween(self.el, self.otherGrabber)

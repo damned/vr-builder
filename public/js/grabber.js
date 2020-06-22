@@ -53,7 +53,14 @@ AFRAME.registerComponent('grabber', {
         clog('grasp', tograb.outerHTML)
         if (tograb.currentlyGrabbed) {
           let otherGrabber = tograb.currentGrabber
-          self.secondGrabHandlers.forEach((handler) => { handler(self.grabbed) })
+          clog('grasp', 'about to call second grab handlers')
+
+          self.secondGrabHandlers.forEach((handler, otherGrabber) => { 
+            clog('grasp', 'got a grab handler to call')
+            handler(self.grabbed) 
+          })
+
+          clog('grasp', 'called second grab handlers')
           return
         }
         debugColor(host, 'white')
