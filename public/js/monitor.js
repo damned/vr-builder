@@ -38,6 +38,9 @@ AFRAME.registerComponent('monitor', {
     self.getMonitored = function() {
       return self.monitored
     }
+    self.cloneTo = function(targetMonitor) {
+      targetMonitor.monitor(self.getMonitored())
+    }
     setTimeout(() => {
       let $touchSourceAncestor = $host.closest('[touch-source]')
       if ($touchSourceAncestor.length == 0) {

@@ -1,5 +1,5 @@
-/* global AFRAME THREE colorFromEntityRotation collider getResizeVector clog catching xyzToFixed addDebugColor removeDebugColor */
-let debug = { useColor: true }
+/* global AFRAME THREE colorFromEntityRotation collider clog catching addDebugColor removeDebugColor */
+let debug = { useColor: false }
 var options = { colorTwist: false }
 
 function debugColor(el, color) {
@@ -46,20 +46,14 @@ AFRAME.registerComponent('grabber', {
       let host = this.el
       let self = this
       debugColor(host, 'black')
-      host.setAttribute('debugged', 'oh come on')
-      clog('starting grasp')
-      clog('grasp', 'grasping...')
       if (self.toucher.isTouching()) {
-        clog('grasp', 'touching something, getting closestIntersectedEl...')
         let tograb = self.toucher.closest()
-        clog('grasp', tograb.outerHTML)
         if (tograb.currentlyGrabbed) {
           let otherGrabber = tograb.currentGrabber
           clog('grasp', 'about to call second grab handlers')
   
           self.grabbed = tograb
           self.secondGrabHandlers.forEach((handler) => { 
-            clog('grasp', 'got a grab handler to call')
             handler(self.grabbed, otherGrabber) 
             self.inSecondGrab = true
           })
@@ -75,9 +69,7 @@ AFRAME.registerComponent('grabber', {
           let sourceMonitor = tograb.components['monitor']
           let monitored
           if (sourceMonitor) {
-            clog('grasp', 'there is a source monitor')
             monitored = sourceMonitor.getMonitored()
-            clog('grasp', 'got monitored', monitored)
           }
           else {
             clog('grasp', 'there is no source monitor')            
@@ -90,10 +82,8 @@ AFRAME.registerComponent('grabber', {
             setTimeout(() => {
               clog('grasp', 'monitored ok, getting cloned monitor component...')
               let clonedComponents = tograb.components 
-              clog('grasp', 'components of cloned', clonedComponents)
               let monitorClone = clonedComponents['monitor']
               if (monitorClone) {
-                clog('grasp', 'got monitor clone, calling...')
                 monitorClone.monitor(monitored)
               }            
             }, 0)
