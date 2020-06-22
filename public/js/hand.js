@@ -30,6 +30,7 @@ var Hand = function($hand) {
       color: 'yellow',
       'hand-side': side,
       grabber: '#' + handId,
+      resizer: '',
       debugged: ''
     })
     return model

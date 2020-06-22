@@ -1,4 +1,4 @@
-/* global AFRAME clog collider xyzToFixed getResizeVector */
+/* global AFRAME clog collider xyzToFixed getResizeVector catching */
 
 function distanceBetween(grabber1, grabber2) {
   return grabber1.object3D.getWorldPosition().distanceTo(grabber2.object3D.getWorldPosition())
@@ -22,6 +22,9 @@ AFRAME.registerComponent('resizer', {
     let parent = self.el.parentNode // use localToWorld() rather than specifically using parent??
 
     setTimeout(() => {
+      catching(() => {
+        
+      })
       let grabber = host.components.grabber
       if (!grabber) {
         let err = 'oops - resizer needs a grabber on this element!!'
@@ -34,7 +37,7 @@ AFRAME.registerComponent('resizer', {
         clog('resizer', 'in resizer i got a second grab event for: ' + grabbed.tagName)
         
         self.grabbed = grabbed
-        self.otherGrabber =otherGrabber
+        self.otherGrabber = otherGrabber
         
         self.resizeInitialScale = grabbed.object3D.scale.clone()
         self.resizeInitialDistance = distanceBetween(host, otherGrabber)
@@ -48,7 +51,6 @@ AFRAME.registerComponent('resizer', {
   },
   tick: function() {
     if (!self.currentlyResizing) {
-      clog('resizer', 'not currently resizing')
       return
     }
     let grabDistance = distanceBetween(self.el, self.otherGrabber)
