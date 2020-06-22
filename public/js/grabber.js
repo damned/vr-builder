@@ -23,9 +23,9 @@ AFRAME.registerComponent('grabber', {
     self.ticks = 0
     self.grabbed = null
     self.secondGrabHandlers = []
-    catching(() => {
-      self.onSecondGrab = (handler) => { self.secondGrabHandlers.push(handler) }      
-    })
+    self.releaseHandlers = []
+    self.onSecondGrab = (handler) => { self.secondGrabHandlers.push(handler) }      
+    self.onRelease = (handler) => { self.releaseHandlers.push(handler) }      
   },
   update: function(oldData) {
     console.log('this.data', this.data)
@@ -61,6 +61,7 @@ AFRAME.registerComponent('grabber', {
           self.secondGrabHandlers.forEach((handler) => { 
             clog('grasp', 'got a grab handler to call')
             handler(self.grabbed, otherGrabber) 
+            self.inSecondGrab = true
           })
           return
         }
@@ -109,8 +110,11 @@ AFRAME.registerComponent('grabber', {
   },
   release: function(event) {
     if (this.grabbed != null) {
-      if (this.currentlyResizing) {
-        this.currentlyResizing = false    
+      this.releaseHandlers.forEach((handler) => {
+        handler()
+      })
+      if (this.inSecondGrab) {
+        this.inSecondGrab = false
       }
       else {
         this.grabbed.currentlyGrabbed = false

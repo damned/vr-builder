@@ -38,15 +38,15 @@ AFRAME.registerComponent('resizer', {
           self.otherGrabber = otherGrabber
 
           self.resizeInitialScale = grabbed.object3D.scale.clone()
-          clog('resizer', 'got initial scale')
           self.resizeInitialDistance = distanceBetween(host, otherGrabber)
-          clog('resizer', 'got initial distance')
-          self.currentlyResizing = true
-          clog('resizer', 'now currently resizing')
+          clog('resizer', 'got initial state')
           self.grabbed.setAttribute('resizing', '')
           setTimeout(() => {
             self.resizingComponent = self.grabbed.components.resizing
           }, 0)
+        })
+        grabber.onRelease(() => {
+          self.grabbed = null          
         })
       })
     }, 0)
@@ -55,7 +55,7 @@ AFRAME.registerComponent('resizer', {
     let self = this
     let parent = self.el.parentNode
     catching(() => {
-      if (!self.currentlyResizing) {
+      if (!self.grabbed) {
         return
       }
       clog('resizer', 'resizing - in tick')
