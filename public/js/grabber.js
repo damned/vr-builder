@@ -42,9 +42,16 @@ AFRAME.registerComponent('grabber', {
     })
   },
   cloneGrabbed: function() {
-    if (this.grabbed) {
-      cloneEntity(this.grabbed).removeAttribute('follower')
-    }
+    let self = this
+    catching(() => {
+      if (self.grabbed) {
+        let cloned = cloneEntity(self.grabbed)
+        cloned.removeAttribute('follower')
+        self.el.object3D.getWorldPosition(cloned.object3D.position)
+        
+        self.el.setAttribute('color', 'white')
+      }      
+    })
   },
   grasp: function(event) {
     catching(function (){
