@@ -4,8 +4,9 @@ AFRAME.registerComponent('flick-cloner', {
     let self = this
     let object3d = self.el.object3D
     const TIME_TO_STOP_MS = 200
-    const MIN_PRE_FLICK_VELOCITY = 1
-    const MAX_STOP_VELOCITY = 0.2
+    const MIN_PRE_FLICK_VELOCITY = 2.5
+    const MAX_REAL_VELOCITY = 6
+    const MAX_STOP_VELOCITY = 0.15
     let lastPos
     let nowPos = new THREE.Vector3()
     let moving = false
@@ -18,7 +19,7 @@ AFRAME.registerComponent('flick-cloner', {
       object3d.getWorldPosition(nowPos)
       if (lastPos) {
         let velocity = 1000 * nowPos.distanceTo(lastPos) / timeDelta
-        if (velocity > MIN_PRE_FLICK_VELOCITY) {
+        if (velocity > MIN_PRE_FLICK_VELOCITY && velocity < MAX_REAL_VELOCITY) {
           clog('flick-cloner velocity: ' + velocity.toFixed(3))
           moving = true
           stopping = false
