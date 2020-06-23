@@ -66,24 +66,7 @@ AFRAME.registerComponent('grabber', {
         let cloneable = tograb.components['cloneable']
         if (cloneable) {
           clog('grasp', 'its cloneable')
-          let sourceMonitor = tograb.components['monitor']
-          if (!sourceMonitor) {
-            clog('grasp', 'there is no source monitor')            
-          }
           tograb = cloneable.clone()
-          // how _should_ this pass off to the monitor - maybe provide cloneInto method on component
-          // where it will clone its state into the (new/empty) monitor component (or cloneOnto onto
-          // an entity)
-          if (sourceMonitor) {
-            setTimeout(() => {
-              clog('grasp', 'monitored ok, getting cloned monitor component...')
-              let clonedComponents = tograb.components 
-              let monitorClone = clonedComponents['monitor']
-              if (monitorClone) {
-                sourceMonitor.copyTo(monitorClone)
-              }            
-            }, 0)
-          }
         }
         tograb.setAttribute('follower', 'leader: ' + this.grabbedLeaderSpec)
         this.grabbed = tograb
