@@ -26,9 +26,9 @@
 [x] fix streching
 [x] easier stretching
     - make axis lock margin greater at more distance
-[/] move code around
-    - extract collider wrapper for aabb-collider
-    - extract toucher component - esp. from grabber - hands off events e.g. to grabber, monitor
+[x] move code around
+[x] - extract collider wrapper for aabb-collider
+[x] - extract toucher component - esp. from grabber - hands off events e.g. to grabber, monitor
 [ ] change colour - inside sleeve
 [ ] align to axis - inside sleeve
 [ ] group and ungroup

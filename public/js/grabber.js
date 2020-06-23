@@ -79,9 +79,7 @@ AFRAME.registerComponent('grabber', {
   },
   release: function(event) {
     if (this.grabbed != null) {
-      this.releaseHandlers.forEach((handler) => {
-        handler()
-      })
+      this.releaseHandlers.forEach(handler => handler())
       if (this.inSecondGrab) {
         this.inSecondGrab = false
       }
@@ -91,6 +89,7 @@ AFRAME.registerComponent('grabber', {
       }
     }
     removeDebugColor(this.grabbed)
+    removeDebugColor(this.el)
     this.grabbed = null
     this.el.setAttribute('opacity', 1)
   }
