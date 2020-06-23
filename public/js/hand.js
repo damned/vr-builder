@@ -57,11 +57,11 @@ var Hand = function($hand) {
   let model = createHandModel(side)
   let $model = $(model)
   $model.appendTo($hand)
-  setTimeout(() => model.components.flicker.onFlick(() => {
-    model.setAttribute('color', 'orange')
-    model.components.grabber.cloneGrabbed()
-    setTimeout(() => model.setAttribute('color', 'yellow'), 1000)
-  }), 0)
+  // setTimeout(() => model.components.flicker.onFlick(() => {
+  //   model.setAttribute('color', 'orange')
+  //   model.components.grabber.cloneGrabbed()
+  //   setTimeout(() => model.setAttribute('color', 'yellow'), 1000)
+  // }), 0)
   
   let grabber = model.components.grabber
   

@@ -5,6 +5,7 @@ function copyableComponents(el) {
 }
 
 function cloneEntity(entity) {
+  entity.flushToDOM()
   let clone = entity.cloneNode()
   clone.removeAttribute('cloneable')
   document.getElementById('spawn').appendChild(clone)
