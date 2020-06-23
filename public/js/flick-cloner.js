@@ -18,15 +18,31 @@ AFRAME.registerComponent('flick-cloner', {
       object3d.getWorldPosition(nowPos)
       if (lastPos) {
         let velocity = 1000 * nowPos.distanceTo(lastPos) / timeDelta
-        clog('flick-cloner velocity: ' + velocity.toFixed(3))
         if (velocity > MIN_PRE_FLICK_VELOCITY) {
+          clog('flick-cloner velocity: ' + velocity.toFixed(3))
           moving = true
+          stopping = false
+          stopCountdownMs = null
         }
         else if (moving) {
+          if (velocity < MIN_PRE_FLICK_VELOCITY) {
+            stopping = true
+            moving = false
+            stopCountdownMs = TIME_TO_STOP_MS
+          }
+        }
+        if (stopping) {
+          clog('flick', 'velocity: ' + velocity.toFixed(3))
           if (velocity < MAX_STOP_VELOCITY) {
             flick()
           }
-          clog('moving, time remaining (ms): ' + stopCountdownMs)
+          stopCountdownMs -= timeDelta
+          clog('flick', 'stopping, time remaining (ms): ' + stopCountdownMs)
+        }
+        if (stopCountdownMs < 0) {
+          stopCountdownMs = null
+          moving = false
+          stopping = false
         }
       }
       else {
@@ -34,6 +50,8 @@ AFRAME.registerComponent('flick-cloner', {
       }
       lastPos.copy(nowPos)
     }
-    self.onFlick = handler => flickHandlers.push(handler)
+    self.onFlick = function(handler) {
+      flickHandlers.push(handler)
+    }
   }
 })
