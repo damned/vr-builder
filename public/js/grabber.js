@@ -1,4 +1,4 @@
-/* global AFRAME THREE colorFromEntityRotation collider clog catching addDebugColor removeDebugColor */
+/* global AFRAME THREE colorFromEntityRotation collider clog catching addDebugColor removeDebugColor cloneEntity */
 let debug = { useColor: false }
 var options = { colorTwist: false }
 
@@ -41,6 +41,11 @@ AFRAME.registerComponent('grabber', {
       }
     })
   },
+  cloneGrabbed: function() {
+    if (this.grabbed) {
+      cloneEntity(this.grabbed)
+    }
+  },
   grasp: function(event) {
     catching(function (){
       let host = this.el
@@ -78,7 +83,7 @@ AFRAME.registerComponent('grabber', {
     }.bind(this))
   },
   release: function(event) {
-    if (this.grabbed != null) {
+    if (this.grabbed) {
       this.releaseHandlers.forEach(handler => handler())
       if (this.inSecondGrab) {
         this.inSecondGrab = false

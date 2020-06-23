@@ -59,6 +59,7 @@ var Hand = function($hand) {
   $model.appendTo($hand)
   setTimeout(() => model.components.flicker.onFlick(() => {
     model.setAttribute('color', 'orange')
+    model.components.grabber.cloneGrabbed()
     setTimeout(() => model.setAttribute('color', 'yellow'), 1000)
   }), 0)
   
