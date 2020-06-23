@@ -31,7 +31,11 @@
 [x] - extract toucher component - esp. from grabber - hands off events e.g. to grabber, monitor
 [ ] flick to clone
 [ ] change colour - inside sleeve
-[ ] align to axis - inside sleeve
+[ ] align to axis - inside sleeve? 
+    ... or maybe alignment by how far away other hand is...
+    ... move hand far away is coarse grid and align, closer to is finer grid (visible affordance)
+    ... once relationship with other hand formed, rotation of hand affects axis-alignment lock?
+    ... rumble other hand as pass gridline to gridline, to denote relationship
 [ ] group and ungroup
 [ ] align to objects
 [ ] fix plan / build preserve rotation

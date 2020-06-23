@@ -43,7 +43,7 @@ AFRAME.registerComponent('grabber', {
   },
   cloneGrabbed: function() {
     if (this.grabbed) {
-      cloneEntity(this.grabbed)
+      cloneEntity(this.grabbed).removeAttribute('follower')
     }
   },
   grasp: function(event) {
@@ -90,7 +90,7 @@ AFRAME.registerComponent('grabber', {
       }
       else {
         this.grabbed.currentlyGrabbed = false
-        this.grabbed.removeAttribute('follower')        
+        this.grabbed.removeAttribute('follower')
       }
     }
     removeDebugColor(this.grabbed)
