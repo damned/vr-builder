@@ -1,5 +1,5 @@
 /* global AFRAME THREE clog */
-AFRAME.registerComponent('flick-cloner', {
+AFRAME.registerComponent('flicker', {
   init: function() {
     let self = this
     let object3d = self.el.object3D
@@ -20,7 +20,7 @@ AFRAME.registerComponent('flick-cloner', {
       if (lastPos) {
         let velocity = 1000 * nowPos.distanceTo(lastPos) / timeDelta
         if (velocity > MIN_PRE_FLICK_VELOCITY && velocity < MAX_REAL_VELOCITY) {
-          clog('flick-cloner velocity: ' + velocity.toFixed(3))
+          clog('flicker velocity: ' + velocity.toFixed(3))
           moving = true
           stopping = false
           stopCountdownMs = null
@@ -33,12 +33,12 @@ AFRAME.registerComponent('flick-cloner', {
           }
         }
         if (stopping) {
-          clog('flick', 'velocity: ' + velocity.toFixed(3))
+          clog('flicker', 'velocity: ' + velocity.toFixed(3))
           if (velocity < MAX_STOP_VELOCITY) {
             flick()
           }
           stopCountdownMs -= timeDelta
-          clog('flick', 'stopping, time remaining (ms): ' + stopCountdownMs)
+          clog('flicker', 'stopping, time remaining (ms): ' + stopCountdownMs)
         }
         if (stopCountdownMs < 0) {
           stopCountdownMs = null

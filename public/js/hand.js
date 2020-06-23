@@ -30,7 +30,7 @@ var Hand = function($hand) {
       color: 'yellow',
       'hand-side': side,
       grabber: '#' + handId,
-      'flick-cloner': '',
+      flicker: '',
       resizer: '',
       debugged: ''
     })
@@ -57,7 +57,7 @@ var Hand = function($hand) {
   let model = createHandModel(side)
   let $model = $(model)
   $model.appendTo($hand)
-  setTimeout(() => model.components['flick-cloner'].onFlick(() => {
+  setTimeout(() => model.components.flicker.onFlick(() => {
     model.setAttribute('color', 'orange')
     setTimeout(() => model.setAttribute('color', 'yellow'), 1000)
   }), 0)
