@@ -29,8 +29,17 @@
 [x] move code around
 [x] - extract collider wrapper for aabb-collider
 [x] - extract toucher component - esp. from grabber - hands off events e.g. to grabber, monitor
-[ ] flick to clone
+[/] flick to clone
+    - single clone
+    - copy rotation and scale
+    - easier to flick
 [ ] change colour - inside sleeve
+    - move to colour easier than rotation... r g b axes 
+    - (twist for shiny etc. ?)
+[ ] texture browser...
+    - 3d movement with axes for roughness etc
+    - areas in globes are different 'topics'
+    - areas are like graph with weighted connections
 [ ] align to axis - inside sleeve? 
     ... or maybe alignment by how far away other hand is...
     ... move hand far away is coarse grid and align, closer to is finer grid (visible affordance)
@@ -41,6 +50,7 @@
 [ ] fix plan / build preserve rotation
 [ ] fix TODOs
 [ ] delete object
+    - flick away with back of hand
     - make v small
     - splat it
     - tear it up
