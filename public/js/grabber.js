@@ -80,7 +80,7 @@ AFRAME.registerComponent('grabber', {
               let clonedComponents = tograb.components 
               let monitorClone = clonedComponents['monitor']
               if (monitorClone) {
-                sourceMonitor.cloneTo(monitorClone)
+                sourceMonitor.copyTo(monitorClone)
               }            
             }, 0)
           }

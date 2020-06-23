@@ -2,14 +2,16 @@
 
 AFRAME.registerComponent('cloneable', {
   init: function() {
-    this.dragger = null
-    this.updateCount = 0
-    this.tickCount = 0
-  },
-  clone: function() {
-    let clone = this.el.cloneNode()
-    clone.removeAttribute('cloneable')
-    document.getElementById('spawn').appendChild(clone)
-    return clone
+    let self = this
+    let host = self.el
+    function copyableComponents() {
+      return host.components.map(component => component.copyTo ?)
+    }
+    self.clone = function() {
+      let clone = this.el.cloneNode()
+      clone.removeAttribute('cloneable')
+      document.getElementById('spawn').appendChild(clone)
+      return clone
+    }
   }
 });

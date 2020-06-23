@@ -38,7 +38,7 @@ AFRAME.registerComponent('monitor', {
     self.getMonitored = function() {
       return self.monitored
     }
-    self.cloneTo = function(targetMonitor) {
+    self.copyTo = function(targetMonitor) {
       targetMonitor.monitor(self.getMonitored())
     }
     setTimeout(() => {
