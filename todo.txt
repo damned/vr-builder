@@ -39,6 +39,9 @@
     - make v small
     - splat it
     - tear it up
+[ ] remove unwanted parent dereferencing between model<->hand
+    - and yet allow scriptable movement - factor out oculus hand control
+    - use local<->world conversions
 [ ] recorder component
 [ ] playback - 
 [ ] multiple plans
