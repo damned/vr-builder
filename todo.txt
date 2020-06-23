@@ -29,6 +29,7 @@
 [x] move code around
 [x] - extract collider wrapper for aabb-collider
 [x] - extract toucher component - esp. from grabber - hands off events e.g. to grabber, monitor
+[ ] flick to clone
 [ ] change colour - inside sleeve
 [ ] align to axis - inside sleeve
 [ ] group and ungroup
