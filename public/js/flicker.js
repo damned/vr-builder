@@ -13,10 +13,20 @@ AFRAME.registerComponent('flicker', {
     let stopping = false
     let stopCountdownMs = null
     let flickHandlers= []
-    let flick = () => flickHandlers.forEach((handler) => handler())
+
+    let cancelFlick = () => {
+      stopCountdownMs = null
+      moving = false
+      stopping = false
+    }
+    let flick = () => {
+      flickHandlers.forEach((handler) => handler())
+      cancelFlick()
+    }
     
     self.tick = function(time, timeDelta) {
       object3d.getWorldPosition(nowPos)
+      
       if (lastPos) {
         let velocity = 1000 * nowPos.distanceTo(lastPos) / timeDelta
         if (velocity > MIN_PRE_FLICK_VELOCITY && velocity < MAX_REAL_VELOCITY) {
@@ -38,12 +48,9 @@ AFRAME.registerComponent('flicker', {
             flick()
           }
           stopCountdownMs -= timeDelta
-          // clog('flicker', 'stopping, time remaining (ms): ' + stopCountdownMs)
-        }
-        if (stopCountdownMs < 0) {
-          stopCountdownMs = null
-          moving = false
-          stopping = false
+          if (stopCountdownMs < 0) {
+            cancelFlick()
+          }
         }
       }
       else {

@@ -59,6 +59,7 @@
     - use local<->world conversions
 [ ] recorder component
 [ ] playback - 
+[ ] slow replay for debugging (e.g. tuning flick)
 [ ] multiple plans
     - use shapes as names and slots
     - drag on/off like glasses?
