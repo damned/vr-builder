@@ -1,4 +1,4 @@
-/* global AFRAME THREE colorFromEntityRotation collider clog catching addDebugColor removeDebugColor cloneEntity copyPlacement */
+/* global AFRAME THREE colorFromEntityRotation collider clog catching addDebugColor removeDebugColor cloneEntity copyPlacement applyPlacement */
 let debug = { useColor: false }
 var options = { colorTwist: false }
 
@@ -20,6 +20,12 @@ function copyPlacement(entity) {
   object3d.getWorldPosition(place.position)
   
   return place
+}
+
+function applyPlacement(place, entity) {
+  entity.object3D.scale.copy(place.scale)
+  entity.object3D.quaternion.copy(place.quaternion)
+  entity.object3D.position.copy(place.position)
 }
 
 // debugColor
@@ -60,23 +66,9 @@ AFRAME.registerComponent('grabber', {
     catching(() => {
       if (self.grabbed) {
           // move -> aframe-util.js -> positioning.js
-        let place = {}
-        place.position = new THREE.Vector3()
-        place.scale = new THREE.Vector3()
-        place.quaternion = new THREE.Quaternion()
-        let object3d = self.grabbed.object3D
-        
-        object3d.getWorldScale(place.scale)
-        object3d.getWorldQuaternion(place.quaternion)
-        object3d.getWorldPosition(place.position)
-        
+        let place = copyPlacement(self.grabbed)
         let cloned = cloneEntity(self.grabbed)
-        cloned.addEventListener('loaded', () => {
-          // move -> aframe-util.js -> positioning.js
-          cloned.object3D.scale.copy(place.scale)
-          cloned.object3D.quaternion.copy(place.quaternion)
-          cloned.object3D.position.copy(place.position)
-        })
+        cloned.addEventListener('loaded', () => applyPlacement(place, cloned))
 
         cloned.removeAttribute('follower')
         self.el.setAttribute('color', 'white')
