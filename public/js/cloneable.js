@@ -4,8 +4,21 @@ function copyableComponents(el) {
   return Object.values(el.components).filter(component => component.copyTo)
 }
 
+function afterCreation(fn) {
+  setTimeout(() => {
+    catching(() => {
+      fn()
+    })
+  }, 0)  
+}
+
 function copyComponentsState(source, target) {
-  
+  afterCreation(() => {
+    copyableComponents(source).forEach((sourceComponent) => {
+      clog('copying component', sourceComponent.name)
+      sourceComponent.copyTo(target.components[sourceComponent.name]) 
+    })
+  })
 }
 
 function cloneEntity(entity, atSamePlace) {
@@ -14,15 +27,8 @@ function cloneEntity(entity, atSamePlace) {
   entity.setAttribute('color', 'white')
   clone.removeAttribute('cloneable')
   document.getElementById('spawn').appendChild(clone)
-  setTimeout(() => {
-    catching(() => {
-      copyableComponents(entity).forEach((sourceComponent) => {
-        clog('copying component', sourceComponent.name)
-        sourceComponent.copyTo(clone.components[sourceComponent.name]) 
-      })
-    })
-  }, 0)
-
+  copyComponentsState(entity, clone)
+  
   if (atSamePlace) {
     let place = copyPlacement(entity)
     clone.addEventListener('loaded', () => applyPlacement(place, clone))    
