@@ -29,16 +29,16 @@
 [x] move code around
 [x] - extract collider wrapper for aabb-collider
 [x] - extract toucher component - esp. from grabber - hands off events e.g. to grabber, monitor
-[/] flick to clone
-    [ ] single clone
-    [ ] copy rotation and scale
-    [ ] easier to flick
+[x] flick to clone
+    [x] single clone
+    [x] copy rotation and scale
+    [x] easier to flick
     [ ] visual flick debug (for tweaking activation)
         - color over limits
         - visual gauge showing countdown timer
 [ ] change colour - inside sleeve
-    - move to colour easier than rotation... r g b axes 
-    - (twist for shiny etc. ?)
+    [ ] move to colour easier than rotation... r g b axes 
+    [ ] (twist for shiny etc. ?)
 [ ] texture browser...
     - 3d movement with axes for roughness etc
     - areas in globes are different 'topics'
