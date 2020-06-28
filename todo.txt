@@ -33,14 +33,23 @@
     [x] single clone
     [x] copy rotation and scale
     [x] easier to flick
+[ ] delete object
+    [ ] just move out of vision / behind back and release
+    - lesser delete ideas
+      - flick away with back of hand
+      - make v small
+      - splat it
+      - tear it up
 [ ] change colour - inside sleeve
     [ ] move to colour easier than rotation... r g b axes 
     [ ] (twist for shiny etc. ?)
+[ ] undelete - grab behind back and bring it out (stack...  undo?)
 [ ] texture browser...
     - 3d movement with axes for roughness etc
     - areas in globes are different 'topics'
     - areas are like graph with weighted connections
 [ ] default align vertical
+    - show avatar (transparent) for align, move through it to 'pick it up' and turn on alignment 
 [ ] align to axis - inside sleeve? 
     ... or maybe alignment by how far away other hand is...
     ... move hand far away is coarse grid and align, closer to is finer grid (visible affordance)
@@ -48,13 +57,9 @@
     ... rumble other hand as pass gridline to gridline, to denote relationship
 [ ] group and ungroup
 [ ] align to objects
+    - avatar appears on objects as you get near
 [ ] fix plan / build preserve rotation
 [ ] fix TODOs
-[ ] delete object
-    - flick away with back of hand
-    - make v small
-    - splat it
-    - tear it up
 [ ] remove unwanted parent dereferencing between model<->hand
     - and yet allow scriptable movement - factor out oculus hand control
     - use local<->world conversions
