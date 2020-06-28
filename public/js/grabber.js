@@ -1,4 +1,4 @@
-/* global AFRAME THREE colorFromEntityRotation collider clog catching addDebugColor removeDebugColor cloneEntity */
+/* global AFRAME THREE colorFromEntityRotation collider clog catching addDebugColor removeDebugColor cloneEntity copyPlacement */
 let debug = { useColor: false }
 var options = { colorTwist: false }
 
@@ -6,6 +6,20 @@ function debugColor(el, color) {
   if (debug.useColor) {
     addDebugColor(el, color)
   }
+}
+
+function copyPlacement(entity) {
+  let place = {}
+  place.position = new THREE.Vector3()
+  place.scale = new THREE.Vector3()
+  place.quaternion = new THREE.Quaternion()
+  let object3d = entity.object3D
+
+  object3d.getWorldScale(place.scale)
+  object3d.getWorldQuaternion(place.quaternion)
+  object3d.getWorldPosition(place.position)
+  
+  return place
 }
 
 // debugColor
@@ -46,21 +60,22 @@ AFRAME.registerComponent('grabber', {
     catching(() => {
       if (self.grabbed) {
           // move -> aframe-util.js -> positioning.js
-        let position = new THREE.Vector3()
-        let scale = new THREE.Vector3()
-        let quaternion = new THREE.Quaternion()
+        let place = {}
+        place.position = new THREE.Vector3()
+        place.scale = new THREE.Vector3()
+        place.quaternion = new THREE.Quaternion()
         let object3d = self.grabbed.object3D
         
-        object3d.getWorldScale(scale)
-        object3d.getWorldQuaternion(quaternion)
-        object3d.getWorldPosition(position)
+        object3d.getWorldScale(place.scale)
+        object3d.getWorldQuaternion(place.quaternion)
+        object3d.getWorldPosition(place.position)
         
         let cloned = cloneEntity(self.grabbed)
         cloned.addEventListener('loaded', () => {
           // move -> aframe-util.js -> positioning.js
-          cloned.object3D.scale.copy(scale)
-          cloned.object3D.quaternion.copy(quaternion)
-          cloned.object3D.position.copy(position)
+          cloned.object3D.scale.copy(place.scale)
+          cloned.object3D.quaternion.copy(place.quaternion)
+          cloned.object3D.position.copy(place.position)
         })
 
         cloned.removeAttribute('follower')
