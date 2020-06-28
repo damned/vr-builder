@@ -1,10 +1,14 @@
-/* global AFRAME clog catching */
+/* global AFRAME clog catching copyPlacement applyPlacement */
 
 function copyableComponents(el) {
   return Object.values(el.components).filter(component => component.copyTo)
 }
 
-function cloneEntity(entity) {
+function copyComponentsState(source, target) {
+  
+}
+
+function cloneEntity(entity, atSamePlace) {
   entity.flushToDOM()
   let clone = entity.cloneNode()
   entity.setAttribute('color', 'white')
@@ -18,6 +22,11 @@ function cloneEntity(entity) {
       })
     })
   }, 0)
+
+  if (atSamePlace) {
+    let place = copyPlacement(entity)
+    clone.addEventListener('loaded', () => applyPlacement(place, clone))    
+  }
   return clone  
 }
 
