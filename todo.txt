@@ -30,9 +30,12 @@
 [x] - extract collider wrapper for aabb-collider
 [x] - extract toucher component - esp. from grabber - hands off events e.g. to grabber, monitor
 [/] flick to clone
-    - single clone
-    - copy rotation and scale
-    - easier to flick
+    [ ] single clone
+    [ ] copy rotation and scale
+    [ ] easier to flick
+    [ ] visual flick debug (for tweaking activation)
+        - color over limits
+        - visual gauge showing countdown timer
 [ ] change colour - inside sleeve
     - move to colour easier than rotation... r g b axes 
     - (twist for shiny etc. ?)
@@ -88,6 +91,12 @@
 [ ] stretch improvements
     - axis lock affordance
     - finer grained control at small margins
+
+- undo
+  [ ] do as command object
+  [ ] show command stack
+  [ ] activate undo
+[ ] visual debug gauge to show scalars
 
 
 ### unit testing components
