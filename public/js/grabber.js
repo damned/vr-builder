@@ -45,14 +45,22 @@ AFRAME.registerComponent('grabber', {
     let self = this
     catching(() => {
       if (self.grabbed) {
+          // move -> aframe-util.js -> positioning.js
+        let position = new THREE.Vector3()
+        let scale = new THREE.Vector3()
+        let quaternion = new THREE.Quaternion()
+        let object3d = self.grabbed.el.object3D
+        object3d.getWorldScale(scale)
+        object3d.getWorldQuaternion(quaternion)
+        object3d.getWorldPosition(position)
+        
         let cloned = cloneEntity(self.grabbed)
         cloned.removeAttribute('follower')
         cloned.addEventListener('loaded', () => {
           // move -> aframe-util.js -> positioning.js
-          // transform order: scale, rotation, position
-          self.el.object3D.getWorldScale(cloned.object3D.scale)
-          self.el.object3D.getWorldQuaternion(cloned.object3D.quaternion)
-          self.el.object3D.getWorldPosition(cloned.object3D.position)
+          cloned.object3D.scale.copy(scale)
+          cloned.object3D.quaternion.copy(quaternion)
+          cloned.object3D.position.copy(position)
         })
         self.el.setAttribute('color', 'white')
       }      
