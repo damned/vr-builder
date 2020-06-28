@@ -49,7 +49,8 @@ AFRAME.registerComponent('grabber', {
         let position = new THREE.Vector3()
         let scale = new THREE.Vector3()
         let quaternion = new THREE.Quaternion()
-        let object3d = self.grabbed.el.object3D
+        let object3d = self.grabbed.object3D
+        
         object3d.getWorldScale(scale)
         object3d.getWorldQuaternion(quaternion)
         object3d.getWorldPosition(position)
