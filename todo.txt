@@ -33,9 +33,6 @@
     [x] single clone
     [x] copy rotation and scale
     [x] easier to flick
-    [ ] visual flick debug (for tweaking activation)
-        - color over limits
-        - visual gauge showing countdown timer
 [ ] change colour - inside sleeve
     [ ] move to colour easier than rotation... r g b axes 
     [ ] (twist for shiny etc. ?)
@@ -43,6 +40,7 @@
     - 3d movement with axes for roughness etc
     - areas in globes are different 'topics'
     - areas are like graph with weighted connections
+[ ] default align vertical
 [ ] align to axis - inside sleeve? 
     ... or maybe alignment by how far away other hand is...
     ... move hand far away is coarse grid and align, closer to is finer grid (visible affordance)
@@ -71,6 +69,7 @@
     - single grab == move
     - double grab = stretch
     - touch and grab = clone
+    - or maybe for clone, grab and pull through other hand (other hand holding original in place)
 [ ] split out lower doc pieces (testing) in this todo to readme/doc
 [ ] properly shape hands
 [ ] split resize out of grabber
@@ -91,6 +90,10 @@
 [ ] stretch improvements
     - axis lock affordance
     - finer grained control at small margins
+[ ] visual clone-flick debug (for tweaking activation)
+    - color over limits
+    - visual gauge showing countdown timer
+    - little graph
 
 - undo
   [ ] do as command object
