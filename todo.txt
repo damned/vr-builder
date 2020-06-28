@@ -23,6 +23,7 @@
 [x] watch touched object on console
 [x] allow grab console, retaining watch link
 [x] exclude monitor consoles from plan save
+[x] split resize out of grabber
 [x] fix streching
 [x] easier stretching
     - make axis lock margin greater at more distance
@@ -44,21 +45,26 @@
     [ ] move to colour easier than rotation... r g b axes 
     [ ] (twist for shiny etc. ?)
 [ ] undelete - grab behind back and bring it out (stack...  undo?)
+[ ] fix plan / build preserve rotation
+[ ] default align vertical
+    - show avatar (transparent) for align, move through it to 'pick it up' and turn on alignment 
+[ ] group and ungroup
+    [ ] vertical axis captured when group created
+[ ] align to objects
+    - avatar appears on objects as you get near
+[ ] multiple plans
+    - use shapes as names and slots
+    - drag on/off like glasses?
 [ ] texture browser...
     - 3d movement with axes for roughness etc
     - areas in globes are different 'topics'
     - areas are like graph with weighted connections
-[ ] default align vertical
-    - show avatar (transparent) for align, move through it to 'pick it up' and turn on alignment 
+[ ] focus (see below) to break alignment (focus == concentrating on fine placement)
 [ ] align to axis - inside sleeve? 
     ... or maybe alignment by how far away other hand is...
     ... move hand far away is coarse grid and align, closer to is finer grid (visible affordance)
     ... once relationship with other hand formed, rotation of hand affects axis-alignment lock?
     ... rumble other hand as pass gridline to gridline, to denote relationship
-[ ] group and ungroup
-[ ] align to objects
-    - avatar appears on objects as you get near
-[ ] fix plan / build preserve rotation
 [ ] fix TODOs
 [ ] remove unwanted parent dereferencing between model<->hand
     - and yet allow scriptable movement - factor out oculus hand control
@@ -66,9 +72,6 @@
 [ ] recorder component
 [ ] playback - 
 [ ] slow replay for debugging (e.g. tuning flick)
-[ ] multiple plans
-    - use shapes as names and slots
-    - drag on/off like glasses?
 [ ] improve grab location - re-parent or track orientation / vector offset?
 [ ] control clone vs move ??
     - single grab == move
@@ -77,7 +80,6 @@
     - or maybe for clone, grab and pull through other hand (other hand holding original in place)
 [ ] split out lower doc pieces (testing) in this todo to readme/doc
 [ ] properly shape hands
-[ ] split resize out of grabber
 [ ] have proper focus events
     - focus as scalar quantity
     - based on looking at something
@@ -102,8 +104,10 @@
 
 - undo
   [ ] do as command object
-  [ ] show command stack
+  [ ] show command stack - drag rope/chain of events from behind back
   [ ] activate undo
+  [ ] undo rope coils together movements etc into spirals (rotate to move through)
+      without using so much rope/chain length
 [ ] visual debug gauge to show scalars
 
 
