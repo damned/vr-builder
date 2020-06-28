@@ -6,7 +6,7 @@ AFRAME.registerComponent('flicker', {
     const TIME_TO_STOP_MS = 250
     const MIN_PRE_FLICK_VELOCITY = 1.8
     const MAX_REAL_VELOCITY = 6
-    const MAX_STOP_VELOCITY = 0.25
+    const MAX_STOP_VELOCITY = 0.3
     let lastPos
     let nowPos = new THREE.Vector3()
     let moving = false

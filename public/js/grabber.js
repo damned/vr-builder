@@ -48,9 +48,11 @@ AFRAME.registerComponent('grabber', {
         let cloned = cloneEntity(self.grabbed)
         cloned.removeAttribute('follower')
         cloned.addEventListener('loaded', () => {
-          self.el.object3D.getWorldPosition(cloned.object3D.position)
+          // move -> aframe-util.js -> positioning.js
+          // transform order: scale, rotation, position
+          self.el.object3D.getWorldScale(cloned.object3D.scale)
           self.el.object3D.getWorldQuaternion(cloned.object3D.quaternion)
-          self.el.object3D.getWorldRotation(cloned.object3D.rotation)
+          self.el.object3D.getWorldPosition(cloned.object3D.position)
         })
         self.el.setAttribute('color', 'white')
       }      
