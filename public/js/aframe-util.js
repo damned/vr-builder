@@ -4,6 +4,14 @@ function collider(collidee) {
   return collidee.components["aabb-collider"];
 }
 
+function afterCreation(fn) {
+  setTimeout(() => {
+    catching(() => {
+      fn()
+    })
+  }, 0)  
+}
+
 const axisLockMarginFactor = 0.15;
 
 function withinAxisLockMargin(n, distance) {

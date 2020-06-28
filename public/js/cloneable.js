@@ -1,15 +1,7 @@
-/* global AFRAME clog catching copyPlacement applyPlacement */
+/* global AFRAME clog catching copyPlacement applyPlacement afterCreation */
 
 function copyableComponents(el) {
   return Object.values(el.components).filter(component => component.copyTo)
-}
-
-function afterCreation(fn) {
-  setTimeout(() => {
-    catching(() => {
-      fn()
-    })
-  }, 0)  
 }
 
 function copyComponentsState(source, target) {
