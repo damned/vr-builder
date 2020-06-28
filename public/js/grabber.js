@@ -56,13 +56,14 @@ AFRAME.registerComponent('grabber', {
         object3d.getWorldPosition(position)
         
         let cloned = cloneEntity(self.grabbed)
-        cloned.removeAttribute('follower')
         cloned.addEventListener('loaded', () => {
           // move -> aframe-util.js -> positioning.js
           cloned.object3D.scale.copy(scale)
           cloned.object3D.quaternion.copy(quaternion)
           cloned.object3D.position.copy(position)
         })
+
+        cloned.removeAttribute('follower')
         self.el.setAttribute('color', 'white')
       }      
     })
