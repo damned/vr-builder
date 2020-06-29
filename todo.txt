@@ -34,8 +34,8 @@
     [x] single clone
     [x] copy rotation and scale
     [x] easier to flick
-[ ] delete object
-    [ ] just move out of vision / behind back and release
+[x] delete object
+    [x] just move out of vision / behind back and release
     - lesser delete ideas
       - flick away with back of hand
       - make v small
