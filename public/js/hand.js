@@ -64,7 +64,11 @@ var Hand = function($hand) {
     setTimeout(() => model.setAttribute('color', 'yellow'), 1000)
   }))
   model.addEventListener('blind-release', event => {
-        
+    let released = event.target
+    clog('blind-release', 'released', released)
+    clog('blind-release', 'parent', released.parentNode)
+    released.parentNode.removeChild(released)
+    clog('blind-release', 'removed from parent')
   })
   
   let grabber = model.components.grabber
