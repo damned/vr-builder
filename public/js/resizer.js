@@ -1,18 +1,7 @@
-/* global AFRAME clog collider xyzToFixed getResizeVector catching */
+/* global AFRAME clog collider xyzToFixed getResizeVector catching positionRelativeTo */
 
 function distanceBetween(grabber1, grabber2) {
   return grabber1.object3D.getWorldPosition().distanceTo(grabber2.object3D.getWorldPosition())
-}
-
-function positionRelativeTo(entity, referenceEntity) {
-  let relativePositionInLocalScale = referenceEntity.object3D.worldToLocal(entity.object3D.getWorldPosition())
-  let scale = referenceEntity.object3D.scale
-  let inNormalisedScale = {
-    x: relativePositionInLocalScale.x * scale.x,
-    y: relativePositionInLocalScale.y * scale.y,
-    z: relativePositionInLocalScale.z * scale.z
-  }
-  return inNormalisedScale
 }
 
 AFRAME.registerComponent('resizer', {
