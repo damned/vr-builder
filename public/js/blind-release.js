@@ -1,4 +1,4 @@
-/* global AFRAME clog */
+/* global AFRAME THREE clog */
 
 AFRAME.registerComponent('blind-release', {
   init: function() {
@@ -6,7 +6,8 @@ AFRAME.registerComponent('blind-release', {
     let host = self.el
     host.addEventListener('release', function(event) {
       clog('blind-release', 'got release')
-      clog('blind-release', 'host position', this.getAttribute('position'))
+      clog('blind-release', 'host position', this.object3D.getWorldPosition(new THREE.Vector3()))
+      clog('blind-release', 'host position', this.object3D.getWorldPosition(new THREE.Vector3()))
     })
   }
 })

@@ -90,7 +90,7 @@ AFRAME.registerComponent('grabber', {
   release: function(event) {
     if (this.grabbed) {
       this.releaseHandlers.forEach(handler => handler())
-      this.emit('release',{ target: this.grabbed })
+      this.el.emit('release',{ target: this.grabbed })
       if (this.inSecondGrab) {
         this.inSecondGrab = false
       }
