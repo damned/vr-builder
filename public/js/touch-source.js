@@ -8,6 +8,7 @@ AFRAME.registerComponent('touch-source', {
     let touchStartHandlers = []
     self.touchStart = function(touched) {
       clog('touch', 'i am a toucher and i touched a: ' + touched.tagName)
+      if (touched.hasAttribute())
       touchStartHandlers.forEach((handler) => {
         handler(touched)
       })
