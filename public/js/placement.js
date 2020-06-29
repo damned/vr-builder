@@ -20,9 +20,9 @@ function applyPlacement(place, entity) {
   entity.object3D.position.copy(place.position)
 }
 
-function positionRelativeTo(entity, referenceEntity) {
-  let relativePositionInLocalScale = referenceEntity.object3D.worldToLocal(entity.object3D.getWorldPosition())
-  let scale = referenceEntity.object3D.scale
+function positionRelativeTo(entity, referenceObject3d) {
+  let relativePositionInLocalScale = referenceObject3d.worldToLocal(entity.object3D.getWorldPosition())
+  let scale = referenceObject3d.scale
   let inNormalisedScale = {
     x: relativePositionInLocalScale.x * scale.x,
     y: relativePositionInLocalScale.y * scale.y,

@@ -1,4 +1,4 @@
-/* global AFRAME THREE clog */
+/* global AFRAME THREE clog positionRelativeTo */
 
 AFRAME.registerComponent('blind-release', {
   init: function() {
@@ -7,7 +7,7 @@ AFRAME.registerComponent('blind-release', {
     host.addEventListener('release', function(event) {
       clog('blind-release', 'got release')
       clog('blind-release', 'host position', this.object3D.getWorldPosition(new THREE.Vector3()))
-      clog('blind-release', 'relative position', positionRelativeTo(event.target, host.camera))
+      clog('blind-release', 'relative position', positionRelativeTo(event.target, host.sceneEl.camera))
     })
   }
 })

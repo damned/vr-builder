@@ -53,7 +53,7 @@ AFRAME.registerComponent('resizer', {
 
       // clog(`grabDistance ${grabDistance} initial ${self.resizeInitialDistance}`)
 
-      let posInGrabbedSpace = positionRelativeTo(parent, self.grabbed)
+      let posInGrabbedSpace = positionRelativeTo(parent, self.grabbed.object3D)
       // clog(`resizer pos in space of grabbed:\n${posInGrabbedSpace.x.toFixed(2)} ${posInGrabbedSpace.y.toFixed(2)} ${posInGrabbedSpace.z.toFixed(2)}`)
       self.resizingComponent.updateInfo({'resizer pos': xyzToFixed(posInGrabbedSpace)})
       let newScale = self.resizeInitialScale.clone().multiplyVectors(self.resizeInitialScale, getResizeVector(resizeFactor, posInGrabbedSpace))
