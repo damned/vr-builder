@@ -32,6 +32,7 @@ var Hand = function($hand) {
       grabber: '#' + handId,
       flicker: '',
       resizer: '',
+      'blind-release': '',
       debugged: ''
     })
     return model

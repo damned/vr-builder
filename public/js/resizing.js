@@ -8,4 +8,4 @@ AFRAME.registerComponent('resizing', {
       host.monitorExtraInfo = info
     }
   }
-});
+})
