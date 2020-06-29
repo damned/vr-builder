@@ -67,7 +67,7 @@ var Hand = function($hand) {
     let released = event.detail.released
     clog('blind-release', 'released', released)
     released.parentNode.removeChild(released)
-    released.setAttribute('deleted', '')
+    released.setAttribute('touch-event-suppression', '')
     clog('blind-release', 'removed from parent')
   })
   
