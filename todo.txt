@@ -51,7 +51,11 @@
 [ ] group and ungroup
     [ ] vertical axis captured when group created
 [ ] align to objects
-    - avatar appears on objects as you get near
+    - objects provide viscous resistance when you push another object into them?
+      - within margin just rests on surface / aligns to surface?
+      - pushing with second hand reduces viscosity?
+      - distance offset from object to hand denotes force on object
+    - avatar appears on objects as you get near?
 [ ] multiple plans
     - use shapes as plan keys
     - drag on/off like glasses?
