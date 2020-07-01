@@ -7,7 +7,7 @@ AFRAME.registerComponent('debugged', {
   init: function() {
     let $self = $(this.el)
     let $scene = $('a-scene')
-    let $text = $(`<a-text follower value="x y z">`)
+    let $text = $(`<a-text follower scale="0.2 0.2 0.2" value="x y z">`)
     $scene.append($text)
     this.textEl = $text.get(0)
     this.textEl.followComponentLeader = this.el
