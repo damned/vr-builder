@@ -39,18 +39,19 @@ AFRAME.registerComponent('follower', {
       return;
     }
     try {
-      let object3d = this.el.object3D
-      let leaderPos = object3d.parent.worldToLocal(this.leader.object3D.getWorldPosition())
+      let followerObject3d = this.el.object3D
+      let convertToFollowerFrameOfReference = followerObject3d.parent.worldToLocal
+      let leaderPos = convertToFollowerFrameOfReference(this.leader.object3D.getWorldPosition())
       
       let leaderRot = this.leader.object3D.rotation
       // this.el.setAttribute('debugged', 'follower: tick')
       // this.el.setAttribute('debugged', this.leader.tagName)
       // this.el.setAttribute('debugged', 'follower: position: ' + leaderPos)
       if (this.lock != 'position') {
-        object3d.position.set(leaderPos.x, leaderPos.y, leaderPos.z)             
+        followerObject3d.position.set(leaderPos.x, leaderPos.y, leaderPos.z)             
       }
       if (this.lock != 'rotation') {
-        object3d.rotation.copy(leaderRot)
+        followerObject3d.rotation.copy(leaderRot)
       }
     }
     catch (e) {

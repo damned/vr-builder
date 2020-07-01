@@ -54,7 +54,8 @@ AFRAME.registerComponent('color-tweaker', {
     }
     
     let updateTrackedColor = function() {
-      let pos = host.getAttribute('position')
+      let pos = host.object3D.position
+      clog('color-tweaker', 'tweaker pos', pos)
       let color = '#' + rgbComponentFromAxis(pos.x) + rgbComponentFromAxis(pos.y) + rgbComponentFromAxis(pos.z)
       // tracking.setAttribute('color')
       clog('color-tweaker', 'tweaker pos', pos)
@@ -67,7 +68,7 @@ AFRAME.registerComponent('color-tweaker', {
           if (touchSource) {
             if (tracking) {
               matchTrackedColor()
-              updateTrackedColor()
+              // updateTrackedColor()
             }
           }
           else {
