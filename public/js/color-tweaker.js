@@ -44,10 +44,20 @@ AFRAME.registerComponent('color-tweaker', {
     let tickCount = 0
 
     let matchTrackedColor = function() {
-                    let trackedColor = tracking.getAttribute('material').color
-              clog('color-tweaker', 'tick, tracked color:', trackedColor)
-              host.setAttribute('color', trackedColor)
-
+      let trackedColor = tracking.getAttribute('material').color
+      clog('color-tweaker', 'tick, tracked color:', trackedColor)
+      host.setAttribute('color', trackedColor)
+    }
+    
+    let rgbComponentFromAxis = function(axisValue) {
+      return Math.max(Math.min(255 * axisValue, 1), 0).toString(16)
+    }
+    
+    let updateTrackedColor = function() {
+      let pos = host.getAttribute('position')
+      let color = '#' + rgbComponentFromAxis(pos.x) + rgbComponentFromAxis(pos.y) + rgbComponentFromAxis(pos.z)
+      // tracking.setAttribute('color')
+      clog('')
     }
     
     self.tick = () => {
@@ -55,6 +65,8 @@ AFRAME.registerComponent('color-tweaker', {
         if (tickCount % tickInterval == 0) {
           if (touchSource) {
             if (tracking) {
+              matchTrackedColor()
+              updateTrackedColor()
             }
           }
           else {
