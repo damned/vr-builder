@@ -1,0 +1,7 @@
+/* global AFRAME*/
+
+AFRAME.registerComponent('follower-constraint', {
+  schema: {
+    'axis-limit': {type: 'string', default: ''},
+  }
+})
