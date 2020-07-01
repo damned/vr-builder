@@ -1,4 +1,4 @@
-/* global AFRAME colorFromEntityRotation */
+/* global AFRAME clog */
 
 function findTouchSourceWeAreAttachedTo($host) {
   let $touchSourceAncestor = $host.closest('[touch-source]')
@@ -17,12 +17,10 @@ AFRAME.registerComponent('color-tweaker', {
     $model.append(`<a-cylinder position="1.2 0 0" rotation="0 0 90" radius="0.5" height="0.3" color="red">`)
     $model.append(`<a-cylinder position="0 1.2 0" rotation="0 0 0" radius="0.5" height="0.3" color="green">`)
     $model.append(`<a-cylinder position="0 0 1.2" rotation="90 0 0" radius="0.5" height="0.3" color="blue">`)
-
+    let tracking
     let touchSource = findTouchSourceWeAreAttachedTo($host)
     if (touchSource) {
       touchSource.onTouchStart((touched) => {
-        clog('touch', 'in monitor i got a touch start for: ' + touched.tagName)
-        self.monitor(touched)
       })
     }
     
