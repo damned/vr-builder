@@ -8,16 +8,24 @@ function findTouchSourceWeAreAttachedTo($host) {
   return $touchSourceAncestor.get(0).components['touch-source']
 }
 
+function createTweakerModel($host) {
+  let $model = $(`<a-sphere touchable class="color-tweaker-model" radius="0.5"></a-sphere>`).appendTo($host)
+  $model.append(`<a-cylinder position="1.2 0 0" rotation="0 0 90" radius="0.5" height="0.3" color="red">`)
+  $model.append(`<a-cylinder position="0 1.2 0" rotation="0 0 0" radius="0.5" height="0.3" color="green">`)
+  $model.append(`<a-cylinder position="0 0 1.2" rotation="90 0 0" radius="0.5" height="0.3" color="blue">`)
+  return $model  
+}
+
 AFRAME.registerComponent('color-tweaker', {
   init: function() {
     let self = this
     let host = self.el
     let $host = $(host)
+    
+    let tickInterval = 10
+    
     $host.append(`<a-box class="color-tweaker-bounds" opacity="0.1" color="white"></a-box>`)
-    let $model = $(`<a-sphere class="color-tweaker-model" radius="0.5"></a-sphere>`).appendTo($host)
-    $model.append(`<a-cylinder position="1.2 0 0" rotation="0 0 90" radius="0.5" height="0.3" color="red">`)
-    $model.append(`<a-cylinder position="0 1.2 0" rotation="0 0 0" radius="0.5" height="0.3" color="green">`)
-    $model.append(`<a-cylinder position="0 0 1.2" rotation="90 0 0" radius="0.5" height="0.3" color="blue">`)
+    let $model = createTweakerModel($host)
     let tracking
     let touchSource
     let acquireTouchSource = function() {
@@ -34,15 +42,19 @@ AFRAME.registerComponent('color-tweaker', {
       }
     }
     let tickCount = 0
+
+    let matchTrackedColor = function() {
+                    let trackedColor = tracking.getAttribute('material').color
+              clog('color-tweaker', 'tick, tracked color:', trackedColor)
+              host.setAttribute('color', trackedColor)
+
+    }
     
     self.tick = () => {
       catching(() => {
-        if (tickCount % 50 == 0) {
+        if (tickCount % tickInterval == 0) {
           if (touchSource) {
             if (tracking) {
-              let trackedColor = tracking.getAttribute('material').color
-              clog('color-tweaker', 'tick, tracked color:', trackedColor)
-              host.setAttribute('color', trackedColor)
             }
           }
           else {
