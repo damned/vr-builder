@@ -11,6 +11,7 @@ function doSomeMagicToMakeExpressParseJsonBodyAsYoudExpectItDidOutOfTheBox() {
   app.use(bodyParser.json());
 }
 
+
 // Set process name
 process.title = "networked-aframe-server";
 

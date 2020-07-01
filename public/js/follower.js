@@ -40,7 +40,7 @@ AFRAME.registerComponent('follower', {
     }
     try {
       let object3d = this.el.object3D
-      let leaderPos = object3d.worldToLocal(this.leader.object3D.getWorldPosition())
+      let leaderPos = object3d.parent.worldToLocal(this.leader.object3D.getWorldPosition())
       
       let leaderRot = this.leader.object3D.rotation
       // this.el.setAttribute('debugged', 'follower: tick')
