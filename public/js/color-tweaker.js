@@ -22,7 +22,7 @@ AFRAME.registerComponent('color-tweaker', {
     let host = self.el
     let $host = $(host)
     
-    let tickInterval = 100
+    let tickInterval = 10
     
     $host.append(`<a-box class="color-tweaker-bounds" opacity="0.1" color="white"></a-box>`)
     let controlModel = createTweakerModel($host).get(0)
@@ -31,7 +31,6 @@ AFRAME.registerComponent('color-tweaker', {
     let acquireTouchSource = function() {
       touchSource = findTouchSourceWeAreAttachedTo($host)
       if (touchSource) {
-        clog('color-tweaker', 'found touch-source ancestor')
         touchSource.onTouchStart((touched) => {
           clog('color-tweaker', 'got a touch:', touched)
           tracking = touched
@@ -45,21 +44,21 @@ AFRAME.registerComponent('color-tweaker', {
 
     let matchTrackedColor = function() {
       let trackedColor = tracking.getAttribute('material').color
-      clog('color-tweaker', 'tick, tracked color:', trackedColor)
-      host.setAttribute('color', trackedColor)
+      controlModel.setAttribute('color', trackedColor)
     }
     
     let rgbComponentFromAxis = function(axisValue) {
-      return Math.floor(Math.max(Math.min(255 * axisValue, 255), 0)).toString(16).toFixed()
+      return Math.floor(Math.max(Math.min(255 * axisValue, 255), 0)).toString(16).padStart(2, '0')
     }
     
     let updateTrackedColor = function() {
       let pos = controlModel.object3D.position
       let color = '#' + rgbComponentFromAxis(pos.x) + rgbComponentFromAxis(pos.y) + rgbComponentFromAxis(pos.z)
-      // tracking.setAttribute('color')
-      clog('color-tweaker', 'tweaker pos', pos)
-      clog('color-tweaker', 'update color', color)
+      tracking.setAttribute('color', color)
+      clog('color-tweaker', 'tweaker pos, update color:', pos, color)
     }
+    
+    let controlBeingMoved = () => controlModel.hasAttribute('follower')
     
     self.tick = () => {
       catching(() => {
@@ -67,7 +66,9 @@ AFRAME.registerComponent('color-tweaker', {
           if (touchSource) {
             if (tracking) {
               matchTrackedColor()
-              updateTrackedColor()
+              if (controlBeingMoved()) {
+                updateTrackedColor()                
+              }
             }
           }
           else {
