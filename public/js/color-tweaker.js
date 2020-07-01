@@ -9,7 +9,7 @@ function findTouchSourceWeAreAttachedTo($host) {
 }
 
 function createTweakerModel($host) {
-  let $model = $(`<a-sphere touchable class="color-tweaker-model" radius="0.5"></a-sphere>`).appendTo($host)
+  let $model = $(`<a-sphere class="color-tweaker-model touchable" scale="0.1 0.1 0.1" radius="0.5"></a-sphere>`).appendTo($host)
   $model.append(`<a-cylinder position="1.2 0 0" rotation="0 0 90" radius="0.5" height="0.3" color="red">`)
   $model.append(`<a-cylinder position="0 1.2 0" rotation="0 0 0" radius="0.5" height="0.3" color="green">`)
   $model.append(`<a-cylinder position="0 0 1.2" rotation="90 0 0" radius="0.5" height="0.3" color="blue">`)
@@ -22,7 +22,7 @@ AFRAME.registerComponent('color-tweaker', {
     let host = self.el
     let $host = $(host)
     
-    let tickInterval = 10
+    let tickInterval = 100
     
     $host.append(`<a-box class="color-tweaker-bounds" opacity="0.1" color="white"></a-box>`)
     let $model = createTweakerModel($host)
@@ -50,14 +50,15 @@ AFRAME.registerComponent('color-tweaker', {
     }
     
     let rgbComponentFromAxis = function(axisValue) {
-      return Math.max(Math.min(255 * axisValue, 1), 0).toString(16)
+      return Math.max(Math.min(255 * axisValue, 255), 0).toString(16)
     }
     
     let updateTrackedColor = function() {
       let pos = host.getAttribute('position')
       let color = '#' + rgbComponentFromAxis(pos.x) + rgbComponentFromAxis(pos.y) + rgbComponentFromAxis(pos.z)
       // tracking.setAttribute('color')
-      clog('')
+      clog('color-tweaker', 'tweaker pos', pos)
+      clog('color-tweaker', 'update color', color)
     }
     
     self.tick = () => {
