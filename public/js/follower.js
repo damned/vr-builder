@@ -15,7 +15,7 @@ AFRAME.registerComponent('follower', {
     this.axisLimit = -1
     let constraints = this.el.getAttribute('follower-constraint')
     if (constraints) {
-      this.axisLimit = constraints['axis-limit']
+      this.axisLimit = constraints.axisLimit
     }
   },
   update: function(oldData) {
