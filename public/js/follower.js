@@ -1,4 +1,4 @@
-/* global AFRAME clog catching */
+/* global AFRAME THREE clog catching */
 
 AFRAME.registerComponent('follower', {
   schema: {
@@ -46,7 +46,7 @@ AFRAME.registerComponent('follower', {
     }
     catching(() => {
       let followerObject3d = this.el.object3D
-      let leaderPos = followerObject3d.parent.worldToLocal(this.leader.object3D.getWorldPosition())
+      let leaderPos = followerObject3d.parent.worldToLocal(this.leader.object3D.getWorldPosition(new THREE.Vector3()))
       // clog('follower', 'got leader pos:', leaderPos)
       
       let leaderRot = this.leader.object3D.rotation

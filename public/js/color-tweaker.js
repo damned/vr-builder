@@ -9,7 +9,7 @@ function findTouchSourceWeAreAttachedTo($host) {
 }
 
 function createTweakerModel($host) {
-  let $model = $(`<a-sphere class="color-tweaker-model touchable" scale="0.1 0.1 0.1" radius="0.5"></a-sphere>`).appendTo($host)
+  let $model = $(`<a-sphere class="color-tweaker-model touchable" follower-constraint="axisLimit: 0.5" scale="0.1 0.1 0.1" radius="0.5"></a-sphere>`).appendTo($host)
   $model.append(`<a-cylinder position="1.2 0 0" rotation="0 0 90" radius="0.5" height="0.3" color="red">`)
   $model.append(`<a-cylinder position="0 1.2 0" rotation="0 0 0" radius="0.5" height="0.3" color="green">`)
   $model.append(`<a-cylinder position="0 0 1.2" rotation="90 0 0" radius="0.5" height="0.3" color="blue">`)
@@ -24,7 +24,6 @@ AFRAME.registerComponent('color-tweaker', {
     
     let tickInterval = 10
     
-    $host.append(`<a-box class="color-tweaker-bounds" follower-constraint="axis-limit: 0.5" opacity="0.1" color="white"></a-box>`)
     let controlModel = createTweakerModel($host).get(0)
     let tracking
     let touchSource
