@@ -21,12 +21,17 @@ AFRAME.registerComponent('color-tweaker', {
     let touchSource = findTouchSourceWeAreAttachedTo($host)
     if (touchSource) {
       touchSource.onTouchStart((touched) => {
+        tracking = touched
       })
     }
-    
+    let tickCount = 0
     
     self.tick = () => {
-      host.setAttribute('color', colorFromEntityRotation(host))
+      catching()
+      if (tickCount % 10 == 0) {
+        host.setAttribute('color', tracking.components['material'].color)        
+      }
+      tickCount++
     }
   }
 });
