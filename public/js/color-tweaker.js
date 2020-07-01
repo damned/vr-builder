@@ -23,8 +23,9 @@ AFRAME.registerComponent('color-tweaker', {
     let acquireTouchSource = function() {
       touchSource = findTouchSourceWeAreAttachedTo($host)
       if (touchSource) {
+        clog('color-tweaker', 'found touch-source ancestor')
         touchSource.onTouchStart((touched) => {
-          clog('color-tweaker', 'got a touch:')
+          clog('color-tweaker', 'got a touch:', touched)
           tracking = touched
         })
       }
@@ -39,7 +40,7 @@ AFRAME.registerComponent('color-tweaker', {
         if (tickCount % 50 == 0) {
           if (touchSource) {
             if (tracking) {
-              let trackedColor = tracking.components['material'].color
+              let trackedColor = tracking.getAttribute('material').color
               clog('color-tweaker', 'tick, tracked color:', trackedColor)
               host.setAttribute('color', trackedColor)
             }
