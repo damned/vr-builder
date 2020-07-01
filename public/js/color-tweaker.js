@@ -1,4 +1,4 @@
-/* global AFRAME clog */
+/* global AFRAME clog catching */
 
 function findTouchSourceWeAreAttachedTo($host) {
   let $touchSourceAncestor = $host.closest('[touch-source]')
@@ -10,6 +10,7 @@ function findTouchSourceWeAreAttachedTo($host) {
 
 AFRAME.registerComponent('color-tweaker', {
   init: function() {
+    let self = this
     let host = self.el
     let $host = $(host)
     $host.append(`<a-box class="color-tweaker-bounds" opacity="0.1" color="white"></a-box>`)
@@ -18,20 +19,37 @@ AFRAME.registerComponent('color-tweaker', {
     $model.append(`<a-cylinder position="0 1.2 0" rotation="0 0 0" radius="0.5" height="0.3" color="green">`)
     $model.append(`<a-cylinder position="0 0 1.2" rotation="90 0 0" radius="0.5" height="0.3" color="blue">`)
     let tracking
-    let touchSource = findTouchSourceWeAreAttachedTo($host)
-    if (touchSource) {
-      touchSource.onTouchStart((touched) => {
-        tracking = touched
-      })
+    let touchSource
+    let acquireTouchSource = function() {
+      touchSource = findTouchSourceWeAreAttachedTo($host)
+      if (touchSource) {
+        touchSource.onTouchStart((touched) => {
+          clog('color-tweaker', 'got a touch:')
+          tracking = touched
+        })
+      }
+      else {
+        clog('color-tweaker', 'could not find touch-source ancestor')
+      }
     }
     let tickCount = 0
     
     self.tick = () => {
-      catching()
-      if (tickCount % 10 == 0) {
-        host.setAttribute('color', tracking.components['material'].color)        
-      }
-      tickCount++
+      catching(() => {
+        if (tickCount % 50 == 0) {
+          if (touchSource) {
+            if (tracking) {
+              let trackedColor = tracking.components['material'].color
+              clog('color-tweaker', 'tick, tracked color:', trackedColor)
+              host.setAttribute('color', trackedColor)
+            }
+          }
+          else {
+            acquireTouchSource()
+          }
+        }
+        tickCount++        
+      })
     }
   }
 });
