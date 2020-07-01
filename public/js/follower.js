@@ -11,6 +11,12 @@ AFRAME.registerComponent('follower', {
     // this.el.setAttribute('debugged', 'follower: init')
     this.updateCount = 0
     this.tickCount = 0
+
+    this.axisLimit = -1
+    let constraints = this.el.getAttribute('follower-constraint')
+    if (constraints) {
+      this.axisLimit = constraints['axis-limit']
+    }
   },
   update: function(oldData) {
     this.updateCount++
@@ -47,8 +53,19 @@ AFRAME.registerComponent('follower', {
       // this.el.setAttribute('debugged', 'follower: tick')
       // this.el.setAttribute('debugged', this.leader.tagName)
       // this.el.setAttribute('debugged', 'follower: position: ' + leaderPos)
+      let limited = axisValue => {
+        if (this.axisLimit >= 0) {
+          if (axisValue > this.axisLimit) {
+            return this.axisLimit
+          }
+          else if (axisValue < -this.axisLimit) {
+            return -this.axisLimit
+          }
+        }
+        return axisValue
+      }
       if (this.lock != 'position') {
-        followerObject3d.position.set(leaderPos.x, leaderPos.y, leaderPos.z)             
+        followerObject3d.position.set(limited(leaderPos.x), limited(leaderPos.y), limited(leaderPos.z))
       }
       if (this.lock != 'rotation') {
         followerObject3d.rotation.copy(leaderRot)

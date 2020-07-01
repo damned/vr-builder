@@ -2,6 +2,6 @@
 
 AFRAME.registerComponent('follower-constraint', {
   schema: {
-    'axis-limit': {type: 'string', default: ''},
+    'axis-limit': {type: 'number', default: -1 },
   }
 })
