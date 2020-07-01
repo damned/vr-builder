@@ -41,9 +41,10 @@
       - make v small
       - splat it
       - tear it up
-[ ] change colour - inside sleeve
-    [ ] move to colour easier than rotation... r g b axes 
+[x] change colour - inside sleeve
+    [x] move to colour easier than rotation... r g b axes 
     [ ] (twist for shiny etc. ?)
+    [ ] copy, revert, re-apply colors
 [ ] undelete - grab behind back and bring it out (stack...  undo?)
 [ ] fix plan / build preserve rotation
 [ ] default align vertical
