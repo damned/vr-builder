@@ -25,7 +25,7 @@ AFRAME.registerComponent('color-tweaker', {
     let tickInterval = 100
     
     $host.append(`<a-box class="color-tweaker-bounds" opacity="0.1" color="white"></a-box>`)
-    let $model = createTweakerModel($host)
+    let controlModel = createTweakerModel($host).get(0)
     let tracking
     let touchSource
     let acquireTouchSource = function() {
@@ -50,12 +50,11 @@ AFRAME.registerComponent('color-tweaker', {
     }
     
     let rgbComponentFromAxis = function(axisValue) {
-      return Math.max(Math.min(255 * axisValue, 255), 0).toString(16)
+      return Math.floor(Math.max(Math.min(255 * axisValue, 255), 0)).toString(16).toFixed()
     }
     
     let updateTrackedColor = function() {
-      let pos = host.object3D.position
-      clog('color-tweaker', 'tweaker pos', pos)
+      let pos = controlModel.object3D.position
       let color = '#' + rgbComponentFromAxis(pos.x) + rgbComponentFromAxis(pos.y) + rgbComponentFromAxis(pos.z)
       // tracking.setAttribute('color')
       clog('color-tweaker', 'tweaker pos', pos)
@@ -68,7 +67,7 @@ AFRAME.registerComponent('color-tweaker', {
           if (touchSource) {
             if (tracking) {
               matchTrackedColor()
-              // updateTrackedColor()
+              updateTrackedColor()
             }
           }
           else {

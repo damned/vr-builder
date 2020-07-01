@@ -82,7 +82,7 @@
 [ ] slow replay for debugging (e.g. tuning flick)
 [ ] re-use a tick-interval updater for performance
     - tracking doesn't have to be frame by frame for many things
-   
+    - search for tickCount (used for mod tick selection)
 [ ] improve grab location - re-parent or track orientation / vector offset?
 [ ] control clone vs move ??
     - single grab == move
