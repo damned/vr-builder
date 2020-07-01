@@ -62,6 +62,7 @@
     - ultimately add other shapes to the keys (as group) to build little representations for plans
     - the starting room can be built as you see fit to organise your plan keys
     - maybe ultimately add plan keys within any plan
+[ ] switch custom handler code to host.emit() events and addEventListener...
 [ ] texture browser...
     - 3d movement with axes for roughness etc
     - areas in globes are different 'topics'
