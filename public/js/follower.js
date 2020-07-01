@@ -1,4 +1,4 @@
-/* global AFRAME clog */
+/* global AFRAME clog catching */
 
 AFRAME.registerComponent('follower', {
   schema: {
@@ -38,10 +38,10 @@ AFRAME.registerComponent('follower', {
     if (this.leader == null || this.leader == undefined) {
       return;
     }
-    try {
+    catching(() => {
       let followerObject3d = this.el.object3D
-      let convertToFollowerFrameOfReference = followerObject3d.parent.worldToLocal
-      let leaderPos = convertToFollowerFrameOfReference(this.leader.object3D.getWorldPosition())
+      let leaderPos = followerObject3d.parent.worldToLocal(this.leader.object3D.getWorldPosition())
+      // clog('follower', 'got leader pos:', leaderPos)
       
       let leaderRot = this.leader.object3D.rotation
       // this.el.setAttribute('debugged', 'follower: tick')
@@ -53,11 +53,6 @@ AFRAME.registerComponent('follower', {
       if (this.lock != 'rotation') {
         followerObject3d.rotation.copy(leaderRot)
       }
-    }
-    catch (e) {
-      // this.el.setAttribute('debugged', 'oops - error')
-      this.el.setAttribute('color', 'red')
-      // this.el.setAttribute('debugged', e.toString())
-    }
+    })
   }
 });
