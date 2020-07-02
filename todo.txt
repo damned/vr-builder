@@ -44,7 +44,8 @@
 [x] change colour - inside sleeve
     [x] move to colour easier than rotation... r g b axes 
     [ ] (twist for shiny etc. ?)
-    [ ] copy, revert, re-apply colors
+    [ ] copy - take colour off sleeve and touch other objects with it
+    - revert, re-apply - see undo?
 [ ] undelete - grab behind back and bring it out (stack...  undo?)
 [ ] fix plan / build preserve rotation
 [ ] default align vertical
@@ -117,6 +118,10 @@
 - undo
   [ ] do as command object
   [ ] show command stack - drag rope/chain of events from behind back
+  [ ] undos flow from actions slowly in space, so:
+      - you can see what happened
+      - you can very quickly grab it and re-apply for v quick undo
+      - by moving behind user, it gives affordance that that's where history goes
   [ ] activate undo
   [ ] undo rope coils together movements etc into spirals (rotate to move through)
       without using so much rope/chain length
