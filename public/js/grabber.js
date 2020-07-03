@@ -24,12 +24,8 @@ function otherHand(grabber) {
 
 let currentlyTouching = (hand) => {
   clog('group', 'hand', hand.id)
-  let handModel = hand.get
-  clog('group', 'components', components)
-  if (components.toucher) {
-    return components.toucher.closest()  
-  }
-  return null
+  let handModel = $(hand).find('.hand-model').get(0)
+  return handModel.components.toucher.closest()  
 }
 
 function groupUnder(groupRoot, child) {
@@ -118,24 +114,26 @@ AFRAME.registerComponent('grabber', {
     }.bind(this))
   },
   release: function(event) {
-    if (this.grabbed) {
-      this.releaseHandlers.forEach(handler => handler())
-      this.el.emit('release', { released: this.grabbed })
-      if (this.inSecondGrab) {
-        this.inSecondGrab = false
-      }
-      else {
-        this.grabbed.currentlyGrabbed = false
-        this.grabbed.removeAttribute('follower')
-        let otherHandTouching = currentlyTouching(otherHand(this))
-        if (otherHandTouching) {
-          groupUnder(otherHandTouching, this.grabbed)
+    catching(() => {
+      if (this.grabbed) {
+        this.releaseHandlers.forEach(handler => handler())
+        this.el.emit('release', { released: this.grabbed })
+        if (this.inSecondGrab) {
+          this.inSecondGrab = false
+        }
+        else {
+          this.grabbed.currentlyGrabbed = false
+          this.grabbed.removeAttribute('follower')
+          let otherHandTouching = currentlyTouching(otherHand(this))
+          if (otherHandTouching) {
+            groupUnder(otherHandTouching, this.grabbed)
+          }
         }
       }
-    }
-    removeDebugColor(this.grabbed)
-    removeDebugColor(this.el)
-    this.grabbed = null
-    this.el.setAttribute('opacity', 1)
+      removeDebugColor(this.grabbed)
+      removeDebugColor(this.el)
+      this.grabbed = null
+      this.el.setAttribute('opacity', 1)      
+    })
   }
 });
