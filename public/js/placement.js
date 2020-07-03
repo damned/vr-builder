@@ -14,11 +14,12 @@ function copyPlacement(entity) {
   return place
 }
 
+// only works with untransformed entity parent
 function applyPlacement(place, entity) {
   let entity3d = entity.object3D
   entity3d.scale.copy(place.scale)
   entity3d.quaternion.copy(place.quaternion)
-  entity3d.position.copy(entity3d.parent.worldToLocal(place.position))
+  entity3d.position.copy(place.position)
 }
 
 function positionRelativeTo(entity, referenceObject3d) {
