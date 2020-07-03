@@ -32,30 +32,30 @@ AFRAME.registerComponent('planner', {
           console.log(positionedHtml)
           plan.items.push(positionedHtml)
         })
-      $.ajax({ // NB: complete attribute does not work in this jquery :()
-        url: '/plan/a',
-        method: 'PUT',
-        contentType: 'application/json',
-        data: JSON.stringify(plan)
-      }).done(success).fail(failure)
+        $.ajax({ // NB: complete attribute does not work in this jquery :()
+          url: '/plan/a',
+          method: 'PUT',
+          contentType: 'application/json',
+          data: JSON.stringify(plan)
+        }).done(success).fail(failure)
 
-    }
-      })
-    let $planControl = $('<a-box id="glasses-collider" side="double"' +
-                         ` visible="${options.debug}"` +
-                         ' class="touchable" position="0.01 0 0" opacity="0.6" scale="0.22 0.18 0.18"></a-box>').appendTo($self)
-    $planControl.on('hitstart', function(event) {
-      $planControl.attr('visible', 'true')
-      let planControl = $planControl.get(0)
-      this.setAttribute('color', 'green')
-      this.setAttribute('debugged', 'triggered plan')
-      putPlan(() => { $planControl.attr('color', 'white')
-                       $planControl.attr('sound', "src: url(sounds/one.mp3); autoplay: true; volume: 5")},
-              () => { $planControl.attr('color', 'red') })
-    }) 
-    $planControl.on('hitend', function(event) {
-      $planControl.attr('visible', options.debug)
-    }) 
+      }
+      let $planControl = $('<a-box id="glasses-collider" side="double"' +
+                           ` visible="${options.debug}"` +
+                           ' class="touchable" position="0.01 0 0" opacity="0.6" scale="0.22 0.18 0.18"></a-box>').appendTo($self)
+      $planControl.on('hitstart', function(event) {
+        $planControl.attr('visible', 'true')
+        let planControl = $planControl.get(0)
+        this.setAttribute('color', 'green')
+        this.setAttribute('debugged', 'triggered plan')
+        putPlan(() => { $planControl.attr('color', 'white')
+                         $planControl.attr('sound', "src: url(sounds/one.mp3); autoplay: true; volume: 5")},
+                () => { $planControl.attr('color', 'red') })
+      }) 
+      $planControl.on('hitend', function(event) {
+        $planControl.attr('visible', options.debug)
+      }) 
+    })
   }
 });
 
