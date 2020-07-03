@@ -17,7 +17,7 @@ AFRAME.registerComponent('planner', {
           return
         }
         let positionValue = `${built3d.position.x} ${built3d.position.y} ${built3d.position.z}`
-        let rotation = built3d.getAttribute('rotation')
+        let rotation = this.getAttribute('rotation')
         let rotationValue = `${rotation.x} ${rotation.y} ${rotation.z}`
         let scaleValue = `${built3d.scale.x} ${built3d.scale.y} ${built3d.scale.z}`
         console.log(positionValue)
