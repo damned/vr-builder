@@ -4,7 +4,7 @@ AFRAME.registerComponent('flicker', {
     let self = this
     let object3d = self.el.object3D
     const TIME_TO_STOP_MS = 300
-    const MIN_PRE_FLICK_VELOCITY = 2
+    const MIN_PRE_FLICK_VELOCITY = 1.8
     const MAX_REAL_VELOCITY = 7
     const MAX_STOP_VELOCITY = 0.3
     let lastPos

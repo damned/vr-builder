@@ -1,5 +1,9 @@
 function addHtmlProperty(html, name, value) {
-  return html.replace
+  return html.replace(new RegExp("(.*\<[a-zA-Z\-]+)(.*)"), `$1 ${property(name, value)}$2`)
+}
+
+function property(name, value) {
+  return `${name}="${value}"`
 }
 
 function patchHtmlProperty(html, name, value) {
@@ -7,7 +11,7 @@ function patchHtmlProperty(html, name, value) {
   let replacedCount = 0
   let replacement = () => {
     replacedCount ++
-    return `${name}="${value}"`
+    return property(name, value)
   } 
   let patched = html.replace(new RegExp(pattern, 'g'), replacement)
   if (replacedCount > 0) {
