@@ -9,7 +9,7 @@ AFRAME.registerComponent('planner', {
       let $scene = $('a-scene')
       let $spawn = $('#spawn')
       let putPlan = function(success, failure) {
-        console.log('putting plan a')
+        console.log('planner', 'putting plan a')
         let plan = { items: []}
         $spawn.get(0).flushToDOM(true)
         $spawn.children().each(function() {
@@ -21,7 +21,7 @@ AFRAME.registerComponent('planner', {
           this.comoponents.rotation.flushToDOM()
           let rotation = this.getAttribute('rotation')
           let rotationValue = `${rotation.x} ${rotation.y} ${rotation.z}`
-          clog('setting rotation value: ' + rotationValue)
+          clog('planner', 'setting rotation value: ' + rotationValue)
           let scaleValue = `${built3d.scale.x} ${built3d.scale.y} ${built3d.scale.z}`
           console.log(positionValue)
           let positionedHtml = patchHtml(this.outerHTML, {
@@ -44,10 +44,11 @@ AFRAME.registerComponent('planner', {
                            ` visible="${options.debug}"` +
                            ' class="touchable" position="0.01 0 0" opacity="0.6" scale="0.22 0.18 0.18"></a-box>').appendTo($self)
       $planControl.on('hitstart', function(event) {
-        $planControl.attr('visible', 'true')
+        clog('planner', 'got a hit on plan control')
+        // $planControl.attr('visible', 'true')
         let planControl = $planControl.get(0)
         this.setAttribute('color', 'green')
-        this.setAttribute('debugged', 'triggered plan')
+        // this.setAttribute('debugged', 'triggered plan')
         putPlan(() => { $planControl.attr('color', 'white')
                          $planControl.attr('sound', "src: url(sounds/one.mp3); autoplay: true; volume: 5")},
                 () => { $planControl.attr('color', 'red') })

@@ -12,7 +12,7 @@ AFRAME.registerComponent('toucher', {
                          )
     setTimeout(() => {
       self.collider = collider(host)
-      clog('collider on toucher: ' + self.collider)
+      // clog('collider on toucher: ' + self.collider)
     })
     let touchSourceHost = host.parentNode
     touchSourceHost.setAttribute('touch-source', '')

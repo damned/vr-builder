@@ -47,7 +47,7 @@ AFRAME.registerComponent('monitor', {
         return
       }
       $touchSourceAncestor.get(0).components['touch-source'].onTouchStart((touched) => {
-        clog('touch', 'in monitor i got a touch start for: ' + touched.tagName)
+        // clog('touch', 'in monitor i got a touch start for: ' + touched.tagName)
         self.monitor(touched)
       })      
     }, 0)

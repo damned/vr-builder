@@ -15,7 +15,7 @@ AFRAME.registerComponent('touch-source', {
       if (hasTouchEventsSuppressedAsWorkaroundForCollisionAfterRemoval(touched)) {
         return
       }
-      clog('touch', 'i am a toucher and i touched a: ' + touched.tagName)
+      // clog('touch', 'i am a toucher and i touched a: ' + touched.tagName)
       touchStartHandlers.forEach((handler) => {
         handler(touched)
       })

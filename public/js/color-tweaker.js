@@ -21,6 +21,11 @@ AFRAME.registerComponent('color-tweaker', {
     let self = this
     let host = self.el
     let $host = $(host)
+    let log = function() {
+      if (false) {
+        clog.apply(arguments)        
+      }
+    }
     
     let tickInterval = 10
     
@@ -31,12 +36,12 @@ AFRAME.registerComponent('color-tweaker', {
       touchSource = findTouchSourceWeAreAttachedTo($host)
       if (touchSource) {
         touchSource.onTouchStart((touched) => {
-          clog('color-tweaker', 'got a touch:', touched)
+          log('color-tweaker', 'got a touch:', touched)
           tracking = touched
         })
       }
       else {
-        clog('color-tweaker', 'could not find touch-source ancestor')
+        log('color-tweaker', 'could not find touch-source ancestor')
       }
     }
     let tickCount = 0
@@ -54,7 +59,7 @@ AFRAME.registerComponent('color-tweaker', {
       let pos = controlModel.object3D.position
       let color = '#' + rgbComponentFromAxis(pos.x) + rgbComponentFromAxis(pos.y) + rgbComponentFromAxis(pos.z)
       tracking.setAttribute('color', color)
-      clog('color-tweaker', 'tweaker pos, update color:', pos, color)
+      log('color-tweaker', 'tweaker pos, update color:', pos, color)
     }
     
     let controlBeingMoved = () => controlModel.hasAttribute('follower')
