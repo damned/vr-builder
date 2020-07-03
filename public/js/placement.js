@@ -16,10 +16,9 @@ function copyPlacement(entity) {
 
 function applyPlacement(place, entity) {
   let entity3d = entity.object3D
-  let 
-  entity.object3D.scale.copy(place.scale)
-  entity.object3D.quaternion.copy(place.quaternion)
-  entity.object3D.position.copy(place.position)
+  entity3d.scale.copy(place.scale)
+  entity3d.quaternion.copy(place.quaternion)
+  entity3d.position.copy(entity3d.parent.worldToLocal(place.position))
 }
 
 function positionRelativeTo(entity, referenceObject3d) {
