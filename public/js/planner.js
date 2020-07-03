@@ -1,42 +1,46 @@
-/* global AFRAME patchHtml inDegrees clog */
+/* global AFRAME patchHtml inDegrees clog catching */
 AFRAME.registerComponent('planner', {
   init: function() {
-    let options = {
-      debug: false
-    }
-    let $self = $(this.el)
-    let $scene = $('a-scene')
-    let $spawn = $('#spawn')
-    let putPlan = function(success, failure) {
-      console.log('putting plan a')
-      let plan = { items: []}
-      $spawn.get(0).flushToDOM(true)
-      $spawn.children().each(function() {
-        let built3d = this.object3D
-        if (this.hasAttribute('omit-from-plan')) {
-          return
-        }
-        let positionValue = `${built3d.position.x} ${built3d.position.y} ${built3d.position.z}`
-        let rotation = this.getAttribute('rotation')
-        let rotationValue = `${rotation.x} ${rotation.y} ${rotation.z}`
-        clog('setting rotation value: ' + rotationValue)
-        let scaleValue = `${built3d.scale.x} ${built3d.scale.y} ${built3d.scale.z}`
-        console.log(positionValue)
-        let positionedHtml = patchHtml(this.outerHTML, {
-          'position': positionValue,
-          'rotation': rotationValue,
-          'scale': scaleValue
+    catching(() => {
+      let options = {
+        debug: false
+      }
+      let $self = $(this.el)
+      let $scene = $('a-scene')
+      let $spawn = $('#spawn')
+      let putPlan = function(success, failure) {
+        console.log('putting plan a')
+        let plan = { items: []}
+        $spawn.get(0).flushToDOM(true)
+        $spawn.children().each(function() {
+          let built3d = this.object3D
+          if (this.hasAttribute('omit-from-plan')) {
+            return
+          }
+          let positionValue = `${built3d.position.x} ${built3d.position.y} ${built3d.position.z}`
+          this.comoponents.rotation.flushToDOM()
+          let rotation = this.getAttribute('rotation')
+          let rotationValue = `${rotation.x} ${rotation.y} ${rotation.z}`
+          clog('setting rotation value: ' + rotationValue)
+          let scaleValue = `${built3d.scale.x} ${built3d.scale.y} ${built3d.scale.z}`
+          console.log(positionValue)
+          let positionedHtml = patchHtml(this.outerHTML, {
+            'position': positionValue,
+            'rotation': rotationValue,
+            'scale': scaleValue
+          })
+          console.log(positionedHtml)
+          plan.items.push(positionedHtml)
         })
-        console.log(positionedHtml)
-        plan.items.push(positionedHtml)
-      })
       $.ajax({ // NB: complete attribute does not work in this jquery :()
         url: '/plan/a',
         method: 'PUT',
         contentType: 'application/json',
         data: JSON.stringify(plan)
       }).done(success).fail(failure)
+
     }
+      })
     let $planControl = $('<a-box id="glasses-collider" side="double"' +
                          ` visible="${options.debug}"` +
                          ' class="touchable" position="0.01 0 0" opacity="0.6" scale="0.22 0.18 0.18"></a-box>').appendTo($self)
