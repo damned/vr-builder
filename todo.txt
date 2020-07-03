@@ -50,8 +50,9 @@
 [ ] group and ungroup
     [ ] vertical axis captured when group created
 [ ] keyboard entry
+    - create key tile with monitor, fires letter on collision with touchable
     - create key-home with a-z, space and linked monitor
-    - create key-home with a-z, space and linked monitor
+    - use group to create hand typing attachments
 [ ] undelete - grab behind back and bring it out (stack...  undo?)
 [ ] default align vertical
     - show avatar (transparent) for align, move through it to 'pick it up' and turn on alignment 
