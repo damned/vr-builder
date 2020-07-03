@@ -30,20 +30,21 @@ let currentlyTouching = (hand) => {
 
 function groupUnder(groupRoot, child) {
   catching(() => {
-    child.object3D.updateMatrixWorld()
     groupRoot.object3D.updateMatrixWorld()
     let worldToLocal = new THREE.Matrix4().getInverse(groupRoot.object3D.matrixWorld)
     
     
     let matrix = new THREE.Matrix4().copy(child.object3D.matrixWorld)
     clog('group', 'adding', child, 'to', groupRoot)
-    clog('group', 'child', child)
-    clog('group', 'parent', groupRoot)
     groupRoot.setAttribute('opacity', '0.2')
 
     let cloned = child.cloneNode()
+    groupRoot.appendChild(cloned)
+    child.object3D.updateMatrixWorld()
     cloned.object3D.matrix.copy(matrix)
-    cloned.object3D.applyMatrix4(worldToLocal)
+    clog('group', 'matrix', matrix)    
+    cloned.object3D.applyMatrix(worldToLocal)
+    clog('group', 'after apply matrix', cloned.object3D)    
 
     child.parentElement.remove(child) // REMOVE OLD CHILD
     clog('group', 'reparented')    
