@@ -8,6 +8,16 @@ function debugColor(el, color) {
   }
 }
 
+function oppositeSide(side) {
+  return side == 'left' ? 'right' : 'left'
+}
+
+// 
+function otherHand(grabber) {
+  let otherHandSide = oppositeSide(grabber.el.getAttribute('hand-side'))
+  return document.getElementById(`${otherHandSide}-hand`)
+}
+
 // debugColor
 AFRAME.registerComponent('grabber', {
   schema: {type: 'string'},
@@ -97,6 +107,10 @@ AFRAME.registerComponent('grabber', {
       else {
         this.grabbed.currentlyGrabbed = false
         this.grabbed.removeAttribute('follower')
+        let otherHandTouching = currentlyTouching(otherHand(this))
+        if (otherHandTouching) {
+          groupUnder(otherHandTouching, this.grabbed)
+        }
       }
     }
     removeDebugColor(this.grabbed)
