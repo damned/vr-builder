@@ -34,10 +34,11 @@ function groupUnder(groupRoot, child) {
   child3d.updateMatrixWorld()
   child3d.matrix.copy(child3d.matrixWorld)
   child3d.applyMatrix(new THREE.Matrix4().getInverse(groupRoot.object3D.matrixWorld))
-  // groupRoot.appendChild(child)
-  // clog('group', 'reparented')
   clog('group', 'child', child)
   clog('group', 'parent', groupRoot)
+  groupRoot.setAttribute('opacity', '0.2')
+  groupRoot.appendChild(child)
+  clog('group', 'reparented')
 }
 
 // debugColor
