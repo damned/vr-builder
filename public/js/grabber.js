@@ -30,11 +30,11 @@ let currentlyTouching = (hand) => {
 
 function groupUnder(groupRoot, child) {
   clog('group', 'adding', child, 'to', groupRoot)
-  child.parentElement.remove(child)
   clog('group', 'child', child)
   clog('group', 'parent', groupRoot)
   groupRoot.setAttribute('opacity', '0.2')
-  groupRoot.appendChild(child.cloneNode()) // with reset position
+  cloneEntity(child, true, groupRoot)
+  child.parentElement.remove(child) // REMOVE OLD CHILD
   clog('group', 'reparented')
 }
 

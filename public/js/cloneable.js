@@ -13,11 +13,12 @@ function copyComponentsState(source, target) {
   })
 }
 
-function cloneEntity(entity, atSamePlace) {
+function cloneEntity(entity, atSamePlace, newParent) {
   entity.flushToDOM()
   let clone = entity.cloneNode()
   clone.removeAttribute('cloneable')
-  document.getElementById('spawn').appendChild(clone)
+  let parent = newParent || document.getElementById('spawn')
+  parent.appendChild(clone)
   copyComponentsState(entity, clone)
   
   if (atSamePlace) {
@@ -32,7 +33,7 @@ AFRAME.registerComponent('cloneable', {
     let self = this
     let host = self.el
     self.clone = function() {
-      return cloneEntity(host)
+      return cloneEntity(host, false)
     }
   }
 });
