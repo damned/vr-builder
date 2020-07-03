@@ -1,5 +1,4 @@
 /* global THREE */
-
 function collider(collidee) {
   return collidee.components["aabb-collider"];
 }

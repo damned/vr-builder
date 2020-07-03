@@ -12,10 +12,19 @@ function oppositeSide(side) {
   return side == 'left' ? 'right' : 'left'
 }
 
-// 
+// todo could have registered hands with hands system
 function otherHand(grabber) {
   let otherHandSide = oppositeSide(grabber.el.getAttribute('hand-side'))
   return document.getElementById(`${otherHandSide}-hand`)
+}
+
+let currentlyTouching = (hand) => hand.components.toucher.closest()
+
+function groupUnder(groupRoot, child) {
+  clog('group', 'adding', child, 'to', groupRoot)
+  child.flushToDOM()
+  groupRoot.appendChild(child)
+  clog('group', 'reparented')
 }
 
 // debugColor
@@ -57,7 +66,6 @@ AFRAME.registerComponent('grabber', {
       if (self.grabbed) {
         let cloned = cloneEntity(self.grabbed, true)
         cloned.removeAttribute('follower')
-        self.el.setAttribute('color', 'white')
       }      
     })
   },

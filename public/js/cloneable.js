@@ -16,7 +16,6 @@ function copyComponentsState(source, target) {
 function cloneEntity(entity, atSamePlace) {
   entity.flushToDOM()
   let clone = entity.cloneNode()
-  entity.setAttribute('color', 'white')
   clone.removeAttribute('cloneable')
   document.getElementById('spawn').appendChild(clone)
   copyComponentsState(entity, clone)
