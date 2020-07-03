@@ -46,7 +46,7 @@
     [ ] (twist for shiny etc. ?)
     [ ] copy - take colour off sleeve and touch other objects with it
     - revert, re-apply - see undo?
-[ ] fix plan / build preserve rotation
+[x] fix plan / build preserve rotation
 [ ] group and ungroup
     [ ] vertical axis captured when group created
 [ ] keyboard entry
