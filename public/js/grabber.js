@@ -1,4 +1,4 @@
-/* global AFRAME THREE colorFromEntityRotation collider clog catching addDebugColor removeDebugColor cloneEntity */
+/* global AFRAME THREE colorFromEntityRotation collider clog catching addDebugColor removeDebugColor cloneEntity positionRelativeTo */
 let debug = { useColor: false }
 var options = { colorTwist: false }
 
@@ -31,11 +31,10 @@ let currentlyTouching = (hand) => {
 function groupUnder(groupRoot, child) {
   clog('group', 'adding', child, 'to', groupRoot)
   child.parentElement.remove(child)
-  let child3d = child.object3D
   clog('group', 'child', child)
   clog('group', 'parent', groupRoot)
   groupRoot.setAttribute('opacity', '0.2')
-  groupRoot.appendChild(child)
+  groupRoot.appendChild(child.cloneNode()) // with reset position
   clog('group', 'reparented')
 }
 
