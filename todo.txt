@@ -47,6 +47,10 @@
     [ ] copy - take colour off sleeve and touch other objects with it
     - revert, re-apply - see undo?
 [x] fix plan / build preserve rotation
+[ ] revert broken group reparenting
+[ ] unit tests to understand three.js transforms
+[ ] unit tests to prove aframe reparenting functions
+[ ] integration test for collisions
 [ ] group and ungroup
     [ ] vertical axis captured when group created
 [ ] unit tests on copyPlacement() / applyPlacement()
