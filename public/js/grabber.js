@@ -30,10 +30,8 @@ let currentlyTouching = (hand) => {
 
 function groupUnder(groupRoot, child) {
   clog('group', 'adding', child, 'to', groupRoot)
+  child.parentElement.remove(child)
   let child3d = child.object3D
-  child3d.updateMatrixWorld()
-  child3d.matrix.copy(child3d.matrixWorld)
-  child3d.applyMatrix(new THREE.Matrix4().getInverse(groupRoot.object3D.matrixWorld))
   clog('group', 'child', child)
   clog('group', 'parent', groupRoot)
   groupRoot.setAttribute('opacity', '0.2')
