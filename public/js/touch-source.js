@@ -10,11 +10,14 @@ function hasTouchEventsSuppressedAsWorkaroundForCollisionAfterRemoval(touched) {
 AFRAME.registerComponent('touch-source', {
   init: function() {
     let self = this
+    let host = self.el
+    let side = host.getAttribute('hand-side')
     let touchStartHandlers = []
     self.touchStart = function(touched) {
       if (hasTouchEventsSuppressedAsWorkaroundForCollisionAfterRemoval(touched)) {
         return
       }
+      
       // clog('touch', 'i am a toucher and i touched a: ' + touched.tagName)
       touchStartHandlers.forEach((handler) => {
         handler(touched)
