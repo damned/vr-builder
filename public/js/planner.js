@@ -1,4 +1,4 @@
-/* global AFRAME patchHtml */
+/* global AFRAME patchHtml inDegrees */
 AFRAME.registerComponent('planner', {
   init: function() {
     let options = {
@@ -17,7 +17,7 @@ AFRAME.registerComponent('planner', {
           return
         }
         let positionValue = `${built3d.position.x} ${built3d.position.y} ${built3d.position.z}`
-        let rotationValue = `${built3d.rotation.x} ${built3d.rotation.y} ${built3d.rotation.z}`
+        let rotationValue = `${inDegrees(built3d.rotation.x)} ${inDegrees(built3d.rotation.y)} ${inDegrees(built3d.rotation.z)}`
         let scaleValue = `${built3d.scale.x} ${built3d.scale.y} ${built3d.scale.z}`
         console.log(positionValue)
         let positionedHtml = patchHtml(this.outerHTML, {

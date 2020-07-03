@@ -31,3 +31,6 @@ function positionRelativeTo(entity, referenceObject3d) {
   return inNormalisedScale
 }
 
+function inDegrees(radians) {
+  return THREE.Math.radToDeg(radians)
+}
