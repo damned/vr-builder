@@ -46,12 +46,15 @@
     [ ] (twist for shiny etc. ?)
     [ ] copy - take colour off sleeve and touch other objects with it
     - revert, re-apply - see undo?
-[ ] undelete - grab behind back and bring it out (stack...  undo?)
 [ ] fix plan / build preserve rotation
-[ ] default align vertical
-    - show avatar (transparent) for align, move through it to 'pick it up' and turn on alignment 
 [ ] group and ungroup
     [ ] vertical axis captured when group created
+[ ] keyboard entry
+    - create key-home with a-z, space and linked monitor
+    - create key-home with a-z, space and linked monitor
+[ ] undelete - grab behind back and bring it out (stack...  undo?)
+[ ] default align vertical
+    - show avatar (transparent) for align, move through it to 'pick it up' and turn on alignment 
 [ ] align to objects
     - objects provide viscous resistance when you push another object into them?
       - within margin just rests on surface / aligns to surface?
