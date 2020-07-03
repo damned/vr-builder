@@ -31,12 +31,12 @@ describe('Hand', () => {
       expect($hand.attr('oculus-touch-controls')).to.equal('hand: right; model: false')
     })
     
-    it('is a small box', () => {
+    it('is a really small box', () => {
       expect($model.get(0).tagName).to.equal('A-BOX')
       let scale = model.object3D.scale
-      expect(scale.x).to.equal(0.05)
-      expect(scale.y).to.equal(0.05)
-      expect(scale.z).to.equal(0.05)
+      expect(scale.x).to.equal(0.03)
+      expect(scale.y).to.equal(0.03)
+      expect(scale.z).to.equal(0.03)
     })
     
     it('is marked as the correct hand', () => {

@@ -21,4 +21,11 @@ describe('patchHtml', () => {
       rotation: 'snafu'
     })).to.eql('<a-box position="foo" scale="bar" rotation="snafu"></a-box>')
   })
+
+  it('will replace add a property if it doesn't exist, () => {
+    let original = '<a-box></a-box>'
+    expect(patchHtml(original, { 
+      rotation: 'fubar'
+    })).to.eql('<a-box rotation="fubar"></a-box>')
+  })
 })
