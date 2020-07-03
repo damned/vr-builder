@@ -33,14 +33,14 @@ function groupUnder(groupRoot, child) {
     groupRoot.object3D.updateMatrixWorld()
     let worldToLocal = new THREE.Matrix4().getInverse(groupRoot.object3D.matrixWorld)
     
-    
+    child.object3D.updateMatrixWorld()
     let matrix = new THREE.Matrix4().copy(child.object3D.matrixWorld)
+
     clog('group', 'adding', child, 'to', groupRoot)
     groupRoot.setAttribute('opacity', '0.2')
 
     let cloned = child.cloneNode()
     groupRoot.appendChild(cloned)
-    child.object3D.updateMatrixWorld()
     cloned.object3D.matrix.copy(matrix)
     clog('group', 'matrix', matrix)    
     cloned.object3D.applyMatrix(worldToLocal)
