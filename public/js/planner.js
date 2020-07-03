@@ -18,7 +18,6 @@ AFRAME.registerComponent('planner', {
             return
           }
           let positionValue = `${built3d.position.x} ${built3d.position.y} ${built3d.position.z}`
-          this.comoponents.rotation.flushToDOM()
           let rotation = this.getAttribute('rotation')
           let rotationValue = `${rotation.x} ${rotation.y} ${rotation.z}`
           clog('planner', 'setting rotation value: ' + rotationValue)
