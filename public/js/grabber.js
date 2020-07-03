@@ -15,10 +15,22 @@ function oppositeSide(side) {
 // todo could have registered hands with hands system
 function otherHand(grabber) {
   let otherHandSide = oppositeSide(grabber.el.getAttribute('hand-side'))
-  return document.getElementById(`${otherHandSide}-hand`)
+  let otherId = `${otherHandSide}-hand`
+  clog('group', 'other hand id', otherId)
+  let other = document.getElementById(otherId)
+  clog('group', 'other hand', other)
+  return other
 }
 
-let currentlyTouching = (hand) => hand.components.toucher.closest()
+let currentlyTouching = (hand) => {
+  clog('group', 'hand', hand.id)
+  let handModel = hand.get
+  clog('group', 'components', components)
+  if (components.toucher) {
+    return components.toucher.closest()  
+  }
+  return null
+}
 
 function groupUnder(groupRoot, child) {
   clog('group', 'adding', child, 'to', groupRoot)
