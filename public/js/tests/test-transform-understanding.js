@@ -18,6 +18,71 @@ describe('a-frame and three.js nested entities and transforms', () => {
   let localMatrix
   let worldMatrix
 
+  describe('a entity with nesting: a present (box) with decoration (a small sphere) on top', () => {
+    let present
+    let decoration
+    
+    beforeEach((done) => {
+      let presentBoxMaxY = 0.5
+      let decorationRadiusAtTenthScale = 0.1
+      let decorationOriginInY = presentBoxMaxY + decorationRadiusAtTenthScale
+
+      present = $('<a-box>' +
+                    `<a-sphere id="decoration" position="0 ${decorationOriginInY} 0" scale="0.1 0.1 0.1"></a-sphere>` +
+                  '</a-box>').appendTo($scene).get(0)
+
+      decoration = $('#decoration').get(0)
+      present.addEventListener('loaded', () => done())
+    })
+    
+    describe('without translation or scale', () => {
+
+      describe('the present', () => {
+        it('will be locally positioned at origin', () => {
+          expect(present.getAttribute('position')).to.shallowDeepEqual({x: 0, y: 0, z: 0})
+          expect(present.object3D.position)       .to.shallowDeepEqual({x: 0, y: 0, z: 0})
+        })        
+        it('will be world-positioned at origin', () => {
+          expect(present.object3D.getWorldPosition()).to.shallowDeepEqual({x: 0, y: 0, z: 0})
+        })
+      })
+      describe('the decoration', () => {        
+        it('will be locally positioned on top of present', () => {
+          expect(decoration.getAttribute('position')).to.shallowDeepEqual({x: 0, y: 0.6, z: 0})
+          expect(decoration.object3D.position)       .to.shallowDeepEqual({x: 0, y: 0.6, z: 0})
+        })        
+        it('will be world-positioned at same position', () => {
+          expect(decoration.object3D.getWorldPosition()).to.shallowDeepEqual({x: 0, y: 0.6, z: 0})
+        })
+      })
+    })
+
+    describe('translated the parent, present, in aframe', () => {
+      beforeEach(() => {
+        present.setAttribute('position', '3 3 1')
+      })
+      describe('the present', () => {
+        it('will be locally positioned as specified', () => {
+          expect(present.getAttribute('position')).to.shallowDeepEqual({x: 3, y: 3, z: 1})
+          expect(present.object3D.position)       .to.shallowDeepEqual({x: 3, y: 3, z: 1})
+        })        
+        it('will be world-positioned at specified position', () => {
+          expect(present.object3D.getWorldPosition()).to.shallowDeepEqual({x: 3, y: 3, z: 1})
+        })
+      })
+      describe('the decoration', () => {        
+        it('will be locally positioned on top of present, irrespective of translation of present', () => {
+          expect(decoration.getAttribute('position')).to.shallowDeepEqual({x: 0, y: 0.6, z: 0})
+          expect(decoration.object3D.position)       .to.shallowDeepEqual({x: 0, y: 0.6, z: 0})
+        })        
+        it('will be world-positioned at new translated position of present with addition decoration offset', () => {
+          expect(decoration.object3D.getWorldPosition()).to.shallowDeepEqual({x: 3, y: 3.6, z: 1})
+        })
+      })
+    })
+
+  })
+
   describe('a boring single entity in default placement', () => {
     let boring
     
@@ -147,11 +212,14 @@ describe('a-frame and three.js nested entities and transforms', () => {
       transformed.addEventListener('loaded', () => done())
     })
     
-    it('will be positioned at its unscaled position coordinates', () => {
+    it('will be locally positioned at its unscaled position coordinates', () => {
       expect(transformed.getAttribute('position')).to.shallowDeepEqual({x: -1, y: -2, z: 1})
       expect(transformed.object3D.position)       .to.shallowDeepEqual({x: -1, y: -2, z: 1})
     })
-        
+
+    it('will be world-positioned at its unscaled position coordinates', () => {
+      expect(transformed.object3D.getWorldPosition()).to.shallowDeepEqual({x: -1, y: -2, z: 1})
+    })
 
     it('will have a bounding box of scaled dimensions around the translated origin', () => {
       expect(bounds(transformed.object3D).min).to.shallowDeepEqual({x:-2, y:-3, z: 0})
@@ -179,55 +247,4 @@ describe('a-frame and three.js nested entities and transforms', () => {
 
   })
   
-  describe('a entity with nesting: a present (box) with decoration (a small sphere) on top', () => {
-    let present
-    let decoration
-    
-    beforeEach((done) => {
-      let presentBoxMaxY = 0.5
-      let decorationRadiusAtTenthScale = 0.1
-      let decorationOriginInY = presentBoxMaxY + decorationRadiusAtTenthScale
-
-      present = $('<a-box>' +
-                    `<a-sphere id="decoration" position="0 ${decorationOriginInY} 0" scale="0.1 0.1 0.1"></a-sphere>` +
-                  '</a-box>').appendTo($scene).get(0)
-
-      decoration = $('#decoration').get(0)
-      present.addEventListener('loaded', () => done())
-    })
-    
-    describe('without translation or scale', () => {
-      describe('the present', () => {
-        it('will be positioned at origin', () => {
-          expect(present.getAttribute('position')).to.shallowDeepEqual({x: 0, y: 0, z: 0})
-          expect(present.object3D.position)       .to.shallowDeepEqual({x: 0, y: 0, z: 0})
-        })        
-      })
-      describe('the decoration', () => {        
-        it('will be positioned on top of present', () => {
-          expect(decoration.getAttribute('position')).to.shallowDeepEqual({x: 0, y: 0.6, z: 0})
-          expect(decoration.object3D.position)       .to.shallowDeepEqual({x: 0, y: 0.6, z: 0})
-        })        
-      })
-    })
-
-    describe('translated the parent, present, in aframe', () => {
-      beforeEach(() => {
-        present.setAttribute('position', '')
-      })
-      describe('the present', () => {
-        it('will be positioned at origin', () => {
-          expect(present.getAttribute('position')).to.shallowDeepEqual({x: 0, y: 0, z: 0})
-          expect(present.object3D.position)       .to.shallowDeepEqual({x: 0, y: 0, z: 0})
-        })        
-      })
-      describe('the decoration', () => {        
-        it('will be positioned on top of present', () => {
-          expect(decoration.getAttribute('position')).to.shallowDeepEqual({x: 0, y: 0.6, z: 0})
-          expect(decoration.object3D.position)       .to.shallowDeepEqual({x: 0, y: 0.6, z: 0})
-        })        
-      })
-    })
-
-  })
 })
