@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <title>Mocha Tests</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="https://unpkg.com/mocha@7.1.2/mocha.css" />
+    <link crossorigin rel="stylesheet" href="https://unpkg.com/mocha@7.1.2/mocha.css" />
     <style type="text/css" media="screen">
       body {
         background-color: #222;
@@ -14,14 +14,14 @@
         color: yellow
       }
     </style>
-    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script crossorigin src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <script crossorigin src="https://code.jquery.com/jquery-3.4.1.js"></script>
   </head>
   <body>
     <div id="mocha"></div>
-    <script src="https://unpkg.com/chai/chai.js"></script>
-    <script src="https://unpkg.com/chai-shallow-deep-equal@1.4.6/chai-shallow-deep-equal.js"></script>
-    <script src="https://unpkg.com/mocha@7.1.2/mocha.js"></script>
+    <script crossorigin src="https://unpkg.com/chai/chai.js"></script>
+    <script crossorigin src="https://unpkg.com/chai-shallow-deep-equal@1.4.6/chai-shallow-deep-equal.js"></script>
+    <script crossorigin src="https://unpkg.com/mocha@7.1.2/mocha.js"></script>
     <script class="mocha-init">
       mocha.setup('bdd');
       mocha.checkLeaks();
@@ -32,10 +32,10 @@
     <script src="js/color.js"></script>
     <script src="js/hand.js"></script>
     
+    <script src="js/tests/test-transform-understanding.js"></script>
     <script src="js/tests/test-aframe-util.js"></script>
     <script src="js/tests/test-html.js"></script>
     <script src="js/tests/test-hand.js"></script>
-    <script src="js/tests/test-transform-understanding.js"></script>
     
     <script class="mocha-exec">
       mocha.run();
