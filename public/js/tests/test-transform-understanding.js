@@ -102,20 +102,19 @@ describe('a-frame and three.js nested entities and transforms', () => {
           })
 
           it('will have an unchanged local matrix - from origin offset in Y at top of present, convert vector tenth scale', () => {
-            let inputLocalPosition = vector(10, 10, 10)
-            let output
-            expect(.applyMatrix4(localMatrix)).to.shallowDeepEqual(vector(1, 1.6, 1))
+            let inputLocalPositionRelativeToDecoration = vector(10, 10, 10)
+            let expectedPositionRelativeToParent = vector(1, 1.6, 1)
+            expect(inputLocalPositionRelativeToDecoration.applyMatrix4(localMatrix)).to.shallowDeepEqual(expectedPositionRelativeToParent)
           })
 
           it('will have a world matrix that combines them both', () => {
-            expect(worldMatrix).to.shallowDeepEqual(localMatrix)
-            expect(vector(15, 15, 15).applyMatrix4(worldMatrix)).to.shallowDeepEqual(vector(-1, 0, 1))
+            let inputLocalPositionRelativeToDecoration = vector(10, 10, 10)
+            let expectedWorldPosition = vector(4, 5.2, 4)
+            expect(inputLocalPositionRelativeToDecoration.applyMatrix4(worldMatrix)).to.shallowDeepEqual(expectedWorldPosition)
           })      
         })
       })
-
     })
-
     
     describe('without translation or scale', () => {
 
