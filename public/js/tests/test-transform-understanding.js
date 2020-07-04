@@ -55,11 +55,13 @@ describe('a-frame and three.js nested entities and transforms', () => {
           expect(decoration.object3D.getWorldPosition()).to.shallowDeepEqual({x: 0, y: 0.6, z: 0})
         })
       })
+      
     })
 
     describe('translated the parent, present, in aframe', () => {
       beforeEach(() => {
         present.setAttribute('position', '3 3 1')
+        present.
       })
       describe('the present', () => {
         it('will be locally positioned as specified', () => {
@@ -77,6 +79,30 @@ describe('a-frame and three.js nested entities and transforms', () => {
         })        
         it('will be world-positioned at new translated position of present with addition decoration offset', () => {
           expect(decoration.object3D.getWorldPosition()).to.shallowDeepEqual({x: 3, y: 3.6, z: 1})
+        })
+      })
+    })
+
+    describe('scaled uniformly the parent, present, in aframe', () => {
+      beforeEach(() => {
+        present.setAttribute('scale', '0.5 0.5 0.5')
+      })
+      describe('the present', () => {
+        it('will still be locally positioned at origin', () => {
+          expect(present.getAttribute('position')).to.shallowDeepEqual({x: 0, y: 0, z: 0})
+          expect(present.object3D.position)       .to.shallowDeepEqual({x: 0, y: 0, z: 0})
+        })        
+        it('will be world-positioned at origin', () => {
+          expect(present.object3D.getWorldPosition()).to.shallowDeepEqual({x: 0, y: 0, z: 0})
+        })
+      })
+      describe('the decoration', () => {        
+        it('will be locally positioned on top of present, irrespective of scale of present', () => {
+          expect(decoration.getAttribute('position')).to.shallowDeepEqual({x: 0, y: 0.6, z: 0})
+          expect(decoration.object3D.position)       .to.shallowDeepEqual({x: 0, y: 0.6, z: 0})
+        })        
+        it('will be world-positioned incorporating down-scaling of present, halving its distance to origin', () => {
+          expect(decoration.object3D.getWorldPosition()).to.shallowDeepEqual({x: 0, y: 0.3, z: 0})
         })
       })
     })
