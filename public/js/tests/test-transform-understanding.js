@@ -83,8 +83,8 @@ describe('a-frame and three.js nested entities and transforms', () => {
         
         
         targetParent.appendChild(reparented)
+        targetParent.object3D.attach(reparented3d) // this was critical it wasn't actually attached
         targetParent.object3D.updateMatrixWorld()
-        reparented3d.updateMatrixWorld()
         
         // given parent-world.local matrix multiplication order for child world matrix:
         //   https://github.com/mrdoob/three.js/blob/dev/src/core/Object3D.js#L560
@@ -97,9 +97,9 @@ describe('a-frame and three.js nested entities and transforms', () => {
         // check out the object attach() and applyMatrix4() code
         
         
-        console.log('target parent matrix (before recalcuation)', targetParent.object3D.matrixWorld)
-        console.log('reparented matrixWorld (before recalcuation)', reparented3d.matrixWorld)
-        console.log('reparented matrix (before recalcuation)', reparented3d.matrix)
+        console.log('target parent matrix (before recalculation)', targetParent.object3D.matrixWorld)
+        console.log('reparented matrixWorld (before recalculation)', reparented3d.matrixWorld)
+        console.log('reparented matrix (before recalculation)', reparented3d.matrix)
         
         let parentInverseMatrix = new THREE.Matrix4().getInverse(targetParent.object3D.matrixWorld)
         console.log('inverse target parent matrix', parentInverseMatrix)
@@ -128,9 +128,8 @@ describe('a-frame and three.js nested entities and transforms', () => {
         })      
         it('should retain its world position', () => {
           expect(reparented3d.getWorldPosition(v3)).to.shallowDeepEqual(childWorldPosition)
-          // expect(reparented3d.getWorldPosition(v3)).to.shallowDeepEqual({x: 0, y: 0, z: 0})
         })      
-        xit('should retain original sphere world presence', () => {
+        it('should retain original sphere world presence', () => {
           expect(bounds(reparented3d).min).to.shallowDeepEqual(childWorldMinBounds)
           expect(bounds(reparented3d).max).to.shallowDeepEqual(childWorldMaxBounds)
         })
