@@ -35,8 +35,16 @@ describe('a-frame and three.js nested entities and transforms', () => {
       parent.addEventListener('loaded', () => done())
     })
     
-    it('originally has world bounding box at top of target parent box', () => {
-      expect(child.getWorldPosition(v3)).to.shallowDeepEqual({ x: -1, y: 1; })
+    let childStartingMinBounds = {x:-1.1, y: 0.9, z:-0.1}
+    let childStartingMaxBounds = {x:-0.9, y: 1.1, z: 0.1}
+    
+    it('child sphere originally has world bounding box at top of target parent box', () => {
+      expect(bounds(child.object3D).min).to.shallowDeepEqual(childStartingMinBounds)
+      expect(bounds(child.object3D).max).to.shallowDeepEqual(childStartingMaxBounds)
+    })
+    
+    describe('reparenting, bearing in mind ', () => {
+      
     })
   })
   
