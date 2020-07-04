@@ -73,7 +73,7 @@ describe('a-frame and three.js nested entities and transforms', () => {
       let reparented
       let reparented3d
       
-      function reparent() {
+      function reparent(done) {
         console.log('child local matrix', child.object3D.matrix)
         console.log('child world matrix', childWorldMatrix)
         
@@ -81,9 +81,11 @@ describe('a-frame and three.js nested entities and transforms', () => {
         reparented = child.cloneNode()
         reparented3d = reparented.object3D
         
-        
+        console.log('target parent 3d children before appending', targetParent.object3D.children)
         targetParent.appendChild(reparented)
+        console.log('target parent 3d children after appending', targetParent.object3D.children)
         targetParent.object3D.attach(reparented3d) // this was critical it wasn't actually attached
+        console.log('target parent 3d children after attaching', targetParent.object3D.children)
         targetParent.object3D.updateMatrixWorld()
         
         // given parent-world.local matrix multiplication order for child world matrix:
@@ -113,13 +115,15 @@ describe('a-frame and three.js nested entities and transforms', () => {
         reparented3d.updateMatrixWorld()
         targetParent.object3D.updateMatrixWorld()
         
+        reparented.addEventListener('loaded', () => done())
+        
         console.log('final target parent matrix', targetParent.object3D.matrixWorld)
         console.log('final reparented local matrix', reparented3d.matrix)
         console.log('final reparented world matrix', reparented3d.matrixWorld)
       }
       
-      beforeEach(() => {
-        reparent()
+      beforeEach((done) => {
+        reparent(done)
       })
       
       describe('reparented child sphere', () => {
