@@ -1,4 +1,4 @@
-/* global AFRAME */
+/* global AFRAME THREE */
 var chai = chai || {}
 var expect = chai.expect
 
@@ -29,9 +29,19 @@ describe('a-frame and three.js nested entities and transforms', () => {
         .to.shallowDeepEqual({x: 0, y: 0, z: 0})
     })
 
-    it('will have an identity local matrix: one that transforms a point to itself or ', () => {
-      expect(boring.object3D.position)
-        .to.shallowDeepEqual({x: 0, y: 0, z: 0})
+    describe('the underlying matrices', () => {
+      const identityMatrix = new THREE.Matrix4().identity()
+      let localMatrix
+      let worldMatrix
+      beforeEach(() => {
+        localMatrix = boring.object3D.matrix
+        worldMatrix = boring.object3D.matrixWorld
+      })
+      it('will have an identity local matrix: one that transforms a point or matrix to itself', () => {
+        expect(localMatrix.equals(identityMatrix)).to.be.true
+        expect(localMatrix.)
+      })
+      
     })
 })
 
