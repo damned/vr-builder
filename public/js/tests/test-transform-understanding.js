@@ -2,7 +2,10 @@
 var chai = chai || {}
 var expect = chai.expect
 
+let vector = (x, y, z) => new THREE.Vector3(x, y, z)
+
 describe('a-frame and three.js nested entities and transforms', () => {
+  const identityMatrix = new THREE.Matrix4().identity()
   let $scene = $('<a-scene style="height: 200px" embedded>').appendTo('body')
 
   beforeEach(() => $scene.empty())
@@ -11,6 +14,9 @@ describe('a-frame and three.js nested entities and transforms', () => {
     $scene = null
   })
   
+  let localMatrix
+  let worldMatrix
+
   describe('a boring single entity in default placement', () => {
     let boring
     
@@ -30,18 +36,20 @@ describe('a-frame and three.js nested entities and transforms', () => {
     })
 
     describe('the underlying matrices', () => {
-      const identityMatrix = new THREE.Matrix4().identity()
-      let localMatrix
-      let worldMatrix
       beforeEach(() => {
         localMatrix = boring.object3D.matrix
         worldMatrix = boring.object3D.matrixWorld
       })
+      
       it('will have an identity local matrix: one that transforms a point or matrix to itself', () => {
         expect(localMatrix.equals(identityMatrix)).to.be.true
-        expect(localMatrix.)
+        expect(vector(1, 2, 3).applyMatrix4(localMatrix)).to.deep.equal(vector(1, 2, 3))
       })
       
+      it('will also have an identity world matrix', () => {
+        expect(worldMatrix.equals(identityMatrix)).to.be.true
+        expect(vector(1, 2, 3).applyMatrix4(worldMatrix)).to.deep.equal(vector(1, 2, 3))
+      })      
     })
 })
 
