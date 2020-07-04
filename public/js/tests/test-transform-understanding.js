@@ -57,9 +57,12 @@ describe('a-frame and three.js nested entities and transforms', () => {
       let reparented
       let reparented3d
       
-      function reparent(child, newParent) {
+      function reparent() {
         originalParent.object3D.updateMatrixWorld()
         let childWorldMatrix = new THREE.Matrix4().copy(child.object3D.matrixWorld)
+        
+        console.log('child local matrix', child.object3D.matrix)
+        console.log('child world matrix', childWorldMatrix)
         
         child.parentElement.removeChild(child)
         reparented = child.cloneNode()
@@ -74,8 +77,13 @@ describe('a-frame and three.js nested entities and transforms', () => {
         // determine required local matrix thus:
         //   https://math.stackexchange.com/questions/949341/how-to-find-matrix-b-given-matrix-ab-and-a
         let parentInverseMatrix = new THREE.Matrix4().getInverse(targetParent.object3D.matrixWorld)
+        console.log('target parent matrix', targetParent.object3D.matrixWorld)
+        console.log('inverse target parent matrix', parentInverseMatrix)
         let recalculatedChildMatrix = parentInverseMatrix.multiply(childWorldMatrix)
+        console.log('recalculated child matrix', recalculatedChildMatrix)
+        console.log('child world matrix after recalculation', childWorldMatrix)
         reparented3d.matrix.copy(recalculatedChildMatrix)
+        reparented3d.updateMatrixWorld()
       }
       
       beforeEach(() => {
