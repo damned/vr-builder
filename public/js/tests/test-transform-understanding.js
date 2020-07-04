@@ -78,8 +78,8 @@ describe('a-frame and three.js nested entities and transforms', () => {
         //
         // determine required local matrix thus:
         //   https://math.stackexchange.com/questions/949341/how-to-find-matrix-b-given-matrix-ab-and-a
+        console.log('target parent matrix (before)', targetParent.object3D.matrixWorld)
         let parentInverseMatrix = new THREE.Matrix4().getInverse(targetParent.object3D.matrixWorld)
-        console.log('target parent matrix', targetParent.object3D.matrixWorld)
         console.log('inverse target parent matrix', parentInverseMatrix)
         let recalculatedChildMatrix = new THREE.Matrix4().multiplyMatrices(parentInverseMatrix, childWorldMatrix)
         console.log('recalculated child matrix', recalculatedChildMatrix)
@@ -88,9 +88,10 @@ describe('a-frame and three.js nested entities and transforms', () => {
         
         console.log('reparented local matrix just after setting', reparented3d.matrix)
 
-        reparented3d.object3D.updateMatrixWorld()
+        reparented3d.updateMatrixWorld()
         targetParent.object3D.updateMatrixWorld()
         
+        console.log('final target parent matrix', targetParent.object3D.matrixWorld)
         console.log('final reparented local matrix', reparented3d.matrix)
       }
       
