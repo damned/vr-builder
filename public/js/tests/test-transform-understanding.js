@@ -122,16 +122,59 @@ describe('a-frame and three.js nested entities and transforms', () => {
         it('will be world-positioned translated by the specified amount', () => {
           expect(present.object3D.getWorldPosition()).to.shallowDeepEqual({x: 2, y: 2, z: 2})
         })
+
+        xit('will have a bounding box of scaled dimensions around the translated origin', () => {
+          expect(bounds(present.object3D).min).to.shallowDeepEqual({x:-2, y:-3, z: 0})
+          expect(bounds(present.object3D).max).to.shallowDeepEqual({x: 0, y:-1, z: 2})
+        })
+
+        xdescribe('the underlying matrices', () => {
+          beforeEach(() => {
+            localMatrix = present.object3D.matrix
+            worldMatrix = present.object3D.matrixWorld
+          })
+
+          xit('will have a local matrix that transforms a point by its scale then moves it by the translation', () => {
+            expect(vector(2, 4, 6).applyMatrix4(localMatrix)).to.shallowDeepEqual(vector(3, 6, 13))
+          })
+
+          xit('will have a world matrix equal to the local matrix', () => {
+            expect(worldMatrix).to.shallowDeepEqual(localMatrix)
+            expect(vector(0, 1, 0).applyMatrix4(worldMatrix)).to.shallowDeepEqual(vector(-1, 0, 1))
+          })      
+        })
       })
       describe('the decoration', () => {        
         it('will be locally positioned as ever', () => {
           expect(decoration.getAttribute('position')).to.shallowDeepEqual({x: 0, y: 0.6, z: 0})
           expect(decoration.object3D.position)       .to.shallowDeepEqual({x: 0, y: 0.6, z: 0})
         })        
-        xit('will be world-positioned incorporating present offset and parent-scale-increased decoration offset', () => {
-          expect(decoration.object3D.getWorldPosition()).to.shallowDeepEqual({x: 2, y: 2 + 1.2), z: 2})
+        it('will be world-positioned incorporating present offset and parent-scale-increased decoration offset', () => {
+          expect(decoration.object3D.getWorldPosition()).to.shallowDeepEqual({x: 2, y: (2 + 1.2), z: 2})
+        })
+
+        xit('will have a bounding box of scaled dimensions around the translated origin', () => {
+          expect(bounds(decoration.object3D).min).to.shallowDeepEqual({x:-2, y:-3, z: 0})
+          expect(bounds(decoration.object3D).max).to.shallowDeepEqual({x: 0, y:-1, z: 2})
+        })
+
+        xdescribe('the underlying matrices', () => {
+          beforeEach(() => {
+            localMatrix = decoration.object3D.matrix
+            worldMatrix = decoration.object3D.matrixWorld
+          })
+
+          xit('will have a local matrix that transforms a point by its scale then moves it by the translation', () => {
+            expect(vector(2, 4, 6).applyMatrix4(localMatrix)).to.shallowDeepEqual(vector(3, 6, 13))
+          })
+
+          xit('will have a world matrix equal to the local matrix', () => {
+            expect(worldMatrix).to.shallowDeepEqual(localMatrix)
+            expect(vector(0, 1, 0).applyMatrix4(worldMatrix)).to.shallowDeepEqual(vector(-1, 0, 1))
+          })      
         })
       })
+
     })
 
   })

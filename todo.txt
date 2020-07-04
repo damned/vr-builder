@@ -48,9 +48,12 @@
     - revert, re-apply - see undo?
 [x] fix plan / build preserve rotation
 [ ] revert broken group reparenting
-[ ] unit tests to understand three.js transforms
+[/] unit tests to understand three.js transforms
 [ ] unit tests to prove aframe reparenting functions
-[ ] integration test for collisions
+[ ] tidy up collisions
+    - collision monitor - showing closest and all current collisionsed :)
+      - use identity of tag, color, scale
+    - integration test for collisions?
 [ ] group and ungroup
     [ ] vertical axis captured when group created
 [ ] unit tests on copyPlacement() / applyPlacement()
