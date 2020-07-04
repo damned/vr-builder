@@ -57,7 +57,17 @@ describe('a-frame and three.js nested entities and transforms', () => {
         expect(bounds(child.object3D).max).to.shallowDeepEqual(childWorldMaxBounds)
       })      
     })
-    
+
+    describe('pre-conceptions about matrices, before any reparenting', () => {
+      it('has world position matching its local position (as its parent has indentity world matrix)', () => {
+        expect(child.object3D.getWorldPosition(v3)).to.shallowDeepEqual(childWorldPosition)
+      })      
+      it('has world bounding box at top of target parent box', () => {
+        expect(bounds(child.object3D).min).to.shallowDeepEqual(childWorldMinBounds)
+        expect(bounds(child.object3D).max).to.shallowDeepEqual(childWorldMaxBounds)
+      })      
+    })
+
     describe('reparenting, bearing in mind the entity needs to be cloned before appending as it will be invisible due to aframe bug', () => {
       let reparented
       let reparented3d
