@@ -48,7 +48,7 @@
     - revert, re-apply - see undo?
 [x] fix plan / build preserve rotation
 [ ] revert broken group reparenting
-[/] unit tests to understand three.js transforms
+[x] unit tests to understand three.js transforms
 [ ] unit tests to prove aframe reparenting functions
 [ ] tidy up collisions
     - collision monitor - showing closest and all current collisionsed :)
