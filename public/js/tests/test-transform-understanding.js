@@ -86,29 +86,22 @@ describe('a-frame and three.js nested entities and transforms', () => {
         targetParent.appendChild(reparented)
 
         reparented.addEventListener('loaded', () => {
+          // given parent-world.local matrix multiplication order for child world matrix:
+          //   https://github.com/mrdoob/three.js/blob/dev/src/core/Object3D.js#L560
+          //
+          // determine required local matrix thus:
+          //   https://math.stackexchange.com/questions/949341/how-to-find-matrix-b-given-matrix-ab-and-a
+          let recalculatedLocalMatrix = new THREE.Matrix4().getInverse(targetParent.object3D.matrixWorld).multiply(childWorldMatrix)
+
+          reparented3d.matrixAutoUpdate = false
+          reparented3d.matrix.copy(recalculatedLocalMatrix)
+
+          console.log('final reparented local matrix', reparented3d.matrix)
+          console.log('final reparented world matrix', reparented3d.matrixWorld)
+
           done()
         })
 
-        // given parent-world.local matrix multiplication order for child world matrix:
-        //   https://github.com/mrdoob/three.js/blob/dev/src/core/Object3D.js#L560
-        //
-        // determine required local matrix thus:
-        //   https://math.stackexchange.com/questions/949341/how-to-find-matrix-b-given-matrix-ab-and-a
-        console.log('target parent matrix (before recalculation)', matrixCopy(targetParent.object3D.matrixWorld))
-        console.log('reparented matrixWorld (before recalculation)', matrixCopy(reparented3d.matrixWorld))
-        console.log('reparented matrix (before recalculation)', matrixCopy(reparented3d.matrix))
-        
-        let parentInverseMatrix = new THREE.Matrix4().getInverse(targetParent.object3D.matrixWorld)
-        let recalculatedChildMatrix = new THREE.Matrix4().multiplyMatrices(parentInverseMatrix, childWorldMatrix)
-        reparented3d.matrixAutoUpdate = false
-        reparented3d.matrix.copy(recalculatedChildMatrix)
-        
-        reparented3d.updateMatrixWorld()
-        targetParent.object3D.updateMatrixWorld()
-        
-        
-        console.log('final reparented local matrix', reparented3d.matrix)
-        console.log('final reparented world matrix', reparented3d.matrixWorld)
       }
       
       beforeEach((done) => {
