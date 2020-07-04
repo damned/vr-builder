@@ -65,6 +65,7 @@ describe('a-frame and three.js nested entities and transforms', () => {
       expect(translated.getAttribute('position'))
         .to.shallowDeepEqual({x: 1, y: 2, z: 3})
     })
+    
     it('will have offset local three.js position', () => {
       expect(translated.object3D.position)
         .to.shallowDeepEqual({x: 1, y: 2, z: 3})
@@ -72,17 +73,61 @@ describe('a-frame and three.js nested entities and transforms', () => {
     
     describe('the underlying matrices', () => {
       beforeEach(() => {
-        localMatrix = translated.object3D.matrix
-        worldMatrix = translated.object3D.matrixWorld
+        let object3d = translated.object3D
+        object3d.updateMatrix()
+        object3d.updateMatrixWorld()
+        localMatrix = object3d.matrix
+        worldMatrix = object3d.matrixWorld
       })
       
       it('will have a local matrix that translates a point by its own translation', () => {
-        expect(vector(2, 4, 6).applyMatrix4(localMatrix)).to.shallowDeepEqual(vector(2, 4, 6))
+        expect(vector(2, 4, 6).applyMatrix4(localMatrix)).to.shallowDeepEqual(vector(3, 6, 9))
       })
       
       it('will have a world matrix equal to the local matrix', () => {
         expect(worldMatrix).to.shallowDeepEqual(localMatrix)
-        expect(vector(1, 2, 3).applyMatrix4(worldMatrix)).to.shallowDeepEqual(vector(2, 4, 6))
+        expect(vector(0, 1, 0).applyMatrix4(worldMatrix)).to.shallowDeepEqual(vector(1, 3, 3))
+      })      
+    })
+
+  })
+
+  describe('a single entity scaled uniformly at origin', () => {
+    let scaled
+    
+    beforeEach((done) => {
+      scaled = $('<a-box scale="2 2 2"></a-box>').appendTo($scene).get(0)
+      scaled.addEventListener('loaded', () => done())
+    })
+    
+    it('will have no translation of origin', () => {
+      expect(scaled.getAttribute('position'))
+        .to.shallowDeepEqual({x: 0, y: 0, z: 0})
+      expect(scaled.object3D.position)
+        .to.shallowDeepEqual({x: 0, y: 0, z: 0})
+    })
+    
+    it('will have offset local three.js position', () => {
+      expect(scaled.object3D.position)
+        .to.shallowDeepEqual({x: 1, y: 2, z: 3})
+    })
+    
+    describe('the underlying matrices', () => {
+      beforeEach(() => {
+        let object3d = scaled.object3D
+        object3d.updateMatrix()
+        object3d.updateMatrixWorld()
+        localMatrix = object3d.matrix
+        worldMatrix = object3d.matrixWorld
+      })
+      
+      it('will have a local matrix that translates a point by its own translation', () => {
+        expect(vector(2, 4, 6).applyMatrix4(localMatrix)).to.shallowDeepEqual(vector(3, 6, 9))
+      })
+      
+      it('will have a world matrix equal to the local matrix', () => {
+        expect(worldMatrix).to.shallowDeepEqual(localMatrix)
+        expect(vector(0, 1, 0).applyMatrix4(worldMatrix)).to.shallowDeepEqual(vector(1, 3, 3))
       })      
     })
 
