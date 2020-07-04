@@ -35,10 +35,11 @@ describe('a-frame and three.js nested entities and transforms', () => {
                      '</a-entity>').appendTo($scene).get(0)
 
       child = $('#child').get(0)
-      originalParent = $('#original-parent').get(0)
+      originalParent = parent
       targetParent = $('#target-parent').get(0)
       parent.addEventListener('loaded', () => {
         originalParent.object3D.updateMatrixWorld()
+        targetParent.object3D.updateMatrixWorld()
         childWorldMatrix = new THREE.Matrix4().copy(child.object3D.matrixWorld)
         done()
       })
@@ -59,12 +60,12 @@ describe('a-frame and three.js nested entities and transforms', () => {
     })
 
     describe('pre-conceptions about matrices, before any reparenting', () => {
-      it('has world position matching its local position (as its parent has indentity world matrix)', () => {
-        expect(child.object3D.getWorldPosition(v3)).to.shallowDeepEqual(childWorldPosition)
+      it("the child's parent's starting local matrix and world matrix should be identity as they are untransformed", () => {
+        expect(originalParent.object3D.matrix).to.shallowDeepEqual(identityMatrix)
+        expect(originalParent.object3D.matrixWorld).to.shallowDeepEqual(identityMatrix)
       })      
-      it('has world bounding box at top of target parent box', () => {
-        expect(bounds(child.object3D).min).to.shallowDeepEqual(childWorldMinBounds)
-        expect(bounds(child.object3D).max).to.shallowDeepEqual(childWorldMaxBounds)
+      it("the child's world matrix should be equal to the multiplication of its parent world matrix by its local matrix, i.e. its local matrix", () => {
+        expect(child.object3D.matrixWorld).to.shallowDeepEqual(child.object3D.matrix)
       })      
     })
 
@@ -79,7 +80,6 @@ describe('a-frame and three.js nested entities and transforms', () => {
         child.parentElement.removeChild(child)
         reparented = child.cloneNode()
         reparented3d = reparented.object3D
-        
         
         targetParent.object3D.updateMatrixWorld()
         
