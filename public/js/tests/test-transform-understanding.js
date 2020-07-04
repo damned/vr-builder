@@ -81,9 +81,14 @@ describe('a-frame and three.js nested entities and transforms', () => {
         console.log('inverse target parent matrix', parentInverseMatrix)
         let recalculatedChildMatrix = new THREE.Matrix4().multiplyMatrices(parentInverseMatrix, childWorldMatrix)
         console.log('recalculated child matrix', recalculatedChildMatrix)
-        console.log('child world matrix after recalculation', childWorldMatrix)
+        reparented3d.matrixAutoUpdate = false
         reparented3d.matrix.copy(recalculatedChildMatrix)
+        
+        console.log('reparented local matrix just after setting', reparented3d.matrix)
+
         reparented3d.updateMatrixWorld()
+        
+        console.log('final reparented local matrix', reparented3d.matrix)
       }
       
       beforeEach(() => {
@@ -92,7 +97,7 @@ describe('a-frame and three.js nested entities and transforms', () => {
       
       describe('reparented child sphere', () => {
         it('should retain its world position', () => {
-          // expect(reparented.object3D.getWorldPosition(v3)).to.shallowDeepEqual(childWorldPosition)
+          // expect(reparented3d.getWorldPosition(v3)).to.shallowDeepEqual(childWorldPosition)
           expect(reparented3d.getWorldPosition(v3)).to.shallowDeepEqual({x: 0, y: 0, z: 0})
         })      
         xit('should retain original sphere world presence', () => {
