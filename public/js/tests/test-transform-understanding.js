@@ -81,9 +81,10 @@ describe('a-frame and three.js nested entities and transforms', () => {
         reparented = child.cloneNode()
         reparented3d = reparented.object3D
         
-        targetParent.object3D.updateMatrixWorld()
         
         targetParent.appendChild(reparented)
+        targetParent.object3D.updateMatrixWorld()
+        reparented3d.updateMatrixWorld()
         
         // given parent-world.local matrix multiplication order for child world matrix:
         //   https://github.com/mrdoob/three.js/blob/dev/src/core/Object3D.js#L560
@@ -96,7 +97,10 @@ describe('a-frame and three.js nested entities and transforms', () => {
         // check out the object attach() and applyMatrix4() code
         
         
-        console.log('target parent matrix (before)', targetParent.object3D.matrixWorld)
+        console.log('target parent matrix (before recalcuation)', targetParent.object3D.matrixWorld)
+        console.log('reparented matrixWorld (before recalcuation)', reparented3d.matrixWorld)
+        console.log('reparented matrix (before recalcuation)', reparented3d.matrix)
+        
         let parentInverseMatrix = new THREE.Matrix4().getInverse(targetParent.object3D.matrixWorld)
         console.log('inverse target parent matrix', parentInverseMatrix)
         let recalculatedChildMatrix = new THREE.Matrix4().multiplyMatrices(parentInverseMatrix, childWorldMatrix)
@@ -111,6 +115,7 @@ describe('a-frame and three.js nested entities and transforms', () => {
         
         console.log('final target parent matrix', targetParent.object3D.matrixWorld)
         console.log('final reparented local matrix', reparented3d.matrix)
+        console.log('final reparented world matrix', reparented3d.matrixWorld)
       }
       
       beforeEach(() => {
