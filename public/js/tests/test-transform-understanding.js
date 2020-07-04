@@ -84,8 +84,8 @@ describe('a-frame and three.js nested entities and transforms', () => {
         console.log('target parent 3d children before appending', targetParent.object3D.children)
         targetParent.appendChild(reparented)
         console.log('target parent 3d children after appending', targetParent.object3D.children)
-        targetParent.object3D.attach(reparented3d) // this was critical it wasn't actually attached
-        console.log('target parent 3d children after attaching', targetParent.object3D.children)
+        // targetParent.object3D.attach(reparented3d) // this seemed critical, that it wasn't actually attached
+        // console.log('target parent 3d children after attaching', targetParent.object3D.children)
         targetParent.object3D.updateMatrixWorld()
         
         // given parent-world.local matrix multiplication order for child world matrix:
@@ -94,10 +94,12 @@ describe('a-frame and three.js nested entities and transforms', () => {
         // determine required local matrix thus:
         //   https://math.stackexchange.com/questions/949341/how-to-find-matrix-b-given-matrix-ab-and-a
         
-        // i think i know where problem is - think i've not got the local and world sorted for child:
-        // perhaps it's actually the world transform for the child i need to be updating?
-        // check out the object attach() and applyMatrix4() code
+        // it looks to me like this is how things are actually being calculated in the matrixes (i.e. correctly)
+        // at least with the any updateMatrix* calls we've got at this point
+        // so looks like wasn't working due to this or some other lifecycle issues...
         
+        // but it also looks like the following code was correctly re-calculating the correct values
+        // for the matrices... 
         
         console.log('target parent matrix (before recalculation)', targetParent.object3D.matrixWorld)
         console.log('reparented matrixWorld (before recalculation)', reparented3d.matrixWorld)
