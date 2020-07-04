@@ -50,24 +50,30 @@ describe('a-frame and three.js nested entities and transforms', () => {
           expect(present.object3D.getWorldPosition()).to.shallowDeepEqual({x: 2, y: 2, z: 2})
         })
 
-        it('will have a bounding box of scaled dimensions around the translated origin', () => {
-          expect(bounds(present.object3D).min).to.shallowDeepEqual({x:-1, y:-1, z:-1})
-          expect(bounds(present.object3D).max).to.shallowDeepEqual({x: 1, y: 1, z: 1})
+        it('will have a bounding box of scaled dimensions (including extra height for diameter of decoration) around the translated origin', () => {
+          let decorationDiameter = 0.2 // 100% scale a-sphere is radius 1, diameter 2
+          
+          expect(bounds(present.object3D).min).to.shallowDeepEqual({x: 1, y: 1, z: 1})
+          
+          let maxBounds = bounds(present.object3D).max
+          expect(maxBounds.x).to.be.equal(3)
+          expect(maxBounds.y).to.be.closeTo(3 + (2 * decorationDiameter), 0.001)
+          expect(maxBounds.z).to.be.equal(3)
         })
 
-        xdescribe('the underlying matrices', () => {
+        describe('the underlying matrices', () => {
           beforeEach(() => {
             localMatrix = present.object3D.matrix
             worldMatrix = present.object3D.matrixWorld
           })
 
-          xit('will have a local matrix that transforms a point by its scale then moves it by the translation', () => {
-            expect(vector(2, 4, 6).applyMatrix4(localMatrix)).to.shallowDeepEqual(vector(3, 6, 13))
+          it('will have a local matrix that transforms a point by its scale then moves it by the translation', () => {
+            expect(vector(2, 4, 6).applyMatrix4(localMatrix)).to.shallowDeepEqual(vector(6, 10, 14))
           })
 
-          xit('will have a world matrix equal to the local matrix', () => {
+          it('will have a world matrix equal to the local matrix', () => {
             expect(worldMatrix).to.shallowDeepEqual(localMatrix)
-            expect(vector(0, 1, 0).applyMatrix4(worldMatrix)).to.shallowDeepEqual(vector(-1, 0, 1))
+            expect(vector(0, 1, 0).applyMatrix4(worldMatrix)).to.shallowDeepEqual(vector(2, 4, 2))
           })      
         })
       })
@@ -80,7 +86,7 @@ describe('a-frame and three.js nested entities and transforms', () => {
           expect(decoration.object3D.getWorldPosition()).to.shallowDeepEqual({x: 2, y: (2 + 1.2), z: 2})
         })
 
-        xit('will have a bounding box of scaled dimensions around the translated origin', () => {
+        it('will have a bounding box of its scaled dimensions around the translated origin', () => {
           expect(bounds(decoration.object3D).min).to.shallowDeepEqual({x:-2, y:-3, z: 0})
           expect(bounds(decoration.object3D).max).to.shallowDeepEqual({x: 0, y:-1, z: 2})
         })
