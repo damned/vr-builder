@@ -211,5 +211,23 @@ describe('a-frame and three.js nested entities and transforms', () => {
       })
     })
 
+    describe('translated the parent, present, in aframe', () => {
+      beforeEach(() => {
+        present.setAttribute('position', '')
+      })
+      describe('the present', () => {
+        it('will be positioned at origin', () => {
+          expect(present.getAttribute('position')).to.shallowDeepEqual({x: 0, y: 0, z: 0})
+          expect(present.object3D.position)       .to.shallowDeepEqual({x: 0, y: 0, z: 0})
+        })        
+      })
+      describe('the decoration', () => {        
+        it('will be positioned on top of present', () => {
+          expect(decoration.getAttribute('position')).to.shallowDeepEqual({x: 0, y: 0.6, z: 0})
+          expect(decoration.object3D.position)       .to.shallowDeepEqual({x: 0, y: 0.6, z: 0})
+        })        
+      })
+    })
+
   })
 })
