@@ -24,6 +24,7 @@ describe('a-frame and three.js nested entities and transforms', () => {
   
   describe('a nested sphere being reparented under another entity it sits on top of, but keeping original world representation', () => {
     let child
+    let originalParent
     let targetParent
     
     beforeEach((done) => {
@@ -33,6 +34,7 @@ describe('a-frame and three.js nested entities and transforms', () => {
                      '</a-entity>').appendTo($scene).get(0)
 
       child = $('#child').get(0)
+      originalParent = $('#original-parent').get(0)
       targetParent = $('#target-parent').get(0)
       parent.addEventListener('loaded', () => done())
     })
@@ -56,12 +58,24 @@ describe('a-frame and three.js nested entities and transforms', () => {
       let reparented3d
       
       function reparent(child, newParent) {
+        originalParent.object3D.updateMatrixWorld()
+        let childWorldMatrix = new THREE.Matrix4().copy(child.object3D.matrixWorld)
+        
         child.parentElement.removeChild(child)
         reparented = child.cloneNode()
         reparented3d = reparented.object3D
         
+        targetParent.object3D.updateMatrixWorld()
         targetParent.appendChild(reparented)
-        targetParent.object3D.updateMatrixWorld()        
+        
+        // given parent-world.local matrix multiplication order for child world matrix:
+        //   https://github.com/mrdoob/three.js/blob/dev/src/core/Object3D.js#L560
+        //
+        // determine required local matrix thus:
+        //   https://math.stackexchange.com/questions/949341/how-to-find-matrix-b-given-matrix-ab-and-a
+        let parentInverseMatrix = new THREE.Matrix4().getInverse(targetParent.object3D.matrixWorld)
+        let recalculatedChildMatrix = parentInverseMatrix.multiply(childWorldMatrix)
+        reparented3d.matrix.copy(recalculatedChildMatrix)
       }
       
       beforeEach(() => {
@@ -71,11 +85,11 @@ describe('a-frame and three.js nested entities and transforms', () => {
       describe('reparented child sphere', () => {
         it('should retain its world position', () => {
           // expect(reparented.object3D.getWorldPosition(v3)).to.shallowDeepEqual(childWorldPosition)
-          expect(reparented.object3D.getWorldPosition(v3)).to.shallowDeepEqual({x: 0, y: 0, z: 0})
+          expect(reparented3d.getWorldPosition(v3)).to.shallowDeepEqual({x: 0, y: 0, z: 0})
         })      
         xit('should retain original sphere world presence', () => {
-          expect(bounds(reparented.object3D).min).to.shallowDeepEqual(childWorldMinBounds)
-          expect(bounds(reparented.object3D).max).to.shallowDeepEqual(childWorldMaxBounds)
+          expect(bounds(reparented3d).min).to.shallowDeepEqual(childWorldMinBounds)
+          expect(bounds(reparented3d).max).to.shallowDeepEqual(childWorldMaxBounds)
         })
       })      
     })
