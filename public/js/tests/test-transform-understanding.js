@@ -70,7 +70,9 @@ describe('a-frame and three.js nested entities and transforms', () => {
         reparented = child.cloneNode()
         reparented3d = reparented.object3D
         
+        
         targetParent.object3D.updateMatrixWorld()
+        
         targetParent.appendChild(reparented)
         
         // given parent-world.local matrix multiplication order for child world matrix:
@@ -78,6 +80,12 @@ describe('a-frame and three.js nested entities and transforms', () => {
         //
         // determine required local matrix thus:
         //   https://math.stackexchange.com/questions/949341/how-to-find-matrix-b-given-matrix-ab-and-a
+        
+        // i think i know where problem is - think i've not got the local and world sorted for child:
+        // perhaps it's actually the world transform for the child i need to be updating?
+        // check out the object attach() and applyMatrix4() code
+        
+        
         console.log('target parent matrix (before)', targetParent.object3D.matrixWorld)
         let parentInverseMatrix = new THREE.Matrix4().getInverse(targetParent.object3D.matrixWorld)
         console.log('inverse target parent matrix', parentInverseMatrix)
@@ -104,8 +112,8 @@ describe('a-frame and three.js nested entities and transforms', () => {
           expect(reparented3d.matrixWorld).to.shallowDeepEqual(childWorldMatrix)
         })      
         it('should retain its world position', () => {
-          // expect(reparented3d.getWorldPosition(v3)).to.shallowDeepEqual(childWorldPosition)
-          expect(reparented3d.getWorldPosition(v3)).to.shallowDeepEqual({x: 0, y: 0, z: 0})
+          expect(reparented3d.getWorldPosition(v3)).to.shallowDeepEqual(childWorldPosition)
+          // expect(reparented3d.getWorldPosition(v3)).to.shallowDeepEqual({x: 0, y: 0, z: 0})
         })      
         xit('should retain original sphere world presence', () => {
           expect(bounds(reparented3d).min).to.shallowDeepEqual(childWorldMinBounds)
