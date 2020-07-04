@@ -48,6 +48,7 @@ describe('a-frame and three.js nested entities and transforms', () => {
       beforeEach(() => {
         child.parentElement.removeChild(child)
         reparented = child.cloneNode()
+        
       })
       
       it('reparented child sphere should retain original sphere world presence', () => {
