@@ -24,6 +24,7 @@ describe('a-frame and three.js nested entities and transforms', () => {
   
   describe('a nested sphere being reparented under another entity it sits on top of, but keeping original world representation', () => {
     let child
+    let childWorldMatrix
     let originalParent
     let targetParent
     
@@ -36,7 +37,11 @@ describe('a-frame and three.js nested entities and transforms', () => {
       child = $('#child').get(0)
       originalParent = $('#original-parent').get(0)
       targetParent = $('#target-parent').get(0)
-      parent.addEventListener('loaded', () => done())
+      parent.addEventListener('loaded', () => {
+        originalParent.object3D.updateMatrixWorld()
+        childWorldMatrix = new THREE.Matrix4().copy(child.object3D.matrixWorld)
+        done()
+      })
     })
     
     let childWorldPosition = {x:-1, y: 1, z: 0}
@@ -58,9 +63,6 @@ describe('a-frame and three.js nested entities and transforms', () => {
       let reparented3d
       
       function reparent() {
-        originalParent.object3D.updateMatrixWorld()
-        let childWorldMatrix = new THREE.Matrix4().copy(child.object3D.matrixWorld)
-        
         console.log('child local matrix', child.object3D.matrix)
         console.log('child world matrix', childWorldMatrix)
         
@@ -86,7 +88,7 @@ describe('a-frame and three.js nested entities and transforms', () => {
         
         console.log('reparented local matrix just after setting', reparented3d.matrix)
 
-        reparented3d.updateMatrixWorld()
+        targetParent.object3D.updateMatrixWorld()
         
         console.log('final reparented local matrix', reparented3d.matrix)
       }
@@ -96,6 +98,9 @@ describe('a-frame and three.js nested entities and transforms', () => {
       })
       
       describe('reparented child sphere', () => {
+        it('should retain its world matrix', () => {
+          expect(reparented3d.matrixWorld).to.shallowDeepEqual(childWorldMatrix)
+        })      
         it('should retain its world position', () => {
           // expect(reparented3d.getWorldPosition(v3)).to.shallowDeepEqual(childWorldPosition)
           expect(reparented3d.getWorldPosition(v3)).to.shallowDeepEqual({x: 0, y: 0, z: 0})
