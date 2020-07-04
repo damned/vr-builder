@@ -99,12 +99,16 @@ describe('a-frame and three.js nested entities and transforms', () => {
         // so looks like wasn't working due to this or some other lifecycle issues...
         
         // but it also looks like the following code was correctly re-calculating the correct values
-        // for the matrices... 
+        // for the matrices 
         
         console.log('target parent matrix (before recalculation)', targetParent.object3D.matrixWorld)
         console.log('reparented matrixWorld (before recalculation)', reparented3d.matrixWorld)
-        console.log('reparented matrix (before recalculation)', reparented3d.matrix)
+        console.log('reparented matrix (before recalculation)', new THREE.Matrix4().copy(reparented3d.matrix))
         
+        let parentInverseMatrix = new THREE.Matrix4().getInverse(targetParent.object3D.matrixWorld)
+        console.log('inverse target parent matrix', parentInverseMatrix)
+        let recalculatedChildMatrix = new THREE.Matrix4().multiplyMatrices(parentInverseMatrix, childWorldMatrix)
+        console.log('recalculated child matrix', recalculatedChildMatrix)
         reparented3d.matrixAutoUpdate = false
         reparented3d.matrix.copy(recalculatedChildMatrix)
         
