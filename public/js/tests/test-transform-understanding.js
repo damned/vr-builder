@@ -4,6 +4,7 @@ var expect = chai.expect
 
 let vector = (x, y, z) => new THREE.Vector3(x, y, z)
 let bounds = (object3d) => new THREE.Box3().setFromObject(object3d)
+let matrixCopy = (matrix) => new THREE.Matrix4().copy(matrix)
 
 describe('a-frame and three.js nested entities and transforms', () => {
   const identityMatrix = new THREE.Matrix4().identity()
@@ -40,7 +41,7 @@ describe('a-frame and three.js nested entities and transforms', () => {
       parent.addEventListener('loaded', () => {
         originalParent.object3D.updateMatrixWorld()
         targetParent.object3D.updateMatrixWorld()
-        childWorldMatrix = new THREE.Matrix4().copy(child.object3D.matrixWorld)
+        childWorldMatrix = matrixCopy(child.object3D.matrixWorld)
         done()
       })
     })
@@ -74,52 +75,38 @@ describe('a-frame and three.js nested entities and transforms', () => {
       let reparented3d
       
       function reparent(done) {
-        console.log('child local matrix', child.object3D.matrix)
-        console.log('child world matrix', childWorldMatrix)
+        console.log('child local matrix', matrixCopy(child.object3D.matrix))
+        console.log('child world matrix', matrixCopy(childWorldMatrix))
         
         child.parentElement.removeChild(child)
+
         reparented = child.cloneNode()
         reparented3d = reparented.object3D
         
-        console.log('target parent 3d children before appending', targetParent.object3D.children)
         targetParent.appendChild(reparented)
-        console.log('target parent 3d children after appending', targetParent.object3D.children)
-        // targetParent.object3D.attach(reparented3d) // this seemed critical, that it wasn't actually attached
-        // console.log('target parent 3d children after attaching', targetParent.object3D.children)
-        targetParent.object3D.updateMatrixWorld()
-        
+
+        reparented.addEventListener('loaded', () => {
+          done()
+        })
+
         // given parent-world.local matrix multiplication order for child world matrix:
         //   https://github.com/mrdoob/three.js/blob/dev/src/core/Object3D.js#L560
         //
         // determine required local matrix thus:
         //   https://math.stackexchange.com/questions/949341/how-to-find-matrix-b-given-matrix-ab-and-a
-        
-        // it looks to me like this is how things are actually being calculated in the matrixes (i.e. correctly)
-        // at least with the any updateMatrix* calls we've got at this point
-        // so looks like wasn't working due to this or some other lifecycle issues...
-        
-        // but it also looks like the following code was correctly re-calculating the correct values
-        // for the matrices 
-        
-        console.log('target parent matrix (before recalculation)', targetParent.object3D.matrixWorld)
-        console.log('reparented matrixWorld (before recalculation)', reparented3d.matrixWorld)
-        console.log('reparented matrix (before recalculation)', new THREE.Matrix4().copy(reparented3d.matrix))
+        console.log('target parent matrix (before recalculation)', matrixCopy(targetParent.object3D.matrixWorld))
+        console.log('reparented matrixWorld (before recalculation)', matrixCopy(reparented3d.matrixWorld))
+        console.log('reparented matrix (before recalculation)', matrixCopy(reparented3d.matrix))
         
         let parentInverseMatrix = new THREE.Matrix4().getInverse(targetParent.object3D.matrixWorld)
-        console.log('inverse target parent matrix', parentInverseMatrix)
         let recalculatedChildMatrix = new THREE.Matrix4().multiplyMatrices(parentInverseMatrix, childWorldMatrix)
-        console.log('recalculated child matrix', recalculatedChildMatrix)
         reparented3d.matrixAutoUpdate = false
         reparented3d.matrix.copy(recalculatedChildMatrix)
         
-        console.log('reparented local matrix just after setting', reparented3d.matrix)
-
         reparented3d.updateMatrixWorld()
         targetParent.object3D.updateMatrixWorld()
         
-        reparented.addEventListener('loaded', () => done())
         
-        console.log('final target parent matrix', targetParent.object3D.matrixWorld)
         console.log('final reparented local matrix', reparented3d.matrix)
         console.log('final reparented world matrix', reparented3d.matrixWorld)
       }
