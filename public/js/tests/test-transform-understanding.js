@@ -105,10 +105,6 @@ describe('a-frame and three.js nested entities and transforms', () => {
         console.log('reparented matrixWorld (before recalculation)', reparented3d.matrixWorld)
         console.log('reparented matrix (before recalculation)', reparented3d.matrix)
         
-        let parentInverseMatrix = new THREE.Matrix4().getInverse(targetParent.object3D.matrixWorld)
-        console.log('inverse target parent matrix', parentInverseMatrix)
-        let recalculatedChildMatrix = new THREE.Matrix4().multiplyMatrices(parentInverseMatrix, childWorldMatrix)
-        console.log('recalculated child matrix', recalculatedChildMatrix)
         reparented3d.matrixAutoUpdate = false
         reparented3d.matrix.copy(recalculatedChildMatrix)
         
