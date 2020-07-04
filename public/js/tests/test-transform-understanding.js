@@ -19,7 +19,7 @@ describe('a-frame and three.js nested entities and transforms', () => {
       boring3d = boring.object3d
     })
     it('will have local position at origin', () => {
-      expect(boring.getAttribute('position')).to.shallowDeepEqual({x: 1, y: 0, z: 0})
+      expect(boring.getAttribute('position')).to.shallowDeepEqual({x: 0, y: 0, z: 0})
     })
   })
 })
