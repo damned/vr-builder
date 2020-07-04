@@ -88,6 +88,7 @@ describe('a-frame and three.js nested entities and transforms', () => {
         
         console.log('reparented local matrix just after setting', reparented3d.matrix)
 
+        reparented3d.object3D.updateMatrixWorld()
         targetParent.object3D.updateMatrixWorld()
         
         console.log('final reparented local matrix', reparented3d.matrix)
