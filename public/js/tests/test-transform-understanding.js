@@ -184,20 +184,32 @@ describe('a-frame and three.js nested entities and transforms', () => {
     let decoration
     
     beforeEach((done) => {
-      let $present =$('<a-box></a-box>').appendTo($scene)
-      decoration = $('<a-sphere position="0 0.6 0" radius="0.1"></a-sphere>').appendTo($present).get(0)
-      present = $present.get(0)
+      let presentBoxMaxY = 0.5
+      let decorationRadiusAtTenthScale = 0.1
+      let decorationOriginInY = presentBoxMaxY + decorationRadiusAtTenthScale
+
+      present = $('<a-box>' +
+                    `<a-sphere id="decoration" position="0 ${decorationOriginInY} 0" scale="0.1 0.1 0.1"></a-sphere>` +
+                  '</a-box>').appendTo($scene).get(0)
+
+      decoration = $('#decoration').get(0)
       present.addEventListener('loaded', () => done())
     })
     
-    it('the present will be positioned at origin', () => {
-      expect(present.getAttribute('position')).to.shallowDeepEqual({x: 0, y: 0, z: 0})
-      expect(present.object3D.position)       .to.shallowDeepEqual({x: 0, y: 0, z: 0})
+    describe('without translation or scale', () => {
+      describe('the present', () => {
+        it('will be positioned at origin', () => {
+          expect(present.getAttribute('position')).to.shallowDeepEqual({x: 0, y: 0, z: 0})
+          expect(present.object3D.position)       .to.shallowDeepEqual({x: 0, y: 0, z: 0})
+        })        
+      })
+      describe('the decoration', () => {        
+        it('will be positioned on top of present', () => {
+          expect(decoration.getAttribute('position')).to.shallowDeepEqual({x: 0, y: 0.6, z: 0})
+          expect(decoration.object3D.position)       .to.shallowDeepEqual({x: 0, y: 0.6, z: 0})
+        })        
+      })
     })
 
-    it('the present will be positioned at origin', () => {
-      expect(present.getAttribute('position')).to.shallowDeepEqual({x: 0, y: 0, z: 0})
-      expect(present.object3D.position)       .to.shallowDeepEqual({x: 0, y: 0, z: 0})
-    })
-})
+  })
 })
