@@ -79,7 +79,7 @@ describe('a-frame and three.js nested entities and transforms', () => {
         let parentInverseMatrix = new THREE.Matrix4().getInverse(targetParent.object3D.matrixWorld)
         console.log('target parent matrix', targetParent.object3D.matrixWorld)
         console.log('inverse target parent matrix', parentInverseMatrix)
-        let recalculatedChildMatrix = parentInverseMatrix.multiply(childWorldMatrix)
+        let recalculatedChildMatrix = new THREE.Matrix4().multiplyMatrices(parentInverseMatrix, childWorldMatrix)
         console.log('recalculated child matrix', recalculatedChildMatrix)
         console.log('child world matrix after recalculation', childWorldMatrix)
         reparented3d.matrix.copy(recalculatedChildMatrix)
