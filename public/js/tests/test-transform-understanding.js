@@ -78,8 +78,6 @@ describe('a-frame and three.js nested entities and transforms', () => {
         child.parentElement.removeChild(child)
 
         let reparented = child.cloneNode()
-        reparented3d = reparented.object3D
-        
         targetParent.appendChild(reparented)
 
         reparented.addEventListener('loaded', () => {
@@ -90,8 +88,8 @@ describe('a-frame and three.js nested entities and transforms', () => {
           //   https://math.stackexchange.com/questions/949341/how-to-find-matrix-b-given-matrix-ab-and-a          
           let recalculatedLocalMatrix = new THREE.Matrix4().getInverse(targetParent.object3D.matrixWorld).multiply(childWorldMatrix)
 
-          reparented3d.matrixAutoUpdate = false
-          reparented3d.matrix.copy(recalculatedLocalMatrix)
+          reparented.object3D.matrixAutoUpdate = false
+          reparented.object3D.matrix.copy(recalculatedLocalMatrix)
 
           done()
         })
@@ -99,7 +97,8 @@ describe('a-frame and three.js nested entities and transforms', () => {
       }
       
       beforeEach((done) => {
-        reparent(done)
+        reparented = reparent(done)
+        reparented3d = reparented.object3D
       })
       
       describe('reparented child sphere', () => {
