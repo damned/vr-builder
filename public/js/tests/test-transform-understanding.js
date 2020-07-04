@@ -43,8 +43,17 @@ describe('a-frame and three.js nested entities and transforms', () => {
       expect(bounds(child.object3D).max).to.shallowDeepEqual(childStartingMaxBounds)
     })
     
-    describe('reparenting, bearing in mind ', () => {
+    describe('reparenting, bearing in mind the entity needs to be cloned before appending as it will be invisible due to aframe bug', () => {
+      let reparented
+      beforeEach(() => {
+        child.parentElement.removeChild(child)
+        reparented = child.cloneNode()
+      })
       
+      it('reparented child sphere should retain original sphere world presence', () => {
+        expect(bounds(reparented.object3D).min).to.shallowDeepEqual(childStartingMinBounds)
+        expect(bounds(reparented.object3D).max).to.shallowDeepEqual(childStartingMaxBounds)
+      })
     })
   })
   
