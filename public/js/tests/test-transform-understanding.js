@@ -51,9 +51,9 @@ describe('a-frame and three.js nested entities and transforms', () => {
         expect(vector(1, 2, 3).applyMatrix4(worldMatrix)).to.deep.equal(vector(1, 2, 3))
       })      
     })
-})
+  })
 
-  describe('a single entity translatedsomewhere', () => {
+  describe('a single entity translated somewhere', () => {
     let translated
     
     beforeEach((done) => {
@@ -69,5 +69,22 @@ describe('a-frame and three.js nested entities and transforms', () => {
       expect(translated.object3D.position)
         .to.shallowDeepEqual({x: 1, y: 2, z: 3})
     })
+    
+    describe('the underlying matrices', () => {
+      beforeEach(() => {
+        localMatrix = translated.object3D.matrix
+        worldMatrix = translated.object3D.matrixWorld
+      })
+      
+      it('will have a local matrix that translates a point by its own translation', () => {
+        expect(vector(2, 4, 6).applyMatrix4(localMatrix)).to.shallowDeepEqual(vector(2, 4, 6))
+      })
+      
+      it('will have a world matrix equal to the local matrix', () => {
+        expect(worldMatrix).to.shallowDeepEqual(localMatrix)
+        expect(vector(1, 2, 3).applyMatrix4(worldMatrix)).to.shallowDeepEqual(vector(2, 4, 6))
+      })      
+    })
+
   })
 })
