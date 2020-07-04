@@ -86,24 +86,30 @@ describe('a-frame and three.js nested entities and transforms', () => {
           expect(decoration.object3D.getWorldPosition()).to.shallowDeepEqual({x: 2, y: (2 + 1.2), z: 2})
         })
 
-        it('will have a bounding box of its scaled dimensions around the translated origin', () => {
-          expect(bounds(decoration.object3D).min).to.shallowDeepEqual({x:-2, y:-3, z: 0})
-          expect(bounds(decoration.object3D).max).to.shallowDeepEqual({x: 0, y:-1, z: 2})
+        it('will have a world-positioned bounding box of its scaled dimensions around the translated origin', () => {
+          expect(bounds(decoration.object3D).min).to.shallowDeepEqual({x: 1.8, y: 3.0, z: 1.8})
+
+          let maxBounds = bounds(decoration.object3D).max
+          expect(maxBounds.x).to.be.equal(2.2)
+          expect(maxBounds.y).to.be.closeTo(3.4, 0.001)
+          expect(maxBounds.z).to.be.equal(2.2)
         })
 
-        xdescribe('the underlying matrices', () => {
+        describe('the underlying matrices', () => {
           beforeEach(() => {
             localMatrix = decoration.object3D.matrix
             worldMatrix = decoration.object3D.matrixWorld
           })
 
-          xit('will have a local matrix that transforms a point by its scale then moves it by the translation', () => {
-            expect(vector(2, 4, 6).applyMatrix4(localMatrix)).to.shallowDeepEqual(vector(3, 6, 13))
+          it('will have an unchanged local matrix - from origin offset in Y at top of present, convert vector tenth scale', () => {
+            let inputLocalPosition = vector(10, 10, 10)
+            let output
+            expect(.applyMatrix4(localMatrix)).to.shallowDeepEqual(vector(1, 1.6, 1))
           })
 
-          xit('will have a world matrix equal to the local matrix', () => {
+          it('will have a world matrix that combines them both', () => {
             expect(worldMatrix).to.shallowDeepEqual(localMatrix)
-            expect(vector(0, 1, 0).applyMatrix4(worldMatrix)).to.shallowDeepEqual(vector(-1, 0, 1))
+            expect(vector(15, 15, 15).applyMatrix4(worldMatrix)).to.shallowDeepEqual(vector(-1, 0, 1))
           })      
         })
       })
