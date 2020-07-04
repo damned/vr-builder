@@ -37,7 +37,8 @@ describe('a-frame and three.js nested entities and transforms', () => {
     })
     
     it('will have a bounding box of unit dimensions centred on origin', () => {
-      expect(bounds(boring.object3D).min).to.shallowDeepEqual({x:-0.5, y:-0.5, z: -0.5})
+      expect(bounds(boring.object3D).min).to.shallowDeepEqual({x:-0.5, y:-0.5, z:-0.5})
+      expect(bounds(boring.object3D).max).to.shallowDeepEqual({x: 0.5, y: 0.5, z: 0.5})
     })
 
     describe('the underlying matrices', () => {
@@ -112,6 +113,11 @@ describe('a-frame and three.js nested entities and transforms', () => {
         .to.shallowDeepEqual({x: 0, y: 0, z: 0})
     })
     
+    it('will have a bounding box of unit dimensions centred on origin', () => {
+      expect(bounds(scaled.object3D).min).to.shallowDeepEqual({x:-1, y:-1, z:-1})
+      expect(bounds(scaled.object3D).max).to.shallowDeepEqual({x: 1, y: 1, z: 1})
+    })
+
     describe('the underlying matrices', () => {
       beforeEach(() => {
         let object3d = scaled.object3D
@@ -121,7 +127,7 @@ describe('a-frame and three.js nested entities and transforms', () => {
         worldMatrix = object3d.matrixWorld
       })
       
-      it('will have a local matrix that transforms a point away from the origin by its sacling factor', () => {
+      it('will have a local matrix that transforms a point away from the origin by its scaling factor', () => {
         expect(vector(2, 4, 6).applyMatrix4(localMatrix)).to.shallowDeepEqual(vector(4, 8, 12))
       })
       
@@ -137,17 +143,21 @@ describe('a-frame and three.js nested entities and transforms', () => {
     let transformed
     
     beforeEach((done) => {
-      transformed = $('<a-box position="-1 -1 -1" scale="2 2 2"></a-box>').appendTo($scene).get(0)
+      transformed = $('<a-box position="-1 -2 1" scale="2 2 2"></a-box>').appendTo($scene).get(0)
       transformed.addEventListener('loaded', () => done())
     })
     
-    it('will be at origin', () => {
-      expect(transformed.getAttribute('position'))
-        .to.shallowDeepEqual({x: 0, y: 0, z: 0})
-      expect(transformed.object3D.position)
-        .to.shallowDeepEqual({x: 0, y: 0, z: 0})
+    it('will be positioned at its unscaled position coordinates', () => {
+      expect(transformed.getAttribute('position')).to.shallowDeepEqual({x: -1, y: -2, z: 1})
+      expect(transformed.object3D.position)       .to.shallowDeepEqual({x: -1, y: -2, z: 1})
     })
-    
+        
+
+    it('will have a bounding box of scaled dimensions around the translated origin', () => {
+      expect(bounds(transformed.object3D).min).to.shallowDeepEqual({x:-2, y:-3, z: 0})
+      expect(bounds(transformed.object3D).max).to.shallowDeepEqual({x: 0, y:-1, z: 2})
+    })
+
     describe('the underlying matrices', () => {
       beforeEach(() => {
         let object3d = transformed.object3D
@@ -157,13 +167,13 @@ describe('a-frame and three.js nested entities and transforms', () => {
         worldMatrix = object3d.matrixWorld
       })
       
-      it('will have a local matrix that transforms a point away from the origin by its sacling factor', () => {
-        expect(vector(2, 4, 6).applyMatrix4(localMatrix)).to.shallowDeepEqual(vector(4, 8, 12))
+      it('will have a local matrix that transforms a point by its scale then moves it by the translation', () => {
+        expect(vector(2, 4, 6).applyMatrix4(localMatrix)).to.shallowDeepEqual(vector(3, 6, 13))
       })
       
       it('will have a world matrix equal to the local matrix', () => {
         expect(worldMatrix).to.shallowDeepEqual(localMatrix)
-        expect(vector(0, 1, 0).applyMatrix4(worldMatrix)).to.shallowDeepEqual(vector(0, 2, 0))
+        expect(vector(0, 1, 0).applyMatrix4(worldMatrix)).to.shallowDeepEqual(vector(-1, 0, 1))
       })      
     })
 
