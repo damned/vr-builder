@@ -178,4 +178,26 @@ describe('a-frame and three.js nested entities and transforms', () => {
     })
 
   })
+  
+  describe('a entity with nesting: a present (box) with decoration (a small sphere) on top', () => {
+    let present
+    let decoration
+    
+    beforeEach((done) => {
+      let $present =$('<a-box></a-box>').appendTo($scene)
+      decoration = $('<a-sphere position="0 0.6 0" radius="0.1"></a-sphere>').appendTo($present).get(0)
+      present = $present.get(0)
+      present.addEventListener('loaded', () => done())
+    })
+    
+    it('the present will be positioned at origin', () => {
+      expect(present.getAttribute('position')).to.shallowDeepEqual({x: 0, y: 0, z: 0})
+      expect(present.object3D.position)       .to.shallowDeepEqual({x: 0, y: 0, z: 0})
+    })
+
+    it('the present will be positioned at origin', () => {
+      expect(present.getAttribute('position')).to.shallowDeepEqual({x: 0, y: 0, z: 0})
+      expect(present.object3D.position)       .to.shallowDeepEqual({x: 0, y: 0, z: 0})
+    })
+})
 })
