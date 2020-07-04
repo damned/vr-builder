@@ -22,6 +22,18 @@ describe('a-frame and three.js nested entities and transforms', () => {
   let localMatrix
   let worldMatrix
   
+  describe('a nested sphere being reparented under another entity, but keeping original world representation', () => {
+    beforeEach((done) => {
+      let parent = $('<a-enitity>' +
+                      '<a-sphere id="child" position="1 1 -1" scale="0.1 0.1 0.1"></a-sphere>' +
+                      '<a-box id="target-parent" position="-1 0 0" scale="2 2 2"></a-box>' +
+                     '</a-entity>').appendTo($scene).get(0)
+
+      let child = $('#child').get(0)
+      parent.addEventListener('loaded', () => done())
+    })
+  })
+  
   describe('a boring single entity in default placement', () => {
     let boring
     
