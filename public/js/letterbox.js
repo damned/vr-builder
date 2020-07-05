@@ -10,6 +10,7 @@ AFRAME.registerComponent('letterbox', {
       key = self.data
       $(host).append(`<a-text align="center" baseline="bottom" value="${key}"></a-text>`)
     }
+    host.classList.add('touchable')
     host.classList.add('letterbox')
     host.addEventListener('hitstart', () => {
       clog('key: ' + key)
