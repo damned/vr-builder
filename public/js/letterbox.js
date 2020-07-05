@@ -8,16 +8,13 @@ AFRAME.registerComponent('letterbox', {
     let key
     self.update = function() {
       key = self.data
+      $(host).append(`<a-text align="center" baseline="bottom" value="${key}"></a-text>`)
     }
-    host.addClass('letterbox')
-    host.addEventListener('loaded', () => {
-      $(`<a-text align="center" baseline="bottom" value="${key}"></a-text>`).appendTo(host)
-    })
+    host.classList.add('letterbox')
     host.addEventListener('hitstart', () => {
       clog('key: ' + key)
-      let color = host.getAttribute('color')
       host.setAttribute('color', 'white')
-      setTimeout(() => host.setAttribute('color', color), 100)
+      setTimeout(() => host.setAttribute('color', 'gray'), 100)
     })
   }
 })
