@@ -115,6 +115,39 @@ describe('a-frame and three.js nested entities and transforms', () => {
         })
       })      
     })
+
+    describe('reparenting using the obvious direct method, subject to aframe invisibility bug', () => {
+      let reparented
+      let reparented3d
+      
+      function reparent(done) {
+        targetParent.appendChild(child)
+
+        child.addEventListener('loaded', () => {
+          done()
+        })
+        return child
+      }
+      
+      beforeEach((done) => {
+        reparented = reparent(done)
+        reparented3d = reparented.object3D
+      })
+      
+      describe('reparented child sphere', () => {
+        it('should retain its world matrix', () => {
+          expect(reparented3d.matrixWorld).to.shallowDeepEqual(childWorldMatrix)
+        })      
+        it('should retain its world position', () => {
+          expect(reparented3d.getWorldPosition(v3)).to.shallowDeepEqual(childWorldPosition)
+        })      
+        it('should retain original sphere world presence', () => {
+          expect(bounds(reparented3d).min).to.shallowDeepEqual(childWorldMinBounds)
+          expect(bounds(reparented3d).max).to.shallowDeepEqual(childWorldMaxBounds)
+        })
+      })      
+    })
+
   })
   
   describe('a boring single entity in default placement', () => {
