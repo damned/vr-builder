@@ -81,7 +81,7 @@ describe('a-frame and three.js nested entities and transforms', () => {
       let reparented3d
       
       let reparent = function(done) {
-        let intendedWorldMatrix = matrixCopy(child.object3D.matrixWorld)
+        let intendedWorldMatrix = matrixCopy(child.object3D.matrixWorld) // this encodes starting pos, rot and scale of entity being moved
         child.parentElement.removeChild(child)
 
         let reparented = child.cloneNode()
@@ -95,11 +95,12 @@ describe('a-frame and three.js nested entities and transforms', () => {
           //   https://math.stackexchange.com/questions/949341/how-to-find-matrix-b-given-matrix-ab-and-a          
           let recalculatedLocalMatrix = new THREE.Matrix4().getInverse(targetParent.object3D.matrixWorld).multiply(intendedWorldMatrix)
           
-          reparented.object3D.matrixAutoUpdate = false
+          let matrixAutoUpdate = reparented.object3D.matrixAutoUpdate
+          reparented.object3D.matrixAutoUpdate = false // so that local matrix doesn't get trashed on tick while updating 
           reparented.object3D.matrix.copy(recalculatedLocalMatrix)
-          reparented.object3D.applyMatrix(identityMatrix)
-          targetParent.object3D.updateWorldMatrix(true, true)
-          reparented.object3D.matrixAutoUpdate = true
+          reparented.object3D.applyMatrix(identityMatrix) // to set pos, rot, scale from matrix
+          reparented.object3D.matrixAutoUpdate = matrixAutoUpdate
+          targetParent.object3D.updateMatrixWorld() // ensure all world matrices around moved entity are consistent
 
           done()
         })
