@@ -128,9 +128,11 @@ describe('a-frame and three.js nested entities and transforms', () => {
       })      
     })
 
-    describe('reparenting using the obvious direct method, subject to aframe invisibility bug', () => {
+    describe("how reparenting doesn't work using the obvious direct method, as well as being subject to aframe invisibility bug", () => {
       let reparented
       let reparented3d
+      let childLocalPosition
+      let childLocalMatrix
       
       let reparentDirectly = function(done) {
         expect(child.object3D.parent).to.equal(originalParent.object3D)
@@ -150,6 +152,8 @@ describe('a-frame and three.js nested entities and transforms', () => {
       }
       
       beforeEach((done) => {
+        childLocalPosition = new THREE.Vector3().copy(child.object3D.position)
+        childLocalMatrix = matrixCopy(child.object3D.matrix)
         reparented = reparentDirectly(done)
         reparented3d = reparented.object3D
       })
@@ -165,6 +169,12 @@ describe('a-frame and three.js nested entities and transforms', () => {
         })      
         it('should retain its world position', () => {
           expect(reparented3d.getWorldPosition(v3)).to.shallowDeepEqual(childWorldPosition)
+        })      
+        it('probably retains its local position', () => {
+          expect(reparented3d.position).to.shallowDeepEqual(childLocalPosition)
+        })      
+        it('probably retains its local matrix', () => {
+          expect(reparented3d.matrix).to.shallowDeepEqual(childLocalMatrix)
         })      
         it('should retain original sphere world presence', () => {
           expect(bounds(reparented3d).min).to.shallowDeepEqual(childWorldMinBounds)
