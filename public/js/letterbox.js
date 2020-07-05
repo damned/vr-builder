@@ -8,7 +8,7 @@ AFRAME.registerComponent('letterbox', {
     let key
     self.update = function() {
       key = self.data
-      $(host).append(`<a-text align="center" baseline="bottom" value="${key}"></a-text>`)
+      $(host).append(`<a-text align="center" baseline="top" value="${key}"></a-text>`)
     }
     host.classList.add('touchable')
     host.classList.add('letterbox')
