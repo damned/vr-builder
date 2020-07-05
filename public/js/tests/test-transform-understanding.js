@@ -97,10 +97,11 @@ describe('a-frame and three.js nested entities and transforms', () => {
 
           reparented.object3D.matrixAutoUpdate = false
           reparented.object3D.matrix.copy(recalculatedLocalMatrix)
-          targetParent.object3D.updateMatrixWorld()
-          setTimeout(() => {
+          targetParent.object3D.updateWorldMatrix(true, true)
+          reparented.object3D.applyMatrix4(identityMatrix)
+          // setTimeout(() => {
             reparented.object3D.matrixAutoUpdate = true
-          }, 50)
+          // }, 50)
           
 
           done()
