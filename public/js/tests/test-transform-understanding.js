@@ -75,6 +75,7 @@ describe('a-frame and three.js nested entities and transforms', () => {
       let reparented3d
       
       function reparent(done) {
+        let intendedWorldMatrix = matrixCopy(child.object3D.matrixWorld)
         child.parentElement.removeChild(child)
 
         let reparented = child.cloneNode()
@@ -86,7 +87,7 @@ describe('a-frame and three.js nested entities and transforms', () => {
           //
           // determine required local matrix thus:
           //   https://math.stackexchange.com/questions/949341/how-to-find-matrix-b-given-matrix-ab-and-a          
-          let recalculatedLocalMatrix = new THREE.Matrix4().getInverse(targetParent.object3D.matrixWorld).multiply(childWorldMatrix)
+          let recalculatedLocalMatrix = new THREE.Matrix4().getInverse(targetParent.object3D.matrixWorld).multiply(intendedWorldMatrix)
 
           reparented.object3D.matrixAutoUpdate = false
           reparented.object3D.matrix.copy(recalculatedLocalMatrix)
