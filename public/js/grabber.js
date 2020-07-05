@@ -34,6 +34,10 @@ function groupUnder(groupRoot, child) {
       clog('group', 'cannot group under itself!')
       return
     }
+    if (groupRoot.currentlyGrabbed) {
+      clog('group', 'will not group under grabbed entity - needs ')
+      return
+    }
     clog('group', 'adding', child, 'to', groupRoot)
     groupRoot.setAttribute('opacity', '0.2')
     
