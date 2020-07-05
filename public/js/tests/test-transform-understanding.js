@@ -97,7 +97,11 @@ describe('a-frame and three.js nested entities and transforms', () => {
 
           reparented.object3D.matrixAutoUpdate = false
           reparented.object3D.matrix.copy(recalculatedLocalMatrix)
-          reparented.object3D.updateMatrixWorld()
+          targetParent.object3D.updateMatrixWorld()
+          setTimeout(() => {
+            reparented.object3D.matrixAutoUpdate = true
+          }, 10)
+          
 
           done()
         })
@@ -128,7 +132,7 @@ describe('a-frame and three.js nested entities and transforms', () => {
       })      
     })
 
-    describe("how reparenting doesn't work using the obvious direct method, as well as being subject to aframe invisibility bug", () => {
+    xdescribe("how reparenting doesn't work using the obvious direct method, as well as being subject to aframe invisibility bug", () => {
       let reparented
       let reparented3d
       let childLocalPosition
