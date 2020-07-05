@@ -1,4 +1,4 @@
-/* global AFRAME THREE colorFromEntityRotation collider clog catching addDebugColor removeDebugColor cloneEntity positionRelativeTo */
+/* global AFRAME THREE colorFromEntityRotation collider clog catching addDebugColor removeDebugColor cloneEntity positionRelativeTo reparent */
 let debug = { useColor: false }
 var options = { colorTwist: false }
 
@@ -30,23 +30,11 @@ let currentlyTouching = (hand) => {
 
 function groupUnder(groupRoot, child) {
   catching(() => {
-    groupRoot.object3D.updateMatrixWorld()
-    let worldToLocal = new THREE.Matrix4().getInverse(groupRoot.object3D.matrixWorld)
-    
-    child.object3D.updateMatrixWorld()
-    let matrix = new THREE.Matrix4().copy(child.object3D.matrixWorld)
-
     clog('group', 'adding', child, 'to', groupRoot)
     groupRoot.setAttribute('opacity', '0.2')
+    
+    let cloned = reparent(child, groupRoot, () => {})
 
-    let cloned = child.cloneNode()
-    groupRoot.appendChild(cloned)
-    cloned.object3D.matrix.copy(matrix)
-    clog('group', 'matrix', matrix)    
-    cloned.object3D.applyMatrix(worldToLocal)
-    clog('group', 'after apply matrix', cloned.object3D)    
-
-    child.parentElement.remove(child) // REMOVE OLD CHILD
     clog('group', 'reparented')    
   })
 }
