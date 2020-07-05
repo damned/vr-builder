@@ -30,6 +30,10 @@ let currentlyTouching = (hand) => {
 
 function groupUnder(groupRoot, child) {
   catching(() => {
+    if (groupRoot == child) {
+      clog('group', 'cannot group under itself!')
+      return
+    }
     clog('group', 'adding', child, 'to', groupRoot)
     groupRoot.setAttribute('opacity', '0.2')
     

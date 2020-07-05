@@ -12,10 +12,13 @@ AFRAME.registerComponent('letterbox', {
     }
     host.classList.add('touchable')
     host.classList.add('letterbox')
-    host.addEventListener('hitstart', () => {
-      clog('key: ' + key)
-      host.setAttribute('color', 'white')
-      setTimeout(() => host.setAttribute('color', 'gray'), 100)
+    host.addEventListener('hitstart', (event) => {
+      clog('letterbox', event.target)
+      if (event.target.hasAttribute('fingertip')) {
+        clog('letterbox', 'key: ' + key)
+        host.setAttribute('color', 'white')
+        setTimeout(() => host.setAttribute('color', 'gray'), 100)         
+      }
     })
   }
 })
