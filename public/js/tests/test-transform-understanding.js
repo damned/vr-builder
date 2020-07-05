@@ -94,15 +94,12 @@ describe('a-frame and three.js nested entities and transforms', () => {
           // determine required local matrix thus:
           //   https://math.stackexchange.com/questions/949341/how-to-find-matrix-b-given-matrix-ab-and-a          
           let recalculatedLocalMatrix = new THREE.Matrix4().getInverse(targetParent.object3D.matrixWorld).multiply(intendedWorldMatrix)
-
+          
           reparented.object3D.matrixAutoUpdate = false
           reparented.object3D.matrix.copy(recalculatedLocalMatrix)
+          reparented.object3D.applyMatrix(identityMatrix)
           targetParent.object3D.updateWorldMatrix(true, true)
-          reparented.object3D.applyMatrix4(identityMatrix)
-          // setTimeout(() => {
-            reparented.object3D.matrixAutoUpdate = true
-          // }, 50)
-          
+          reparented.object3D.matrixAutoUpdate = true
 
           done()
         })
