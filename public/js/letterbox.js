@@ -8,17 +8,14 @@ AFRAME.registerComponent('letterbox', {
     let key
     self.update = function() {
       key = self.data
-      $(host).append(`<a-text align="center" baseline="top" value="${key}"></a-text>`)
+      $(`<a-text align="center" wrap-count="100" postion="0 0.5 0" scale"0.2 0.2 0.2" baseline="bottom" value="${key}"></a-text>`).appendTo(host)
     }
-    host.classList.add('touchable')
     host.classList.add('letterbox')
     host.addEventListener('hitstart', (event) => {
       clog('letterbox', event.target)
-      if (event.target.hasAttribute('fingertip')) {
-        clog('letterbox', 'key: ' + key)
-        host.setAttribute('color', 'white')
-        setTimeout(() => host.setAttribute('color', 'gray'), 100)         
-      }
+      clog('letterbox', 'key: ' + key)
+      host.setAttribute('color', 'white')
+      setTimeout(() => host.setAttribute('color', 'gray'), 100)         
     })
   }
 })
