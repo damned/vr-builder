@@ -47,20 +47,29 @@
     [ ] copy - take colour off sleeve and touch other objects with it
     - revert, re-apply - see undo?
 [x] fix plan / build preserve rotation
-[ ] revert broken group reparenting
+[x] revert broken group reparenting
 [x] unit tests to understand three.js transforms
 [x] unit tests to prove aframe reparenting functions
 [ ] tidy up collisions
     - collision monitor - showing closest and all current collisionsed :)
       - use identity of tag, color, scale
     - integration test for collisions?
-[ ] group and ungroup
+[/] group
+    [x] basic grouping attaching dropped entities to touched entities
+    [x] world-placement maintaining reparenting
+    [ ] clean up colliders (etc.?) for removed entities
+    [ ] plan/build of nested entities
     [ ] vertical axis captured when group created
 [ ] ungroup
 [ ] keyboard entry
-    - create key tile with monitor, fires letter on collision with touchable
-    - create key-home with a-z, space and linked monitor
-    - use group to create hand typing attachments?
+    [x] create key tile with monitor, fires letter on collision with touchable
+    [x] create key-home with a-z, space and linked monitor
+    [x] use group to prototype hand typing attachments
+    [ ] custom keyboard mode when hand within keyboard space (auto-attach typist-hand)
+    [ ] adjustable finger locations on typist-hand (normal in-group movement)
+    [ ] extend fingers on rotate around z
+    [ ] whole keyboard pushed down by first contact, mitigating lack of physical stop, hopefully reducing second-typings
+    [ ] draggable keyboard
 [ ] undelete - grab behind back and bring it out (stack...  undo?)
 [ ] default align vertical
     - show avatar (transparent) for align, move through it to 'pick it up' and turn on alignment 
