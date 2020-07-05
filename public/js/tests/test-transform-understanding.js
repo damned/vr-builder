@@ -100,7 +100,7 @@ describe('a-frame and three.js nested entities and transforms', () => {
           targetParent.object3D.updateMatrixWorld()
           setTimeout(() => {
             reparented.object3D.matrixAutoUpdate = true
-          }, 10)
+          }, 50)
           
 
           done()
