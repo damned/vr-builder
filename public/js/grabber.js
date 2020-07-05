@@ -34,8 +34,8 @@ function groupUnder(groupRoot, child) {
       clog('group', 'cannot group under itself!')
       return
     }
-    if (groupRoot.currentlyGrabbed) {
-      clog('group', 'will not group under grabbed entity - needs ')
+    if (groupRoot.currentlyGrabbed || groupRoot.recentlyGrabbed) {
+      clog('group', 'will not group under grabbed entity - needs to be just touching')
       return
     }
     clog('group', 'adding', child, 'to', groupRoot)
@@ -135,6 +135,11 @@ AFRAME.registerComponent('grabber', {
         }
         else {
           this.grabbed.currentlyGrabbed = false
+          let recentlyGrabbed = this.grabbed
+          this.grabbed.recentlyGrabbed = true
+          setTimeout(() => { 
+            recentlyGrabbed.recentlyGrabbed = false
+          }, 500)
           this.grabbed.removeAttribute('follower')
           let otherHandTouching = currentlyTouching(otherHand(this))
           if (otherHandTouching) {
