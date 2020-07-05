@@ -45,6 +45,12 @@ describe('a-frame and three.js nested entities and transforms', () => {
         done()
       })
     })
+    afterEach(() => {
+      if (child.parentNode) {
+        
+      }
+      child.removeElement()
+    })
     
     let childWorldPosition = {x:-1, y: 1, z: 0}
     let childWorldMinBounds = {x:-1.1, y: 0.9, z:-0.1}
@@ -74,7 +80,7 @@ describe('a-frame and three.js nested entities and transforms', () => {
       let reparented
       let reparented3d
       
-      function reparent(done) {
+      let reparent = function(done) {
         let intendedWorldMatrix = matrixCopy(child.object3D.matrixWorld)
         child.parentElement.removeChild(child)
 
@@ -91,6 +97,7 @@ describe('a-frame and three.js nested entities and transforms', () => {
 
           reparented.object3D.matrixAutoUpdate = false
           reparented.object3D.matrix.copy(recalculatedLocalMatrix)
+          reparented.object3D.updateMatrixWorld()
 
           done()
         })
@@ -103,8 +110,9 @@ describe('a-frame and three.js nested entities and transforms', () => {
       })
       
       describe('reparented child sphere', () => {
-        it('should retain its world matrix', () => {
+        it('should retain its world matrix', (done) => {
           expect(reparented3d.matrixWorld).to.shallowDeepEqual(childWorldMatrix)
+          done()
         })      
         it('should retain its world position', () => {
           expect(reparented3d.getWorldPosition(v3)).to.shallowDeepEqual(childWorldPosition)
@@ -120,7 +128,8 @@ describe('a-frame and three.js nested entities and transforms', () => {
       let reparented
       let reparented3d
       
-      function reparent(done) {
+      let reparentDirectly = function(done) {
+        child.flushToDOM()
         targetParent.appendChild(child)
 
         child.addEventListener('loaded', () => {
@@ -130,7 +139,7 @@ describe('a-frame and three.js nested entities and transforms', () => {
       }
       
       beforeEach((done) => {
-        reparented = reparent(done)
+        reparented = reparentDirectly(done)
         reparented3d = reparented.object3D
       })
       
