@@ -9,8 +9,9 @@ AFRAME.registerComponent('letterbox', {
     self.update = function() {
       key = self.data
     }
+    host.addClass('letterbox')
     host.addEventListener('loaded', () => {
-      $(`<a-text align="center" baseline="bottom" value="${key}"></a-text>`)
+      $(`<a-text align="center" baseline="bottom" value="${key}"></a-text>`).appendTo(host)
     })
     host.addEventListener('hitstart', () => {
       clog('key: ' + key)
