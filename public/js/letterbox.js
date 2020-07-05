@@ -8,7 +8,7 @@ AFRAME.registerComponent('letterbox', {
     let key
     self.update = function() {
       key = self.data
-      $(`<a-text align="center" wrap-count="100" postion="0 0.5 0" scale"0.2 0.2 0.2" baseline="bottom" value="${key}"></a-text>`).appendTo(host)
+      $(`<a-text align="center" wrap-count="100" position="0 0 0.051" scale"0.2 0.2 0.2" baseline="center" value="${key}"></a-text>`).appendTo(host)
     }
     host.classList.add('letterbox')
     host.addEventListener('hitstart', (event) => {
