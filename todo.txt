@@ -56,7 +56,7 @@
     - integration test for collisions?
 [ ] group and ungroup
     [ ] vertical axis captured when group created
-[ ] unit tests on copyPlacement() / applyPlacement()
+[ ] ungroup
 [ ] keyboard entry
     - create key tile with monitor, fires letter on collision with touchable
     - create key-home with a-z, space and linked monitor
@@ -77,6 +77,7 @@
     - the starting room can be built as you see fit to organise your plan keys
     - maybe ultimately add plan keys within any plan
 [ ] switch custom handler code to host.emit() events and addEventListener...
+[ ] unit tests on copyPlacement() / applyPlacement()
 [ ] texture browser...
     - 3d movement with axes for roughness etc
     - areas in globes are different 'topics'
@@ -120,6 +121,9 @@
   - maybe with filtering (select fixed bit of text to group)
   - group with tabs maybe
 [ ] stretch improvements
+    - apply on per-geometry basis, or use other mechanisms to limit non-unifrom scaling, as three.js
+      does not support non-uniform scaling (https://github.com/mrdoob/three.js/issues/3845)
+      resulting in shear transformations on children of non-uniform-scaled parents
     - axis lock affordance
     - finer grained control at small margins
 [ ] visual clone-flick debug (for tweaking activation)
