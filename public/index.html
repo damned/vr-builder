@@ -52,25 +52,22 @@
       <a-box class="stock touchable" position="1 0 0" color="brown" width="0.3" depth="0.3" height="0.3"></a-box>
 
       <a-box class="touchable" position="-0.2 1.2 -0.5" width="0.05" depth="0.05" height="0.05">
-        <a-sphere fingertip color="red" radius="0.02" position="-0.05 -0.1 0"></a-sphere>
-        <a-sphere fingertip color="red" radius="0.02" position="0.05  -0.1 0"></a-sphere>
-        <a-sphere fingertip color="red" radius="0.02" position="0.05  -0.1 0.1"></a-sphere>
+        <a-sphere fingertip color="red" radius="0.02" position="0.1 -0.05 -0.05"></a-sphere>
+        <a-sphere fingertip color="red" radius="0.02" position="0.1  0.05 0.05"></a-sphere>
+        <a-sphere fingertip color="red" radius="0.02" position="0.1  0.05 -0.05"></a-sphere>
       </a-box>
 
       <a-box class="touchable" position="0.2 1.2 -0.5" width="0.05" depth="0.05" height="0.05">
-        <a-sphere fingertip color="red" radius="0.02" position="-0.05 -0.1 0.1"></a-sphere>
-        <a-sphere fingertip color="red" radius="0.02" position="-0.05 -0.1 0"></a-sphere>
-        <a-sphere fingertip color="red" radius="0.02" position="0.05  -0.1 0"></a-sphere>
+        <a-sphere fingertip color="red" radius="0.02" position="-0.1  0.05 -0.05"></a-sphere>
+        <a-sphere fingertip color="red" radius="0.02" position="-0.1  0.05 0.05"></a-sphere>
+        <a-sphere fingertip color="red" radius="0.02" position="-0.1 -0.05 -0.05"></a-sphere>
       </a-box>
 
-      <a-entity position="-0.4 0.4 0.1" scale="0.5 0.5 0.5">
-        <a-text id="keyed" align="left" wrap-count="60" position="-0.5 1.2 -1.2" baseline="top" value="keyed input\na"></a-text>
+      <a-entity position="-0.4 0.3 0.1" scale="0.5 0.5 0.5">
+        <a-text id="keyed" align="left" wrap-count="60" position="-0.5 1.5 -1.2" baseline="top" value="keyed input\na"></a-text>
         
-        <a-box letterbox="_" position="0.4   1 -0.3" mixin="letterkey"></a-box>
-        <a-box letterbox="_" position="0.5   1 -0.3" mixin="letterkey"></a-box>
-        <a-box letterbox="_" position="0.6   1 -0.3" mixin="letterkey"></a-box>
-        <a-box letterbox="_" position="0.7   1 -0.3" mixin="letterkey"></a-box>
-        <a-box letterbox="_" position="0.8   1 -0.3" mixin="letterkey"></a-box>
+        <a-box letterbox="_" position="0.6   1 -0.3" width="0.4" mixin="letterkey"></a-box>
+        <a-box letterbox="\n" position="1.6   1 -0.3" mixin="letterkey"></a-box>
 
         <a-entity position="0.2 0 0">
           <a-box letterbox="z" position="0   1 -0.5" mixin="letterkey"></a-box>
