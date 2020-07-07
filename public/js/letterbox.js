@@ -8,7 +8,12 @@ AFRAME.registerComponent('letterbox', {
     let key
     self.update = function() {
       key = self.data
-      $(`<a-text align="center" wrap-count="100" position="0 0 0.051" scale"0.2 0.2 0.2" baseline="center" value="${key}"></a-text>`).appendTo(host)
+      if (key == '') {
+        key = "\n"
+      }
+      else {
+        $(`<a-text align="center" wrap-count="100" position="0 0 0.051" scale"0.2 0.2 0.2" baseline="center" value="${key}"></a-text>`).appendTo(host)        
+      }
     }
     let $keyed = $("#keyed")
     host.classList.add('letterbox')
