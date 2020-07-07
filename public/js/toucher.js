@@ -8,7 +8,7 @@ AFRAME.registerComponent('toucher', {
     let host = self.el
 
     host.setAttribute('aabb-collider', 'objects: .touchable; collideNonVisible: true' 
-                         + '; debug: true'
+                         // + '; debug: true'
                          )
     setTimeout(() => {
       self.collider = collider(host)

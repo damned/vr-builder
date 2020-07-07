@@ -65,10 +65,10 @@
     [x] create key tile with monitor, fires letter on collision with touchable
     [x] create key-home with a-z, space and linked monitor
     [x] use group to prototype hand typing attachments
-    [ ] custom keyboard mode when hand within keyboard space (auto-attach typist-hand)
+    [x] custom keyboard mode when hand within keyboard space (auto-attach typist-hand)
+    [ ] whole keyboard pushed down by first contact, mitigating lack of physical stop, hopefully reducing second-typings
     [ ] adjustable finger locations on typist-hand (normal in-group movement)
     [ ] extend fingers on rotate around z
-    [ ] whole keyboard pushed down by first contact, mitigating lack of physical stop, hopefully reducing second-typings
     [ ] draggable keyboard
 [ ] undelete - grab behind back and bring it out (stack...  undo?)
 [ ] default align vertical

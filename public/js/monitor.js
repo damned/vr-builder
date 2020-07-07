@@ -2,10 +2,10 @@
 let MonitorPart = function(component, host) {
   
   function enableColliderTrackingWhenMoves() {
-    host.setAttribute('omit-from-plan', '')    
+    host.setAttribute('data-aabb-collider-dynamic', '')
   }
   function doNotSaveMonitorToPlan() {
-    host.setAttribute('data-aabb-collider-dynamic', '')
+    host.setAttribute('omit-from-plan', '')    
   }
   return {
     init: function() {
