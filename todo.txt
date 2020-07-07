@@ -67,6 +67,7 @@
     [x] use group to prototype hand typing attachments
     [x] custom keyboard mode when hand within keyboard space (auto-attach typist-hand)
     [ ] whole keyboard pushed down by first contact, mitigating lack of physical stop, hopefully reducing second-typings
+        - follow locked to y, offset by fingertip width
     [ ] adjustable finger locations on typist-hand (normal in-group movement)
     [ ] extend fingers on rotate around z
     [ ] draggable keyboard

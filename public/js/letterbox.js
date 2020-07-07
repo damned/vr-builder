@@ -3,7 +3,7 @@
 const customActions = {
   space: value => value + ' ',
   enter: value => value + '\n',
-  backspace: value => value.slice(0, -1)
+  back: value => value.slice(0, -1)
 }
 
 AFRAME.registerComponent('letterbox', {
