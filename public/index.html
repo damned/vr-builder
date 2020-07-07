@@ -51,12 +51,17 @@
       
       <a-box class="stock touchable" position="1 0 0" color="brown" width="0.3" depth="0.3" height="0.3"></a-box>
 
-      <a-sphere fingertip color="red" radius="0.02" position="0 1.2 -0.5"></a-sphere>
-      <a-sphere fingertip color="red" radius="0.02" position="0.1 1.2 -0.5"></a-sphere>
-      <a-sphere fingertip color="red" radius="0.02" position="0.2 1.2 -0.5"></a-sphere>
-      <a-sphere fingertip color="red" radius="0.02" position="0.3 1.2 -0.5"></a-sphere>
-      <a-sphere fingertip color="red" radius="0.02" position="0.4 1.2 -0.5"></a-sphere>
-      <a-sphere fingertip color="red" radius="0.02" position="0.5 1.2 -0.5"></a-sphere>
+      <a-box class="touchable" position="-0.2 1.2 -0.5" width="0.05" depth="0.05" height="0.05">
+        <a-sphere fingertip color="red" radius="0.02" position="0   -0.1 0"></a-sphere>
+        <a-sphere fingertip color="red" radius="0.02" position="0.1 -0.1 0"></a-sphere>
+        <a-sphere fingertip color="red" radius="0.02" position="0.1 -0.1 0.1"></a-sphere>
+      </a-box>
+
+      <a-box class="touchable" position="0.2 1.2 -0.5" width="0.05" depth="0.05" height="0.05">
+        <a-sphere fingertip color="red" radius="0.02" position="0   -0.1 0.1"></a-sphere>
+        <a-sphere fingertip color="red" radius="0.02" position="0   -0.1 0"></a-sphere>
+        <a-sphere fingertip color="red" radius="0.02" position="0.1 -0.1 0"></a-sphere>
+      </a-box>
 
       <a-entity position="-0.4 0.4 0.1" scale="0.5 0.5 0.5">
         <a-text id="keyed" align="left" wrap-count="60" position="-0.5 1.2 -1.2" baseline="top" value="keyed input\na"></a-text>
