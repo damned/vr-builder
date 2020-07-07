@@ -87,6 +87,7 @@ var Hand = function($hand) {
   debug('hi there you !')
   
   $hand.attr('oculus-touch-controls', 'hand: ' + side + '; model: false')
+  $hand.addClass('hand')
   
   $hand.on('triggerdown', grabHandler)
        .on('triggerup', triggerReleaseHandler)
