@@ -8,7 +8,7 @@ AFRAME.registerComponent('fingertip', {
     host.classList.add('touchable')
     
     host.setAttribute('aabb-collider', 'objects: .letterbox;' 
-                         + '; debug: true'
+                         // + '; debug: true'
                          )
   }
 })
