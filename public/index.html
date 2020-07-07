@@ -52,15 +52,15 @@
       <a-box class="stock touchable" position="1 0 0" color="brown" width="0.3" depth="0.3" height="0.3"></a-box>
 
       <a-box class="touchable" position="-0.2 1.2 -0.5" width="0.05" depth="0.05" height="0.05">
-        <a-sphere fingertip color="red" radius="0.02" position="0   -0.1 0"></a-sphere>
-        <a-sphere fingertip color="red" radius="0.02" position="0.1 -0.1 0"></a-sphere>
-        <a-sphere fingertip color="red" radius="0.02" position="0.1 -0.1 0.1"></a-sphere>
+        <a-sphere fingertip color="red" radius="0.02" position="-0.05 -0.1 0"></a-sphere>
+        <a-sphere fingertip color="red" radius="0.02" position="0.05  -0.1 0"></a-sphere>
+        <a-sphere fingertip color="red" radius="0.02" position="0.05  -0.1 0.1"></a-sphere>
       </a-box>
 
       <a-box class="touchable" position="0.2 1.2 -0.5" width="0.05" depth="0.05" height="0.05">
-        <a-sphere fingertip color="red" radius="0.02" position="0   -0.1 0.1"></a-sphere>
-        <a-sphere fingertip color="red" radius="0.02" position="0   -0.1 0"></a-sphere>
-        <a-sphere fingertip color="red" radius="0.02" position="0.1 -0.1 0"></a-sphere>
+        <a-sphere fingertip color="red" radius="0.02" position="-0.05 -0.1 0.1"></a-sphere>
+        <a-sphere fingertip color="red" radius="0.02" position="-0.05 -0.1 0"></a-sphere>
+        <a-sphere fingertip color="red" radius="0.02" position="0.05  -0.1 0"></a-sphere>
       </a-box>
 
       <a-entity position="-0.4 0.4 0.1" scale="0.5 0.5 0.5">
@@ -72,34 +72,40 @@
         <a-box letterbox="_" position="0.7   1 -0.3" mixin="letterkey"></a-box>
         <a-box letterbox="_" position="0.8   1 -0.3" mixin="letterkey"></a-box>
 
-        <a-box letterbox="z" position="0   1 -0.5" mixin="letterkey"></a-box>
-        <a-box letterbox="x" position="0.2 1 -0.5" mixin="letterkey"></a-box>
-        <a-box letterbox="c" position="0.4 1 -0.5" mixin="letterkey"></a-box>
-        <a-box letterbox="v" position="0.6 1 -0.5" mixin="letterkey"></a-box>
-        <a-box letterbox="b" position="0.8 1 -0.5" mixin="letterkey"></a-box>
-        <a-box letterbox="n" position="1.0 1 -0.5" mixin="letterkey"></a-box>
-        <a-box letterbox="m" position="1.2 1 -0.5" mixin="letterkey"></a-box>
+        <a-entity position="0.2 0 0">
+          <a-box letterbox="z" position="0   1 -0.5" mixin="letterkey"></a-box>
+          <a-box letterbox="x" position="0.2 1 -0.5" mixin="letterkey"></a-box>
+          <a-box letterbox="c" position="0.4 1 -0.5" mixin="letterkey"></a-box>
+          <a-box letterbox="v" position="0.6 1 -0.5" mixin="letterkey"></a-box>
+          <a-box letterbox="b" position="0.8 1 -0.5" mixin="letterkey"></a-box>
+          <a-box letterbox="n" position="1.0 1 -0.5" mixin="letterkey"></a-box>
+          <a-box letterbox="m" position="1.2 1 -0.5" mixin="letterkey"></a-box>
+        </a-entity>
 
-        <a-box letterbox="a" position="0   1 -0.7" mixin="letterkey"></a-box>
-        <a-box letterbox="s" position="0.2 1 -0.7" mixin="letterkey"></a-box>
-        <a-box letterbox="d" position="0.4 1 -0.7" mixin="letterkey"></a-box>
-        <a-box letterbox="f" position="0.6 1 -0.7" mixin="letterkey"></a-box>
-        <a-box letterbox="g" position="0.8 1 -0.7" mixin="letterkey"></a-box>
-        <a-box letterbox="h" position="1.0 1 -0.7" mixin="letterkey"></a-box>
-        <a-box letterbox="j" position="1.2 1 -0.7" mixin="letterkey"></a-box>
-        <a-box letterbox="k" position="1.4 1 -0.7" mixin="letterkey"></a-box>
-        <a-box letterbox="l" position="1.6 1 -0.7" mixin="letterkey"></a-box>
-
-        <a-box letterbox="q" position="0   1 -0.9" mixin="letterkey"></a-box>
-        <a-box letterbox="w" position="0.2 1 -0.9" mixin="letterkey"></a-box>
-        <a-box letterbox="e" position="0.4 1 -0.9" mixin="letterkey"></a-box>
-        <a-box letterbox="r" position="0.6 1 -0.9" mixin="letterkey"></a-box>
-        <a-box letterbox="t" position="0.8 1 -0.9" mixin="letterkey"></a-box>
-        <a-box letterbox="y" position="1.0 1 -0.9" mixin="letterkey"></a-box>
-        <a-box letterbox="u" position="1.2 1 -0.9" mixin="letterkey"></a-box>
-        <a-box letterbox="i" position="1.4 1 -0.9" mixin="letterkey"></a-box>
-        <a-box letterbox="o" position="1.6 1 -0.9" mixin="letterkey"></a-box>
-        <a-box letterbox="p" position="1.8 1 -0.9" mixin="letterkey"></a-box>
+        <a-entity position="0.1 0 0">
+          <a-box letterbox="a" position="0   1 -0.7" mixin="letterkey"></a-box>
+          <a-box letterbox="s" position="0.2 1 -0.7" mixin="letterkey"></a-box>
+          <a-box letterbox="d" position="0.4 1 -0.7" mixin="letterkey"></a-box>
+          <a-box letterbox="f" position="0.6 1 -0.7" mixin="letterkey"></a-box>
+          <a-box letterbox="g" position="0.8 1 -0.7" mixin="letterkey"></a-box>
+          <a-box letterbox="h" position="1.0 1 -0.7" mixin="letterkey"></a-box>
+          <a-box letterbox="j" position="1.2 1 -0.7" mixin="letterkey"></a-box>
+          <a-box letterbox="k" position="1.4 1 -0.7" mixin="letterkey"></a-box>
+          <a-box letterbox="l" position="1.6 1 -0.7" mixin="letterkey"></a-box>
+        </a-entity>
+        
+        <a-entity position="0 0 0">
+          <a-box letterbox="q" position="0   1 -0.9" mixin="letterkey"></a-box>
+          <a-box letterbox="w" position="0.2 1 -0.9" mixin="letterkey"></a-box>
+          <a-box letterbox="e" position="0.4 1 -0.9" mixin="letterkey"></a-box>
+          <a-box letterbox="r" position="0.6 1 -0.9" mixin="letterkey"></a-box>
+          <a-box letterbox="t" position="0.8 1 -0.9" mixin="letterkey"></a-box>
+          <a-box letterbox="y" position="1.0 1 -0.9" mixin="letterkey"></a-box>
+          <a-box letterbox="u" position="1.2 1 -0.9" mixin="letterkey"></a-box>
+          <a-box letterbox="i" position="1.4 1 -0.9" mixin="letterkey"></a-box>
+          <a-box letterbox="o" position="1.6 1 -0.9" mixin="letterkey"></a-box>
+          <a-box letterbox="p" position="1.8 1 -0.9" mixin="letterkey"></a-box>
+        </a-entity>
       </a-entity>
 
       <a-entity id="left-hand" hand-side="left"></a-entity>
