@@ -1,19 +1,27 @@
 /* global AFRAME clog */
 
+const customActions = {
+  space: value => value + ' ',
+  enter: value => value + '\n',
+  backspace: value => value.slice(0, -1)
+}
+
 AFRAME.registerComponent('letterbox', {
   schema: {type: 'string'},
   init: function() {
     let self = this
     let host = self.el
     let key
+    let keyAction
     self.update = function() {
       key = self.data
-      if (key == '') {
-        key = "\n"
+      if (customActions[key]) {
+        keyAction = customActions[key]
       }
       else {
-        $(`<a-text align="center" wrap-count="100" position="0 0 0.051" scale"0.2 0.2 0.2" baseline="center" value="${key}"></a-text>`).appendTo(host)        
+        keyAction = (value) => value += key
       }
+      $(`<a-text align="center" wrap-count="100" position="0 0 0.051" scale"0.2 0.2 0.2" baseline="center" value="${key}"></a-text>`).appendTo(host)        
     }
     let $keyed = $("#keyed")
     host.classList.add('letterbox')
@@ -21,7 +29,7 @@ AFRAME.registerComponent('letterbox', {
       clog('letterbox', event.target)
       clog('letterbox', 'key: ' + key)
       let logValue = $keyed.attr('value')
-      logValue += key
+      logValue = keyAction(logValue)
       $keyed.attr("value", logValue);
 
       host.setAttribute('color', 'white')

@@ -55,24 +55,27 @@
       <a-box class="stock touchable" position="1 0 0" color="brown" width="0.3" depth="0.3" height="0.3"></a-box>
 
       <a-entity keyboard-space position="-0.4 0.35 0.1">
-        <a-box typist-hand hand-side="left" class="touchable" position="0.2 0.8 -0.6" width="0.05" depth="0.05" height="0.05">
+        <a-box typist-hand hand-side="left" class="touchable" position="0.2 0.8 -0.6" opacity="0.5" width="0.03" depth="0.02" height="0.02">
+          <a-sphere fingertip color="red" radius="0.02" position="0.1 -0.1 0.05"></a-sphere>
           <a-sphere fingertip color="red" radius="0.02" position="0.1 -0.1 -0.05"></a-sphere>
           <a-sphere fingertip color="red" radius="0.02" position="0.1  0.1 0.05"></a-sphere>
           <a-sphere fingertip color="red" radius="0.02" position="0.1  0.1 -0.05"></a-sphere>
         </a-box>
 
-        <a-box typist-hand hand-side="right" class="touchable" position="0.6 0.8 -0.6" width="0.05" depth="0.05" height="0.05">
+        <a-box typist-hand hand-side="right" class="touchable" position="0.6 0.8 -0.6" opacity="0.5" width="0.03" depth="0.02" height="0.02">
           <a-sphere fingertip color="red" radius="0.02" position="-0.1  0.1 -0.05"></a-sphere>
           <a-sphere fingertip color="red" radius="0.02" position="-0.1  0.1 0.05"></a-sphere>
           <a-sphere fingertip color="red" radius="0.02" position="-0.1 -0.1 -0.05"></a-sphere>
+          <a-sphere fingertip color="red" radius="0.02" position="-0.1 -0.1 0.05"></a-sphere>
         </a-box>
 
         <a-entity scale="0.5 0.5 0.5">
 
           <a-text id="keyed" align="left" wrap-count="60" position="-0.5 1.7 -1.2" baseline="top" value="keyed input\na"></a-text>
 
-          <a-box letterbox="_" position="0.6   1 -0.3" width="0.8" mixin="letterkey"></a-box>
-          <a-box letterbox="" position="1.6   1 -0.3" mixin="letterkey"></a-box>
+          <a-box letterbox="space" position="0.6 1 -0.3" width="0.8" mixin="letterkey"></a-box>
+          <a-box letterbox="enter" position="1.6 1 -0.3" mixin="letterkey"></a-box>
+          <a-box letterbox="back" position="2.1  1 -0.9" width="0.4" mixin="letterkey"></a-box>
 
           <a-entity position="0.2 0 0">
             <a-box letterbox="z" position="0   1 -0.5" mixin="letterkey"></a-box>
