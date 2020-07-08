@@ -13,6 +13,8 @@ AFRAME.registerComponent('letterbox', {
     let host = self.el
     let key
     let keyAction
+    let keyboard = $(host).closest('[keyboard]').get(0)
+    
     self.update = function() {
       key = self.data
       if (customActions[key]) {
@@ -33,7 +35,11 @@ AFRAME.registerComponent('letterbox', {
       $keyed.attr("value", logValue);
 
       host.setAttribute('color', 'white')
-      setTimeout(() => host.setAttribute('color', 'gray'), 100)         
+      setTimeout(() => host.setAttribute('color', 'gray'), 100)
+      keyboard.emit('keydown', host)
+    })
+    host.addEventListener('hitend', (event) => {
+      keyboard.emit('keyup', host)
     })
   }
 })
