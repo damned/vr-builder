@@ -1,7 +1,8 @@
-/* global AFRAME clog */
+/* global AFRAME clog THREE */
+const __yPositionVector = new THREE.Vector3()
 
 function yPosition(entity) {
-  return entity.object3D.position.y
+  return entity.object3D.getWorldPosition(__yPositionVector).y
 }
 
 AFRAME.registerComponent('keyboard', {
@@ -17,6 +18,7 @@ AFRAME.registerComponent('keyboard', {
     }
     
     host.addEventListener('keydown', (event) => {
+      
       clog('keyboard', 'keydown event target', event.target)
       activeKey = event.target
       keyDownY = yPosition(activeKey)
@@ -29,6 +31,7 @@ AFRAME.registerComponent('keyboard', {
     })
     self.tick = function() {
       if (activeKey && keyDownY) {
+        clog('keyboard', 'setting offset')
         setOffsetInY(keyDownY - yPosition(activeKey))
       }
     }

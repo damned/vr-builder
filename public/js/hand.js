@@ -55,7 +55,7 @@ var Hand = function($hand) {
   let $sleeve = $(sleeve)
   $sleeve.appendTo($hand)
   $hand.on('handtoolstart', () => {
-    clog('handtoolstart', 'got in hand - hiding sleeve')
+    // clog('handtoolstart', 'got in hand - hiding sleeve')
     $sleeve.remove()
   })
 
