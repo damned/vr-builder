@@ -109,7 +109,7 @@ AFRAME.registerComponent('grabber', {
         }
         debugColor(host, 'white')
         debugColor(tograb, 'white')
-        host.setAttribute('debugged', `grabbing: ${tograb.tagName} with ${this.grabbedLeaderSpec}`)
+        // host.setAttribute('debugged', `grabbing: ${tograb.tagName} with ${this.grabbedLeaderSpec}`)
         console.log('grabberId', this.grabbedLeaderSpec)
         let cloneable = tograb.components['cloneable']
         if (cloneable) {

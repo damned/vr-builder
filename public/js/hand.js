@@ -54,6 +54,10 @@ var Hand = function($hand) {
   let sleeve = createSleeve(side)
   let $sleeve = $(sleeve)
   $sleeve.appendTo($hand)
+  $sleeve.on('handtoolstart', () => {
+    clog('handtoolstart', 'got in sleeve')
+    $sleeve.remove()
+  })
 
   let model = createHandModel(side)
   let $model = $(model)

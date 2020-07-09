@@ -1,4 +1,4 @@
-/* global AFRAME */
+/* global AFRAME clog */
 
 AFRAME.registerComponent('typist-hand', {
   init: function() {
@@ -14,7 +14,8 @@ AFRAME.registerComponent('typist-hand', {
 
     $keyboardSpace.on('typestart', () => {
       host.setAttribute('follower', `leader: ${handSpec}`)
-      hand.emit('')
+      hand.emit('handtoolstart')
+      clog('handtoolstart', 'emitted on hand from typist-hand')
     })
     // $keyboardSpace.on('typeend', () => {
     //   host.removeAttribute('follower')
