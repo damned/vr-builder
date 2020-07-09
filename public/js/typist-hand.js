@@ -1,4 +1,4 @@
-/* global AFRAME clog */
+/* global AFRAME clog inDegrees */
 
 AFRAME.registerComponent('typist-hand', {
   init: function() {
@@ -12,6 +12,14 @@ AFRAME.registerComponent('typist-hand', {
     
     host.setAttribute('data-aabb-collider-dynamic', '')
 
+    let leftFinger 
+    let leftFingerStartY
+    host.addEventListener('loaded', 90 => {
+      
+    })
+    leftFinger = $(host).find('[finger="left"]').get(0)
+    leftFingerStartY = leftFinger.object3D.position.y
+    
     $keyboardSpace.on('typestart', () => {
       host.setAttribute('follower', `leader: ${handSpec}`)
       hand.emit('handtoolstart')
@@ -21,7 +29,15 @@ AFRAME.registerComponent('typist-hand', {
     //   host.removeAttribute('follower')
     // })
     self.tick = function() {
-      let zRotation = 
+      let zRotation = inDegrees(host.object3D.rotation.y)
+      if (leftFinger) {
+        if (zRotation < -5 && zRotation > -45) {
+          leftFinger.object3D.position.y = leftFingerStartY + 0.05
+        }
+        else {
+          leftFinger.object3D.position.y = leftFingerStartY
+        }        
+      }
     }
   }
 })
