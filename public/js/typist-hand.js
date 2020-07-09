@@ -12,13 +12,11 @@ AFRAME.registerComponent('typist-hand', {
     
     host.setAttribute('data-aabb-collider-dynamic', '')
 
-    let leftFinger 
+    let leftFinger = $(host).find('[finger="left"]').get(0)
     let leftFingerStartY
-    host.addEventListener('loaded', 90 => {
-      
-    })
-    leftFinger = $(host).find('[finger="left"]').get(0)
-    leftFingerStartY = leftFinger.object3D.position.y
+    if (leftFinger) {
+      leftFingerStartY = leftFinger.object3D.position.y
+    }
     
     $keyboardSpace.on('typestart', () => {
       host.setAttribute('follower', `leader: ${handSpec}`)
@@ -28,8 +26,14 @@ AFRAME.registerComponent('typist-hand', {
     // $keyboardSpace.on('typeend', () => {
     //   host.removeAttribute('follower')
     // })
+    
+    let tickCount = 0
     self.tick = function() {
+      if (tickCount++ % 20 != 0) {
+        return
+      }
       let zRotation = inDegrees(host.object3D.rotation.y)
+      clog('typist-hand', 'zRotation', zRotation)
       if (leftFinger) {
         if (zRotation < -5 && zRotation > -45) {
           leftFinger.object3D.position.y = leftFingerStartY + 0.05
