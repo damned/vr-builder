@@ -4,7 +4,7 @@ let Finger = function($hand, name, rotationCentre) {
   let finger = $hand.find('[finger="' + name + '"]').get(0)
   let startX
   let halfRotationRange = 12
-  let extensionInX = 0.03
+  let extensionInX = 0.02
   let minRotation = rotationCentre - halfRotationRange
   let maxRotation = rotationCentre + halfRotationRange
   if (finger) {
