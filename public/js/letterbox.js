@@ -35,7 +35,7 @@ AFRAME.registerComponent('letterbox', {
 
       host.setAttribute('color', 'white')
       setTimeout(() => host.setAttribute('color', 'gray'), 100)
-      host.emit('keydown')
+      host.emit('keydown', { presser: event.target })
     })
     host.addEventListener('hitend', (event) => {
       host.emit('keyup')

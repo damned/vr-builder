@@ -1,7 +1,8 @@
 /* global AFRAME THREE clog catching */
-const __yPositionVector = new THREE.Vector3()
+let __yPositionVector = new THREE.Vector3()
 
 function yPosition(entity) {
+  entity.object3D.updateWorldMatrix()
   return entity.object3D.getWorldPosition(__yPositionVector).y
 }
 
@@ -10,8 +11,8 @@ AFRAME.registerComponent('keyboard', {
     let self = this
     let host = self.el
     let startY = host.object3D.position.y
-    let activeKey = null
-    let keyDownY = null
+    let activeKeyPresser = null
+    let keyDownPresserY = null
     
     let __vector = new THREE.Vector3() //
     let setOffsetInY = (offset) => {
@@ -20,21 +21,22 @@ AFRAME.registerComponent('keyboard', {
     
     host.addEventListener('keydown', (event) => {
       clog('keyboard', 'YYY keydown event target', event.target)
-      activeKey = event.target
-      keyDownY = yPosition(activeKey)
+      clog('keyboard', 'YYY keydown event detail presser', event.detail.presser)
+      activeKeyPresser = event.detail.presser
+      keyDownPresserY = yPosition(activeKeyPresser)
     })
     host.addEventListener('keyup', (event) => {
       clog('keyboard', 'XXXXXXXXXXXX keyup event target', event.target)
-      keyDownY = null
-      activeKey = null
+      keyDownPresserY = null
+      activeKeyPresser = null
       setOffsetInY(0)
     })
     self.tick = function() {
       catching(() => {
-        if (activeKey && keyDownY) {
-          let keyCurrentY = yPosition(activeKey)
-          clog('keyboard', 'keyDownY', keyDownY, 'keyCurrentY', keyCurrentY)
-          let newOffset = keyDownY - 
+        if (activeKeyPresser && keyDownPresserY) {
+          let presserCurrentY = yPosition(activeKeyPresser)
+          clog('keyboard', 'keyDownPresserY', keyDownPresserY, 'presserCurrentY', presserCurrentY)
+          let newOffset = keyDownPresserY - presserCurrentY
           clog('keyboard', 'setting offset', newOffset)
           setOffsetInY(newOffset)
         }        
