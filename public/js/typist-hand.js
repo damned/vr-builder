@@ -20,5 +20,8 @@ AFRAME.registerComponent('typist-hand', {
     // $keyboardSpace.on('typeend', () => {
     //   host.removeAttribute('follower')
     // })
+    self.tick = function() {
+      let zRotation = 
+    }
   }
 })
