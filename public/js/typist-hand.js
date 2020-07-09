@@ -6,12 +6,15 @@ AFRAME.registerComponent('typist-hand', {
     let host = self.el
     
     let side = host.getAttribute('hand-side')
+    let handSpec = `#${side}-hand`
+    let hand = $(handSpec).get(0)
     let $keyboardSpace = $(host).closest('[keyboard-space]')
     
     host.setAttribute('data-aabb-collider-dynamic', '')
 
     $keyboardSpace.on('typestart', () => {
-      host.setAttribute('follower', `leader: #${side}-hand`)
+      host.setAttribute('follower', `leader: ${handSpec}`)
+      hand.emit('')
     })
     // $keyboardSpace.on('typeend', () => {
     //   host.removeAttribute('follower')
