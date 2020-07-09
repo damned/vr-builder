@@ -1,4 +1,4 @@
-/* global AFRAME */
+/* global AFRAME collider */
 
 AFRAME.registerComponent('fingertip', {
   init: function() {
@@ -12,16 +12,7 @@ AFRAME.registerComponent('fingertip', {
                          )
     
     host.addEventListener('hitclosest', (event) => {
-      clog('letterbox', 'event target', event.target)
-      // clog('letterbox', 'event detail', event.detail)
-      clog('letterbox', 'key: ' + key)
-      let logValue = $keyed.attr('value')
-      logValue = keyAction(logValue)
-      $keyed.attr("value", logValue);
-
-      host.setAttribute('color', 'white')
-      setTimeout(() => host.setAttribute('color', 'gray'), 100)
-      host.emit('keydown', { presser: event.target })
+      collider(host).closestIntersectedEl.emit('keydown', { presser: host })
     })
 
   }

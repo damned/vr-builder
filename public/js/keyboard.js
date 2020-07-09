@@ -15,8 +15,12 @@ AFRAME.registerComponent('keyboard', {
     let keyDownPresserY = null
     
     let __vector = new THREE.Vector3() //
-    let setOffsetInY = (offset) => {
-      host.object3D.position.y = startY + offset
+    
+    const trackingScaleFactor = 2.5
+    
+    let trackPresserByOffsetInY = (presserOffsetInY) => {
+      let newY = startY + presserOffsetInY * trackingScaleFactor
+      host.object3D.position.y = Math.min(startY, newY)
     }
     
     host.addEventListener('keydown', (event) => {
@@ -29,16 +33,16 @@ AFRAME.registerComponent('keyboard', {
       clog('keyboard', 'XXXXXXXXXXXX keyup event target', event.target)
       keyDownPresserY = null
       activeKeyPresser = null
-      setOffsetInY(0)
+      trackPresserByOffsetInY(0)
     })
     self.tick = function() {
       catching(() => {
         if (activeKeyPresser && keyDownPresserY) {
           let presserCurrentY = yPosition(activeKeyPresser)
-          clog('keyboard', 'keyDownPresserY', keyDownPresserY, 'presserCurrentY', presserCurrentY)
-          let newOffset = keyDownPresserY - presserCurrentY
-          clog('keyboard', 'setting offset', newOffset)
-          setOffsetInY(newOffset)
+          // clog('keyboard', 'keyDownPresserY', keyDownPresserY, 'presserCurrentY', presserCurrentY)
+          let newOffset = presserCurrentY - keyDownPresserY
+          // clog('keyboard', 'setting offset', newOffset)
+          trackPresserByOffsetInY(newOffset)
         }        
       })
     }
