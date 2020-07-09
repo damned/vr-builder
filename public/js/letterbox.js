@@ -26,8 +26,9 @@ AFRAME.registerComponent('letterbox', {
     }
     let $keyed = $("#keyed")
     host.classList.add('letterbox')
-    host.addEventListener('hitstart', (event) => {
-      clog('letterbox', event.target)
+    host.addEventListener('hitclosest', (event) => {
+      clog('letterbox', 'event target', event.target)
+      // clog('letterbox', 'event detail', event.detail)
       clog('letterbox', 'key: ' + key)
       let logValue = $keyed.attr('value')
       logValue = keyAction(logValue)
@@ -35,9 +36,8 @@ AFRAME.registerComponent('letterbox', {
 
       host.setAttribute('color', 'white')
       setTimeout(() => host.setAttribute('color', 'gray'), 100)
-      host.emit('keydown', { presser: event.target })
     })
-    host.addEventListener('hitend', (event) => {
+    host.addEventListener('hitclosestclear', (event) => {
       host.emit('keyup')
     })
   }
