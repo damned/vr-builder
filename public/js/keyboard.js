@@ -1,20 +1,36 @@
 /* global AFRAME clog */
 
+function yPosition(entity) {
+  return entity.object3D.position.y
+}
+
 AFRAME.registerComponent('keyboard', {
   init: function() {
     let self = this
     let host = self.el
-    let startY = host.getAttribute('position').y
+    let startY = yPosition(host)
+    let activeKey = null
+    let keyDownY = null
+    
+    let setOffsetInY = (offset) => {
+      host.object3D.position.y = startY + offset
+    }
     
     host.addEventListener('keydown', (event) => {
       clog('keyboard', 'keydown event target', event.target)
-      let 
+      activeKey = event.target
+      keyDownY = yPosition(activeKey)
     })
     host.addEventListener('keyup', (event) => {
       clog('keyboard', 'keyup event target', event.target)
+      keyDownY = null
+      activeKey = null
+      setOffsetInY(0)
     })
-    self.tick(() => {
-      host.
-    })
+    self.tick = function() {
+      if (activeKey && keyDownY) {
+        setOffsetInY(keyDownY - yPosition(activeKey))
+      }
+    }
   }
 })
