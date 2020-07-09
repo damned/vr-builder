@@ -1,14 +1,25 @@
 /* global AFRAME clog inDegrees */
 
-let Finger = function($hand, name) {
+let Finger = function($hand, name, rotationCentre) {
   let finger = $hand.find('[finger="' + name + '"]').get(0)
   let startX
+  let halfRotationRange = 15
+  let extensionInX = 0.03
+  let minRotation = rotationCentre - halfRotationRange
+  let maxRotation = rotationCentre + halfRotationRange
   if (finger) {
     startX = finger.object3D.position.x
   }
   return {
-    tick: () => {
-      
+    updateExtension: (zRotation) => {
+      if (finger) {
+        if (zRotation > minRotation && zRotation < maxRotation) {
+          finger.object3D.position.x = startX - extensionInX
+        }
+        else {
+          finger.object3D.position.x = startX
+        }        
+      }      
     }
   }
 }
@@ -27,7 +38,8 @@ AFRAME.registerComponent('typist-hand', {
 
     let $host = $(host)
     let fingers = [
-      Finger($host, 'left')
+      Finger($host, 'left', 115),
+      Finger($host, 'right', 65)
     ]
     
     $keyboardSpace.on('typestart', () => {
@@ -46,15 +58,9 @@ AFRAME.registerComponent('typist-hand', {
       }
       let zRotation = inDegrees(host.object3D.rotation.z)
       clog('typist-hand', 'zRotation', zRotation)
-      
-      if (leftFinger) {
-        if (zRotation > 95 && zRotation < 135) {
-          leftFinger.object3D.position.x = leftFingerStartX - 0.05
-        }
-        else {
-          leftFinger.object3D.position.x = leftFingerStartX
-        }        
-      }
+      fingers.forEach(finger => {
+        finger.updateExtension(zRotation)
+      })
     }
   }
 })
