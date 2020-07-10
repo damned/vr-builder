@@ -14,7 +14,10 @@ let Finger = function($hand, name, rotationCentre) {
     updateExtension: (zRotation, direction) => {
       if (finger) {
         if (zRotation > minRotation && zRotation < maxRotation) {
-          finger.object3D.position.x = startX - extensionInX * direction
+          let fullExtension = extensionInX * direction
+          let fractionFromCentre = Math.abs(rotationCentre - zRotation) / halfRotationRange
+          let extension = fullExtension * (1 - fractionFromCentre)
+          finger.object3D.position.x = startX - extension
         }
         else {
           finger.object3D.position.x = startX

@@ -16,7 +16,7 @@ AFRAME.registerComponent('keyboard', {
     
     let __vector = new THREE.Vector3() //
     
-    const trackingScaleFactor = 2.5
+    const trackingScaleFactor = 2.8
     
     let trackPresserByOffsetInY = (presserOffsetInY) => {
       let newY = startY + presserOffsetInY * trackingScaleFactor
