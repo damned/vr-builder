@@ -57,6 +57,7 @@ var Hand = function($hand) {
   $hand.on('handtoolstart', () => {
     // clog('handtoolstart', 'got in hand - hiding sleeve')
     $sleeve.remove()
+    model.setAttribute('visible', 'false')
   })
 
   let model = createHandModel(side)
