@@ -4,17 +4,17 @@ let Finger = function($hand, name, rotationCentre) {
   let finger = $hand.find('[finger="' + name + '"]').get(0)
   let startX
   let halfRotationRange = 12
-  let extensionInX = 0.02
+  let extensionInX = 0.03
   let minRotation = rotationCentre - halfRotationRange
   let maxRotation = rotationCentre + halfRotationRange
   if (finger) {
     startX = finger.object3D.position.x
   }
   return {
-    updateExtension: (zRotation) => {
+    updateExtension: (zRotation, direction) => {
       if (finger) {
         if (zRotation > minRotation && zRotation < maxRotation) {
-          finger.object3D.position.x = startX - extensionInX
+          finger.object3D.position.x = startX - extensionInX * direction
         }
         else {
           finger.object3D.position.x = startX
@@ -58,9 +58,14 @@ AFRAME.registerComponent('typist-hand', {
         return
       }
       let zRotation = inDegrees(host.object3D.rotation.z)
+      let direction = 1
+      if (side == 'left') {
+        zRotation += 180
+        direction = -1
+      }
       clog('typist-hand', 'zRotation', zRotation)
       fingers.forEach(finger => {
-        finger.updateExtension(zRotation)
+        finger.updateExtension(zRotation, direction)
       })
     }
   }
