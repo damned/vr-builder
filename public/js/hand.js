@@ -88,7 +88,7 @@ var Hand = function($hand) {
     grabber.release()
   }
 
-  debug('hi there you !')
+  //debug('i am tne hand')
   
   $hand.attr('oculus-touch-controls', 'hand: ' + side + '; model: false')
   $hand.addClass('hand')
