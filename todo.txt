@@ -71,7 +71,8 @@
         - follow locked to y, offset by fingertip width
     [x] adjustable finger locations on typist-hand (normal in-group movement)
     [x] extend fingers on rotate around z (discrete)
-    [ ] extend fingers smoothly in proportion to rotation
+    [x] extend fingers smoothly in proportion to rotation
+    [ ] try 4 fingers
     [ ] draggable keyboard
     [ ] easy adjust parameters: hand rotation vs fingers, span, amount of travel etc.
 [ ] undelete - grab behind back and bring it out (stack...  undo?)
