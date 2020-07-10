@@ -72,8 +72,13 @@
     [x] adjustable finger locations on typist-hand (normal in-group movement)
     [x] extend fingers on rotate around z (discrete)
     [x] extend fingers smoothly in proportion to rotation
-    [ ] try 4 fingers
+    [x] try 4 fingers - yeah, maybe?
+    [ ] make push-down more positive
+        [ ] work from location of fingertip, not by grabbing its offset at first contact
+        [ ] add tapping sound to keyboard
     [ ] draggable keyboard
+    [ ] resizable keyboard
+    [ ] adjustable finger locations on typist-hand without breaking extension (lock in-group)
     [ ] easy adjust parameters: hand rotation vs fingers, span, amount of travel etc.
 [ ] undelete - grab behind back and bring it out (stack...  undo?)
 [ ] default align vertical

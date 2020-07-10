@@ -22,7 +22,7 @@ AFRAME.registerComponent('letterbox', {
       else {
         keyAction = (value) => value += key
       }
-      $(`<a-text align="center" wrap-count="100" position="0 0 0.051" scale"0.2 0.2 0.2" baseline="center" value="${key}"></a-text>`).appendTo(host)        
+      $(`<a-text align="center" wrap-count="100" position="0 0 0.061" scale"0.2 0.2 0.2" baseline="center" value="${key}"></a-text>`).appendTo(host)        
     }
     let $keyed = $("#keyed")
     host.classList.add('letterbox')
