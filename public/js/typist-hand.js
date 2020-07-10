@@ -14,8 +14,15 @@ let Finger = function($hand, name, rotationCentre, halfRotationRange, sidedFacto
       if (finger) {
         if (zRotation > minRotation && zRotation < maxRotation) {
           let fullExtension = extensionInX * direction
-          let fractionFromCentre = Math.abs(rotationCentre - zRotation) / halfRotationRange
-          let extension = fullExtension * (1 - fractionFromCentre)
+          let rotationFromCentre = rotationCentre - zRotation
+          let extension
+          if (sidedFactor * rotationFromCentre > 0) {
+            extension = fullExtension
+          }
+          else {
+            let fractionFromCentre = Math.abs(rotationFromCentre) / halfRotationRange
+            extension = fullExtension * (1 - fractionFromCentre)            
+          }
           finger.object3D.position.x = startX - extension
         }
         else {
@@ -40,9 +47,9 @@ AFRAME.registerComponent('typist-hand', {
 
     let $host = $(host)
     let fingers = [
-      Finger($host, 'left', 120, 17, -1),
+      Finger($host, 'left', 125, 20, -1),
       Finger($host, 'middle', 90, 12, 0),
-      Finger($host, 'right', 70, 17, 1)
+      Finger($host, 'right', 65, 20, 1)
     ]
     
     $keyboardSpace.on('typestart', () => {
