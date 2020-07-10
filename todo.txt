@@ -60,6 +60,10 @@
     [ ] clean up colliders (etc.?) for removed entities
     [ ] plan/build of nested entities
     [ ] vertical axis captured when group created
+    [ ] use virtual twist-connectors for groups
+        - align and twist-right to group
+        - hold both and twist-left to ungroup
+        - maybe interact direct with connectors to interact with group (options on sleeve)
 [ ] ungroup
 [ ] keyboard entry
     [x] create key tile with monitor, fires letter on collision with touchable
