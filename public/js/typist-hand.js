@@ -3,7 +3,7 @@
 let Finger = function($hand, name, rotationCentre, halfRotationRange, sidedFactor) {
   let finger = $hand.find('[finger="' + name + '"]').get(0)
   let startX
-  let extensionInX = 0.03
+  let extensionInX = 0.05
   let minRotation = rotationCentre - halfRotationRange
   let maxRotation = rotationCentre + halfRotationRange
   if (finger) {
@@ -47,9 +47,9 @@ AFRAME.registerComponent('typist-hand', {
 
     let $host = $(host)
     let fingers = [
-      Finger($host, 'left', 125, 20, -1),
-      Finger($host, 'middle', 90, 12, 0),
-      Finger($host, 'right', 65, 20, 1)
+      Finger($host, 'left', 120, 20, -1),
+      Finger($host, 'middle', 90, 20, 0),
+      Finger($host, 'right', 60, 20, 1)
     ]
     
     $keyboardSpace.on('typestart', () => {
