@@ -47,9 +47,11 @@ AFRAME.registerComponent('typist-hand', {
 
     let $host = $(host)
     let fingers = [
-      Finger($host, 'left', 120, 20, -1),
-      Finger($host, 'middle', 90, 20, 0),
-      Finger($host, 'right', 60, 20, 1)
+      Finger($host, 'left',         120, 16, -1),
+      Finger($host, 'middle-left',  100, 16, 0),
+      Finger($host, 'middle',        90, 16, 0),
+      Finger($host, 'middle-right',  80, 16, 0),
+      Finger($host, 'right',         60, 16, 1)
     ]
     
     $keyboardSpace.on('typestart', () => {
