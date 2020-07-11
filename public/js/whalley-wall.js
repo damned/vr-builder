@@ -1,20 +1,23 @@
 /* global AFRAME whalley */
-let VrCardViewFactory = function() {
-  let VrCardView = function() {
-    
+let VrCardViewFactory = function(vrWall, $wall) {
+  let VrCardView = function(logical) {
+    let data = logical.data()
+    $wall.append(`<a-text position="${data.x / 1000} ${data.y / 1000} 0.1" scale="0.1 0.1 0.1" value="${data.text}" color="black">`)
   }
+  
   return {
-    create_card_view: function(vrWall, card) {
-      
+    create_card_view: function(card) {
+      return VrCardView(card)    
     }
   }
 }
 
-let VrWall = function(logical_wall) {
+let VrWall = function(logical_wall, wallEntity) {
   let self = this
+  let $wall = $(wallEntity)
   var wall_view_api = {
     create_card_view: function(card) {
-      return VrCardViewFactory().create_card_view(self, card)
+      return VrCardViewFactory(self, $wall).create_card_view(card)
     },
     group: function(width, height) {
       console.warn('VrWall', 'group - NYI - doing nothing')
@@ -40,7 +43,7 @@ let VrWall = function(logical_wall) {
   var cards_api = CardsApi(logical_wall.cards_api);
 
   function build(builder) {
-    // svg.clear();
+    $wall.empty()
     cards_api.clear();
     builder(cards_api);
     // shelf.reload();
@@ -70,14 +73,14 @@ AFRAME.registerComponent('whalley-wall', {
   schema: {type: 'string', default: ''},
   init: function() {
     let self = this
-    let host =self.el
+    let host = self.el
     
     whalley.host = 'https://damned-whalley.glitch.me'
 
     self.update = function(oldData) {
       let wallId = self.data
       let logical_wall = new whalley.LogicalWall()
-      let visible_wall = VrWall(logical_wall);
+      let visible_wall = VrWall(logical_wall, host);
       let sync_client = whalley.SocketIoSyncClient(visible_wall); // NB tied to visible wall at mo because visible wall needs to create view
                                                                   // when it forwards card add to logical wall
                                                                   // could tie directly to logical wall if made wall view create card view
