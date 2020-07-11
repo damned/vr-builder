@@ -2,7 +2,13 @@
 let VrCardViewFactory = function(vrWall, $wall) {
   let VrCardView = function(logical) {
     let data = logical.data()
-    $wall.append(`<a-text position="${data.x / 1000} ${data.y / 1000} 0.1" scale="0.1 0.1 0.1" value="${data.text}" color="black">`)
+    let wallHeight = parseInt($wall.attr('height'))
+    let wallWidth = parseInt($wall.attr('width'))
+    let wallTop = wallHeight / 2
+    let wallLeft = -wallWidth / 2
+    let x = wallLeft + (data.x / 1000)
+    let y = wallTop - (data.y / 1000)
+    $wall.append(`<a-text position="${x} ${y} 0.1" scale="0.1 0.1 0.1" value="${data.text}" color="black">`)
   }
   
   return {
