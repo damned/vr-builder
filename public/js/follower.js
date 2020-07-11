@@ -18,6 +18,7 @@ AFRAME.registerComponent('follower', {
     if (constraints) {
       this.axisLimit = constraints.axisLimit
       this.axisLock = constraints.axisLock
+      this.lock += constraints.lock
     }
   },
   update: function(oldData) {
@@ -27,7 +28,7 @@ AFRAME.registerComponent('follower', {
     if (this.data == '' || Object.keys(this.data).length == 0) {
       return
     }
-    this.lock = this.data.lock || ''
+    this.lock += this.data.lock || ''
     if (this.leader != null) {
       return
     }
