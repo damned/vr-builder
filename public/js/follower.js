@@ -17,7 +17,7 @@ AFRAME.registerComponent('follower', {
     let constraints = this.el.getAttribute('follower-constraint')
     if (constraints) {
       this.axisLimit = constraints.axisLimit
-      this.axisLock = 
+      this.axisLock = constraints.axisLock
     }
   },
   update: function(oldData) {
@@ -67,7 +67,14 @@ AFRAME.registerComponent('follower', {
         return axisValue
       }
       if (this.lock != 'position') {
-        followerObject3d.position.set(limited(leaderPos.x), limited(leaderPos.y), limited(leaderPos.z))
+        let z
+        if (this.axisLock == 'z') {
+          z = followerObject3d.position.z
+        }
+        else {
+          z = limited(leaderPos.z)
+        }
+        followerObject3d.position.set(limited(leaderPos.x), limited(leaderPos.y), z)
       }
       if (this.lock != 'rotation') {
         followerObject3d.rotation.copy(leaderRot)

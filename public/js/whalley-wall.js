@@ -20,7 +20,7 @@ let VrCardViewFactory = function(vrWall, $wall) {
     
     let $card
     setTimeout(() => {
-      $card = $(`<a-box color="lightyellow" touchable follower-constraint` 
+      $card = $(`<a-box color="lightyellow" class="touchable" follower-constraint="axis-lock: z; lock: rotation"` 
                  + `position="${getX(data)} ${getY(data)} ${z}" width="${width}" height="${height}" depth="0.01">`
                      + `<a-text position="0 ${height / 2} 0.01" wrap-count="${data.width / 5}" width="${cardTextEntityWidth}"`
                         + `align="center" baseline="top" scale="${TEXT_SCALE} ${TEXT_SCALE} ${TEXT_SCALE}" value="${data.text}" color="black">`
