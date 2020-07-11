@@ -6,12 +6,19 @@ let VrCardViewFactory = function(vrWall, $wall) {
   let wallLeft = -wallWidth / 2
 
   let VrCardView = function(logical) {
-    let getX = (data) => wallLeft + (data.x / 1000)
-    let getY = (data) => wallTop - (data.y / 1000)
+    let CARD_TO_METRES_SCALE = 0.002
+    let getX = (data) => wallLeft + (data.x * CARD_TO_METRES_SCALE)
+    let getY = (data) => wallTop - (data.y  * CARD_TO_METRES_SCALE)
     let z = 0.1
     
     let data = logical.data()
-    let $card = $(`<a-text position="${getX(data)} ${getY(data)} ${z}" scale="0.1 0.1 0.1" value="${data.text}" color="black">`)
+    let height = data.height * CARD_TO_METRES_SCALE
+    let width = data.width * CARD_TO_METRES_SCALE
+    
+    
+    let $card = $(`<a-box position="${getX(data)} ${getY(data)} ${z}" width="${width}" height="${height}" depth="0.01" color="lightyellow">`
+                   + `<a-text position="${-width / 2} ${height/2} 0.01" baseline="top" align="left" scale="0.1 0.1 0.1" value="${data.text}" color="black">`
+                  + '</a-box>')
     $card.appendTo($wall)
     
     logical.on_position_value_changed(() => {
