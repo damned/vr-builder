@@ -36,10 +36,13 @@
     <script crossorigin src="js/hand.js"></script>
     <script crossorigin src="js/planner.js"></script>
     <script crossorigin src="js/vr-builder.js"></script>
+    <script crossorigin src="js/whalley-wall.js"></script>
     
+    <script crossorigin src="https://damned-whalley.glitch.me/lib/client/whalley-log.js"></script>
     <script crossorigin src="https://damned-whalley.glitch.me/lib/client/whalley-storage.js"></script>
-    <script crossorigin src="https://damned-whalley.glitch.me/lib/client/whalley-storage.js"></script>
-    <script crossorigin src="https://damned-whalley.glitch.me/lib/client/whalley-storage.js"></script>
+    <script crossorigin src="https://damned-whalley.glitch.me/lib/client/socket-io-sync-client.js"></script>
+    <script crossorigin src="https://damned-whalley.glitch.me/lib/client/logical-card.js"></script>
+    <script crossorigin src="https://damned-whalley.glitch.me/lib/client/logical-wall.js"></script>
   </head>
   <body>
     <a-scene>
@@ -125,7 +128,7 @@
       <a-entity id="left-hand" hand-side="left"></a-entity>
       <a-entity id="right-hand" hand-side="right"></a-entity>
 
-      <a-box whalley-wall="vr-builder">
+      <a-box whalley-wall="vr-builder" position="" rotation="0 90 0">
       </a-box>
 
     </a-scene>
