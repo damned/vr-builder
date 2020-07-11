@@ -27,6 +27,7 @@ let VrWall = function(logical_wall) {
   function CardsApi(logical_cards_api) {
     return {
       add: function (cardlike) {
+        console.log('adding card: ' + cardlike)
         var logical_card = logical_cards_api.add(cardlike);
         wall_view_api.create_card_view(logical_card);
         return logical_card;
@@ -51,7 +52,7 @@ AFRAME.registerComponent('whalley-wall', {
   schema: {type: 'string', default: ''},
   init: function() {
   },
-  update: function(oldData) {
+  self.update = function(oldData) {
     let wallId = this.data
     let logical_wall = new whalley.LogicalWall()
     let visible_wall = VrWall(logical_wall);
@@ -59,5 +60,9 @@ AFRAME.registerComponent('whalley-wall', {
                                                                 // when it forwards card add to logical wall
                                                                 // could tie directly to logical wall if made wall view create card view
                                                                 // in response to "card created" event
+    sync_client.load_wall(wallId, function() {
+      
+    });
+
   }
 });
