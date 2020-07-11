@@ -1,14 +1,23 @@
 /* global AFRAME whalley */
 let VrCardViewFactory = function(vrWall, $wall) {
+  let wallHeight = parseInt($wall.attr('height'))
+  let wallWidth = parseInt($wall.attr('width'))
+  let wallTop = wallHeight / 2
+  let wallLeft = -wallWidth / 2
+
   let VrCardView = function(logical) {
+    let getX = (data) => wallLeft + (data.x / 1000)
+    let getY = (data) => wallTop - (data.y / 1000)
+    let z = 0.1
+    
     let data = logical.data()
-    let wallHeight = parseInt($wall.attr('height'))
-    let wallWidth = parseInt($wall.attr('width'))
-    let wallTop = wallHeight / 2
-    let wallLeft = -wallWidth / 2
-    let x = wallLeft + (data.x / 1000)
-    let y = wallTop - (data.y / 1000)
-    $wall.append(`<a-text position="${x} ${y} 0.1" scale="0.1 0.1 0.1" value="${data.text}" color="black">`)
+    let $card = $(`<a-text position="${getX(data)} ${getY(data)} ${z}" scale="0.1 0.1 0.1" value="${data.text}" color="black">`)
+    $card.appendTo($wall)
+    
+    logical.on_position_value_changed(() => {
+      let dataAfterMove = logical.data()
+      $card.get(0).object3D.position.set(getX(dataAfterMove), getY(dataAfterMove), z)
+    })
   }
   
   return {
