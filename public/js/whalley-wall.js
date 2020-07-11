@@ -15,9 +15,12 @@ let VrCardViewFactory = function(vrWall, $wall) {
     let height = data.height * CARD_TO_METRES_SCALE
     let width = data.width * CARD_TO_METRES_SCALE
     
+    let TEXT_SCALE = 0.1
+    let cardTextEntityWidth = data.width * 100 * CARD_TO_METRES_SCALE
     
     let $card = $(`<a-box position="${getX(data)} ${getY(data)} ${z}" width="${width}" height="${height}" depth="0.01" color="lightyellow">`
-                   + `<a-text position="${-width / 2} ${height/2} 0.01" baseline="top" align="left" scale="0.1 0.1 0.1" value="${data.text}" color="black">`
+                   + `<a-text position="${-width / 2} ${height / 2} 0.01" wrap-count="${data.width}" width="${cardTextEntityWidth}"`
+                      + `align="left" baseline="top" scale="${TEXT_SCALE} ${TEXT_SCALE} ${TEXT_SCALE}" value="${data.text}" color="black">`
                   + '</a-box>')
     $card.appendTo($wall)
     
