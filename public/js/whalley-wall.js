@@ -1,7 +1,7 @@
-/* global AFRAME whalley clog */
+/* global AFRAME whalley clog catching */
 var whalley = whalley || {}
 whalley.log = {
-  level: 'debug',
+  level: 'info',
   debug: function() {
     if (whalley.log.level == 'debug') {
       clog.apply(null, ['card move'].concat(arguments))
@@ -131,8 +131,11 @@ let VrWall = function(logical_wall, wallEntity) {
     on_card_changed: (handler) => {
       console.log('on_card_changed wireup in vrwall, adding: ' + handler.toString())
       logical_wall.on_card_changed((card) => {
-        clog('card move', 'in VrWall passing on a card change from logical wall')
-        handler(card)
+        setTimeout(() => catching(() => {
+          clog('card move', 'in VrWall passing on a card change from logical wall')
+          $wall.attr('color', 'pink')
+          handler(card)          
+        }), 100)
       })
     }
   }
