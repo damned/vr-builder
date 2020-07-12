@@ -141,12 +141,17 @@
     </a-scene>
 
     <script>
+      let setWallSpaceIsSpecified = () => {
+        
+      }
+      
       $(window).on('load', function() {
         var vr_builder = VrBuilder($('a-scene'), Hand($('#left-hand')), Hand($('#right-hand')))
         vr_builder.load()
       })
       $(document).ready(function() {
-        setupGlobalErrorLogging()    
+        setupGlobalErrorLogging()
+        setWallSpaceIsSpecified()
       })
     </script>
   </body>

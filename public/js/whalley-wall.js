@@ -88,7 +88,6 @@ let VrWall = function(logical_wall, wallEntity) {
     $wall.empty()
     cards_api.clear();
     builder(cards_api);
-    // shelf.reload();
   }
 
   let external = {
