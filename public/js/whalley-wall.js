@@ -26,12 +26,24 @@ let VrCardViewFactory = function(vrWall, $wall) {
                         + `align="center" baseline="top" scale="${TEXT_SCALE} ${TEXT_SCALE} ${TEXT_SCALE}" value="${data.text}" color="black">`
                     + '</a-box>')
       $card.appendTo($wall)
+      
+      $card.on('movestart', () => {
+        logical.move_started()
+      })
+      $card.on('moveend', () => {
+        logical.move_completed()
+      })
+      $card.on('move', (event) => {
+        let position = event.detail.position
+        logical.move_happening(position.x, position.y)
+      })
     }, 100)
     
     logical.on_position_value_changed(() => {
       let dataAfterMove = logical.data()
       $card.get(0).object3D.position.set(getX(dataAfterMove), getY(dataAfterMove), z)
     })
+    
   }
   
   return {
