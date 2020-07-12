@@ -1,7 +1,7 @@
-/* global AFRAME whalley */
+/* global AFRAME whalley clog */
 let VrCardViewFactory = function(vrWall, $wall) {
-  let wallHeight = parseInt($wall.attr('height'))
-  let wallWidth = parseInt($wall.attr('width'))
+  let wallHeight = parseFloat($wall.attr('height'))
+  let wallWidth = parseFloat($wall.attr('width'))
   let wallTop = wallHeight / 2
   let wallLeft = -wallWidth / 2
 
@@ -32,6 +32,11 @@ let VrCardViewFactory = function(vrWall, $wall) {
       })
       $card.on('moveend', () => {
         logical.move_completed()
+        let data = logical.data()
+        setTimeout(() => {
+          clog('card move', `logical: ${data.x}, ${data.y}`, `calculated: ${getX(data)}, ${getY(data)}`)
+          clog('card move', `wall basics: height ${wallHeight}, width ${wallWidth}, left ${wallLeft}, top ${wallTop}`)
+        }, 0)
       })
       $card.on('move', (event) => {
         let position = event.detail.position

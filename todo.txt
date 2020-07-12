@@ -101,6 +101,7 @@
     - object information
     - object actions
     - animated takeover for clarity - square flips?
+[ ] clog to cope with multiple log lines of different categories
 [ ] alternative actions
     - ambiguous inputs
     - clear and easy way to choose intent:
