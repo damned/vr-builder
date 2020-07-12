@@ -111,7 +111,12 @@ let VrWall = function(logical_wall, wallEntity) {
 
     on_card_add: logical_wall.on_card_add,
     on_card_moving: logical_wall.on_card_moving,
-    on_card_changed: logical_wall.on_card_changed
+    on_card_changed: (handler) => {
+      logical_wall.on_card_changed((card) => {
+        clog('card move', 'in VrWall passing on a card change from logical wall')
+        handler(card)
+      })
+    }
   }
   return external
 }
