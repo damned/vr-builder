@@ -120,6 +120,9 @@ AFRAME.registerComponent('whalley-wall', {
 
     self.update = function(oldData) {
       let wallId = self.data
+      if (!wallId) {
+        return
+      }
       let logical_wall = new whalley.LogicalWall()
       let visible_wall = VrWall(logical_wall, host);
       let sync_client = whalley.SocketIoSyncClient(visible_wall); // NB tied to visible wall at mo because visible wall needs to create view
