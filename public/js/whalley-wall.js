@@ -20,7 +20,7 @@ let VrCardViewFactory = function(vrWall, $wall) {
     
     let $card
     setTimeout(() => {
-      $card = $(`<a-box color="lightyellow" class="touchable" follower-constraint="axis-lock: z; lock: rotation"` 
+      $card = $(`<a-box color="lightyellow" whalley-card class="touchable" follower-constraint="axis-lock: z; lock: rotation"` 
                  + `position="${getX(data)} ${getY(data)} ${z}" width="${width}" height="${height}" depth="0.01">`
                      + `<a-text position="0 ${height / 2} 0.01" wrap-count="${data.width / 5}" width="${cardTextEntityWidth}"`
                         + `align="center" baseline="top" scale="${TEXT_SCALE} ${TEXT_SCALE} ${TEXT_SCALE}" value="${data.text}" color="black">`
@@ -35,7 +35,8 @@ let VrCardViewFactory = function(vrWall, $wall) {
       })
       $card.on('move', (event) => {
         let position = event.detail.position
-        logical.move_happening(position.x, position.y)
+        logical.move_happening(Math.floor((position.x - wallLeft) / CARD_TO_METRES_SCALE),
+                               Math.floor(-(position.y - wallTop) / CARD_TO_METRES_SCALE))
       })
     }, 100)
     
