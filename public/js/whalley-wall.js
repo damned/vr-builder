@@ -34,6 +34,7 @@ let VrCardViewFactory = function(vrWall, $wall) {
         logical.move_completed()
         let data = logical.data()
         setTimeout(() => {
+          clog('card move', 'move_completed() called!!!!')
           clog('card move', `logical: ${data.x}, ${data.y}`, `calculated: ${getX(data)}, ${getY(data)}`)
           clog('card move', `wall basics: height ${wallHeight}, width ${wallWidth}, left ${wallLeft}, top ${wallTop}`)
         }, 0)
