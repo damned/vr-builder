@@ -120,6 +120,8 @@ AFRAME.registerComponent('grabber', {
         this.grabbed = tograb
         this.grabbed.currentlyGrabbed = true
         this.grabbed.currentGrabber = host
+        this.grabbed.emit('movestart')
+
         debugColor(this.grabbed, 'blue')
         host.setAttribute('opacity', 0.5)
       }          
@@ -141,6 +143,7 @@ AFRAME.registerComponent('grabber', {
             recentlyGrabbed.recentlyGrabbed = false
           }, 500)
           this.grabbed.removeAttribute('follower')
+          this.grabbed.emit('moveend')
           let otherHandTouching = currentlyTouching(otherHand(this))
           if (otherHandTouching) {
             groupUnder(otherHandTouching, this.grabbed)
