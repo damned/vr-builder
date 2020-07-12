@@ -36,7 +36,7 @@ AFRAME.registerComponent('planner', {
           plan.items.push(positionedHtml)
         })
         $.ajax({ // NB: complete attribute does not work in this jquery :()
-          url: '/plan/a',
+          url: '/plan/' + self.data.planId,
           method: 'PUT',
           contentType: 'application/json',
           data: JSON.stringify(plan)
