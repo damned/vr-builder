@@ -37,8 +37,8 @@ var defaultPlan = { items: [
 ]}
 
 let plans = {
-  'a': Object.assign({}, defaultPlan),
-  'vr-builder': Object.assign({}, defaultPlan)
+  'a': Object.assign({items:[]}, defaultPlan),
+  'vr-builder': Object.assign({items:[]}, defaultPlan)
 }
 
 app.get('/plan/:planId', function (req, res) {
