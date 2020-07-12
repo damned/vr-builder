@@ -1,4 +1,21 @@
 /* global AFRAME whalley clog */
+var whalley = whalley || {}
+whalley.log = {
+  level: 'debug',
+  debug: function() {
+    if (whalley.log.level == 'debug') {
+      clog.apply(null, ['card move'].concat(arguments))
+    }
+  },
+  info: function() {
+    clog.apply(null, ['card move'].concat(arguments))
+  },
+  log: function() {
+    clog.apply(null, ['card move'].concat(arguments))
+  }
+};
+
+
 let VrCardViewFactory = function(vrWall, $wall) {
   let wallHeight = parseFloat($wall.attr('height'))
   let wallWidth = parseFloat($wall.attr('width'))
@@ -112,6 +129,7 @@ let VrWall = function(logical_wall, wallEntity) {
     on_card_add: logical_wall.on_card_add,
     on_card_moving: logical_wall.on_card_moving,
     on_card_changed: (handler) => {
+      console.log('on_card_changed wireup in vrwall, adding: ' + handler.toString())
       logical_wall.on_card_changed((card) => {
         clog('card move', 'in VrWall passing on a card change from logical wall')
         handler(card)

@@ -23,7 +23,7 @@ AFRAME.registerComponent('color-tweaker', {
     let $host = $(host)
     let log = function() {
       if (false) {
-        clog.apply(arguments)        
+        clog.apply(null, arguments)        
       }
     }
     
