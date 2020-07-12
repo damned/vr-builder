@@ -1,11 +1,15 @@
 /* global AFRAME patchHtml inDegrees clog catching */
 AFRAME.registerComponent('planner', {
+  schema: {
+    planId: {type: 'string', default: 'a'}
+  },
   init: function() {
+    let self = this
     catching(() => {
       let options = {
         debug: false
       }
-      let $self = $(this.el)
+      let $host = $(self.el)
       let $scene = $('a-scene')
       let $spawn = $('#spawn')
       let putPlan = function(success, failure) {
@@ -41,7 +45,7 @@ AFRAME.registerComponent('planner', {
       }
       let $planControl = $('<a-box id="glasses-collider" side="double"' +
                            ` visible="${options.debug}"` +
-                           ' class="touchable" position="0.01 0 0" opacity="0.6" scale="0.22 0.18 0.18"></a-box>').appendTo($self)
+                           ' class="touchable" position="0.01 0 0" opacity="0.6" scale="0.22 0.18 0.18"></a-box>').appendTo($host)
       $planControl.on('hitstart', function(event) {
         clog('planner', 'got a hit on plan control')
         // $planControl.attr('visible', 'true')

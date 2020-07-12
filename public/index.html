@@ -141,7 +141,7 @@
     </a-scene>
 
     <script>
-      let setWallSpace= () => {
+      let determineSpaceId = (spaceIdHandler) => {
         let spaceId = 'vr-builder'
         
         let path = document.location.pathname
@@ -150,7 +150,7 @@
         if (spaceParamMatch) {
           spaceId = spaceParamMatch[1]
         }
-        $('[whalley-wall]').attr('whalley-wall', spaceId)
+        spaceIdHandler(spaceId)
       }
       
       $(window).on('load', function() {
@@ -159,7 +159,10 @@
       })
       $(document).ready(function() {
         setupGlobalErrorLogging()
-        setWallSpace()
+        determineSpaceId((spaceId) => {
+          $('[whalley-wall]').attr('whalley-wall', spaceId)
+
+        })
       })
     </script>
   </body>
