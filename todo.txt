@@ -84,10 +84,14 @@
     [ ] resizable keyboard
     [ ] reintroduce thumb - back for space?
     [ ] adjustable finger locations on typist-hand without breaking extension (lock in-group)
+        - dev-mode / activate switch on contact (on arm)
     [ ] easy adjust parameters: hand rotation vs fingers, span, amount of travel etc.
     [ ] numbers and syntax keys
     [ ] edit - grabbable handle moves with cursor?
     [ ] auto-complete (hovers above?)
+[ ] arm takeover
+    - object information
+    - object 
 [ ] undelete - grab behind back and bring it out (stack...  undo?)
 [ ] default align vertical
     - show avatar (transparent) for align, move through it to 'pick it up' and turn on alignment 
