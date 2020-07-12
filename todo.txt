@@ -90,6 +90,13 @@
     [ ] numbers and syntax keys
     [ ] edit - grabbable handle moves with cursor?
     [ ] auto-complete (hovers above?)
+[x] cardspace
+    [x] basic integration with whalley - use js and api
+    [x] render cards on wall (walld id 'vr-builder')
+    [x] update card position when receive card.move events
+    [x] drag cards on wall
+    [x] send updates when drag cards on wall
+    [ ] colour cards as per wall data
 [ ] arm takeover
     - object information
     - object actions

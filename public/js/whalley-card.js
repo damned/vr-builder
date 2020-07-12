@@ -11,11 +11,11 @@ AFRAME.registerComponent('whalley-card', {
     
     let isMoving = false
     
-    host.on('movestart', () => {
+    host.addEventListener('movestart', () => {
       isMoving = true
     })
     
-    host.on('moveend', () => {
+    host.addEventListener('moveend', () => {
       isMoving = false
     })
     
