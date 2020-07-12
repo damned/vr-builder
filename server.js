@@ -21,26 +21,39 @@ const port = process.env.PORT || 8080;
 const app = express();
 app.use(express.static('public'))
 
+app.get('/space/:spaceId', function(req, res){
+  let spaceId = req.params.spaceId
+  console.log(`responding with space ${spaceId}`)
+  res.sendFile('index.html');
+})
+
 // Start Express http server
 const webServer = http.createServer(app)
 
-var plan = { items: [
+var defaultPlan = { items: [
   '<a-box position="4 0 0.6" scale="2 2 2" color="blue"></a-box>',
   '<a-box position="2 5 3" scale="5 5 5" color="black"></a-box>',
   '<a-box position="1 1 -3" scale="1 1 1" color="orange"></a-box>'
 ]}
 
-app.get('/plan/a', function (req, res) {
-  console.log(`giving plan (${plan.items.length} items)`)
+let plans = {
+  a: Object.assign({}, defaultPlan)
+}
+
+app.get('/plan/:planId', function (req, res) {
+  let planId = req.params.planId
+  let plan = plans[planId] || {}
+  console.log(`giving plan ${planId} (${plan.items.length} items)`)
   res.send(plan)
 })
 
 doSomeMagicToMakeExpressParseJsonBodyAsYoudExpectItDidOutOfTheBox()
-app.put('/plan/a', function (req, res) {
-  console.log('getting plan:', req.body)
+app.put('/plan/:planId', function (req, res) {
+  let planId = req.params.planId
+  console.log(`receiving plan ${planId}:`, req.body)
   if (req.body.items && req.body.items.length >= 0) {
     console.log('saving plan:', req.body)
-    plan = req.body  
+    plans[planId] = req.body
     res.json({success:true})
   }
   else {
