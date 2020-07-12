@@ -1,4 +1,5 @@
 var VrBuilder = function($scene, left, right) {
+  console.log('vr builder init')
   let spaceId = $scene.attr('space-id')
   let $spawn = $('<a-entity id="spawn"></a-entity>').appendTo($scene)
   let $camera = $scene.children('a-camera')

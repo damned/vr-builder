@@ -154,15 +154,16 @@
       }
       
       $(window).on('load', function() {
+        determineSpaceId((spaceId) => {
+          console.log('space id determined: ' + spaceId)
+          $('[whalley-wall]').attr('whalley-wall', spaceId)
+          $('a-scene').attr('space-id', spaceId)
+        })
         var vr_builder = VrBuilder($('a-scene'), Hand($('#left-hand')), Hand($('#right-hand')))
         vr_builder.load()
       })
       $(document).ready(function() {
         setupGlobalErrorLogging()
-        determineSpaceId((spaceId) => {
-          $('[whalley-wall]').attr('whalley-wall', spaceId)
-
-        })
       })
     </script>
   </body>
