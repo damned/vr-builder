@@ -24,7 +24,7 @@ app.use(express.static('public'))
 app.get('/space/:spaceId', function(req, res){
   let spaceId = req.params.spaceId
   console.log(`responding with space ${spaceId}`)
-  res.sendFile('index.html');
+  res.sendFile(__dirname + '/public/index.html');
 })
 
 // Start Express http server
