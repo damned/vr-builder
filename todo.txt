@@ -64,6 +64,7 @@
         - align and twist-right to group
         - hold both and twist-left to ungroup
         - maybe interact direct with connectors to interact with group (options on sleeve)
+        - shaded bounding box + ports - like clicking lego
 [ ] ungroup
 [ ] keyboard entry
     [x] create key tile with monitor, fires letter on collision with touchable
@@ -91,7 +92,13 @@
     [ ] auto-complete (hovers above?)
 [ ] arm takeover
     - object information
-    - object 
+    - object actions
+    - animated takeover for clarity - square flips?
+[ ] alternative actions
+    - ambiguous inputs
+    - clear and easy way to choose intent:
+      - in physical space, close to actions
+      - in predicatble way, so can intuitively short-cut
 [ ] undelete - grab behind back and bring it out (stack...  undo?)
 [ ] default align vertical
     - show avatar (transparent) for align, move through it to 'pick it up' and turn on alignment 
