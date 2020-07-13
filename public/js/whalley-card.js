@@ -9,20 +9,25 @@ AFRAME.registerComponent('whalley-card', {
     
     lastPosition.copy(getPosition())
     
-//     host.addEventListener('movestart', () => {
-//       self.tick = tick
-//     })
+    let isMoving = false
     
-//     host.addEventListener('moveend', () => {
-//       self.tick = null
-//     })
+    host.addEventListener('movestart', () => {
+      isMoving = true
+    })
     
-//     let tick = function() {
-//       if (lastPosition.equals(getPosition())) {
-//         return
-//       }
-//       lastPosition.copy(getPosition())
-//       host.emit('move', { position: lastPosition })
-//     }
+    host.addEventListener('moveend', () => {
+      isMoving = false
+    })
+    
+    self.tick = function() {
+      if (!isMoving) {
+        return
+      }
+      if (lastPosition.equals(getPosition())) {
+        return
+      }
+      lastPosition.copy(getPosition())
+      host.emit('move', { position: lastPosition })
+    }
   }
 });
