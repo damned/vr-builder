@@ -128,16 +128,7 @@ let VrWall = function(logical_wall, wallEntity) {
 
     on_card_add: logical_wall.on_card_add,
     on_card_moving: logical_wall.on_card_moving,
-    on_card_changed: (handler) => {
-      console.log('on_card_changed wireup in vrwall, adding: ' + handler.toString())
-      logical_wall.on_card_changed((card) => {
-        setTimeout(() => catching(() => {
-          clog('card move', 'in VrWall passing on a card change from logical wall')
-          $wall.attr('color', 'pink')
-          handler(card)          
-        }), 100)
-      })
-    }
+    on_card_changed: logical_wall.on_card_changed
   }
   return external
 }
