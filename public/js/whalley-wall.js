@@ -28,6 +28,10 @@ let VrCardViewFactory = function(vrWall, $wall) {
     let getX = (data) => wallLeft + (data.x * CARD_TO_METRES_SCALE)
     let getY = (data) => wallTop - (data.y  * CARD_TO_METRES_SCALE)
     let z = 0.1
+        
+    let data = logical.data()
+    let height = data.height * CARD_TO_METRES_SCALE
+    let width = data.width * CARD_TO_METRES_SCALE
     
     let getText = (data) => {
       if (data.text && data.text.length > 0) {
@@ -35,19 +39,17 @@ let VrCardViewFactory = function(vrWall, $wall) {
       }
       return DEFAULT_EMPTY_TEXT_THAT_CREATES_BOUNDING_BOX_FOR_COLLIDER
     }
-    
-    let data = logical.data()
-    let height = data.height * CARD_TO_METRES_SCALE
-    let width = data.width * CARD_TO_METRES_SCALE
-    
-    let TEXT_SCALE = 0.1
+    let getTextWrapCount = (data) => data.width / 8
+    const TEXT_SCALE = 0.1
+    const TEXT_TOP_MARGIN = 0.008
     let cardTextEntityWidth = data.width * 10 * CARD_TO_METRES_SCALE
+    let textOffsetY = (height / 2) - TEXT_TOP_MARGIN
     
     let $card
     setTimeout(() => {
       $card = $(`<a-box data-aabb-collider-dynamic color="${data.colour}" whalley-card class="touchable" follower-constraint="axis-lock: z; lock: rotation"` 
                  + `position="${getX(data)} ${getY(data)} ${z}" width="${width}" height="${height}" depth="0.01">`
-                     + `<a-text position="0 ${height / 2} 0.01" wrap-count="${data.width / 5}" width="${cardTextEntityWidth}"`
+                     + `<a-text position="0 ${textOffsetY} 0.01" wrap-count="${getTextWrapCount(data)}" width="${cardTextEntityWidth}"`
                         + `align="center" baseline="top" scale="${TEXT_SCALE} ${TEXT_SCALE} ${TEXT_SCALE}" value="${getText(data)}" color="black">`
                     + '</a-box>')
       $card.appendTo($wall)
