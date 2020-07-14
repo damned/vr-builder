@@ -33,6 +33,7 @@
     <script crossorigin src="/js/color.js"></script>
     <script crossorigin src="/js/color-tweaker.js"></script>
     <script crossorigin src="/js/tweaker-home.js"></script>
+    <script crossorigin src="/js/user-mover.js"></script>
     <script crossorigin src="/js/hand.js"></script>
     <script crossorigin src="/js/planner.js"></script>
     <script crossorigin src="/js/vr-builder.js"></script>
@@ -128,8 +129,11 @@
         </a-entity>
       </a-entity>
 
-      <a-entity id="left-hand" hand-side="left"></a-entity>
-      <a-entity id="right-hand" hand-side="right"></a-entity>
+      <a-entity id="user">
+        <a-camera></a-camera>
+        <a-entity id="left-hand" hand-side="left"></a-entity>
+        <a-entity id="right-hand" user-mover hand-side="right"></a-entity>
+      </a-entity>
 
       <a-box whalley-wall side="double" color="gray"
              position="1 1.3 -0.5" rotation="0 -90 0" 
