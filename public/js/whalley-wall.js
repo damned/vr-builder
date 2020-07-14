@@ -8,10 +8,10 @@ whalley.log = {
     }
   },
   info: function() {
-    clog.apply(null, ['card move'].concat(arguments))
+    // clog.apply(null, ['card move'].concat(arguments))
   },
   log: function() {
-    clog.apply(null, ['card move'].concat(arguments))
+    // clog.apply(null, ['card move'].concat(arguments))
   }
 };
 
@@ -37,7 +37,7 @@ let VrCardViewFactory = function(vrWall, $wall) {
     
     let $card
     setTimeout(() => {
-      $card = $(`<a-box color="${data.colour}" whalley-card class="touchable" follower-constraint="axis-lock: z; lock: rotation"` 
+      $card = $(`<a-box data-aabb-collider-dynamic color="${data.colour}" whalley-card class="touchable" follower-constraint="axis-lock: z; lock: rotation"` 
                  + `position="${getX(data)} ${getY(data)} ${z}" width="${width}" height="${height}" depth="0.01">`
                      + `<a-text position="0 ${height / 2} 0.01" wrap-count="${data.width / 5}" width="${cardTextEntityWidth}"`
                         + `align="center" baseline="top" scale="${TEXT_SCALE} ${TEXT_SCALE} ${TEXT_SCALE}" value="${data.text}" color="black">`
@@ -50,11 +50,11 @@ let VrCardViewFactory = function(vrWall, $wall) {
       $card.on('moveend', () => {
         logical.move_completed()
         let data = logical.data()
-        setTimeout(() => {
-          clog('card move', 'move_completed() called!!!!')
-          clog('card move', `logical: ${data.x}, ${data.y}`, `calculated: ${getX(data)}, ${getY(data)}`)
-          clog('card move', `wall basics: height ${wallHeight}, width ${wallWidth}, left ${wallLeft}, top ${wallTop}`)
-        }, 0)
+        // setTimeout(() => {
+        //   clog('card move', 'move_completed() called!!!!')
+        //   clog('card move', `logical: ${data.x}, ${data.y}`, `calculated: ${getX(data)}, ${getY(data)}`)
+        //   clog('card move', `wall basics: height ${wallHeight}, width ${wallWidth}, left ${wallLeft}, top ${wallTop}`)
+        // }, 0)
       })
       $card.on('move', (event) => {
         let position = event.detail.position

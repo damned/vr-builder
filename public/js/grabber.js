@@ -1,7 +1,8 @@
 /* global AFRAME THREE colorFromEntityRotation collider clog catching addDebugColor removeDebugColor cloneEntity positionRelativeTo reparent */
 let debug = { useColor: false }
 var options = { 
-  colorTwist: false 
+  colorTwist: false,
+  groupOnTouch: false
 }
 
 function debugColor(el, color) {
@@ -146,9 +147,11 @@ AFRAME.registerComponent('grabber', {
           }, 500)
           this.grabbed.removeAttribute('follower')
           this.grabbed.emit('moveend')
-          let otherHandTouching = currentlyTouching(otherHand(this))
-          if (otherHandTouching) {
-            groupUnder(otherHandTouching, this.grabbed)
+          if (options.groupOnTouch) {
+            let otherHandTouching = currentlyTouching(otherHand(this))
+            if (otherHandTouching) {
+              groupUnder(otherHandTouching, this.grabbed)
+            }
           }
         }
       }
