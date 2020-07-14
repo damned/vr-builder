@@ -15,7 +15,7 @@ whalley.log = {
   }
 };
 
-const DEFAULT_EMPTY_TEXT_THAT_CREATES_BOUNDING_BOX_FOR_COLLIDER = ' '
+const DEFAULT_EMPTY_TEXT_THAT_CREATES_BOUNDING_BOX_FOR_COLLIDER = '.'
 
 let VrCardViewFactory = function(vrWall, $wall) {
   let wallHeight = parseFloat($wall.attr('height'))
