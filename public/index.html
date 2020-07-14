@@ -159,7 +159,7 @@
           $('[whalley-wall]').attr('whalley-wall', spaceId)
           $('a-scene').attr('space-id', spaceId)
         })
-        var vr_builder = VrBuilder($('a-scene'), Hand($('#left-hand')), Hand($('#right-hand', {stock:false})))
+        var vr_builder = VrBuilder($('a-scene'), Hand($('#left-hand')), Hand($('#right-hand'), { stock: false }))
         vr_builder.load()
       })
       $(document).ready(function() {

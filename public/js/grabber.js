@@ -1,6 +1,8 @@
 /* global AFRAME THREE colorFromEntityRotation collider clog catching addDebugColor removeDebugColor cloneEntity positionRelativeTo reparent */
 let debug = { useColor: false }
-var options = { colorTwist: false }
+var options = { 
+  colorTwist: false 
+}
 
 function debugColor(el, color) {
   if (debug.useColor) {
