@@ -18,7 +18,8 @@ function placeInDefaultPosition(hand, side) {
   hand.setAttribute('position', xOffset + ' 1.5 -0.5')
 }
 
-var Hand = function($hand) {
+var Hand = function($hand, options) {
+  options = Object.assign({stock: true}, options)
   
   let side = $hand.attr('hand-side')
   let hand = $hand.get(0)
@@ -44,10 +45,14 @@ var Hand = function($hand) {
       radius: '0.04',
       position: '0 0 0.25',
       rotation: '90 0 0',
-      'stock-home': side,
       'monitor-home': side,
       'tweaker-home': side
     })
+    if (options.stock) {
+      addProps(sleeve, {
+        'stock-home': side
+      })      
+    }
     return sleeve
   }
   
