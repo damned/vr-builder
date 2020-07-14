@@ -43,7 +43,7 @@ let VrCardViewFactory = function(vrWall, $wall) {
     let getTextWrapCount = (data) => data.width / 8
     const TEXT_SCALE = 0.1
     const TEXT_TOP_MARGIN = 0.008
-    let font = 'exo2bold' // roboto dejavu mozillavr monoid sourcecodepro exo2bold aileronsemibold kelsonsans exo2semibold
+    let font = '' // roboto dejavu mozillavr monoid sourcecodepro exo2bold aileronsemibold kelsonsans exo2semibold
     
     let cardTextEntityWidth = data.width * 10 * CARD_TO_METRES_SCALE
     let textOffsetY = (height / 2) - TEXT_TOP_MARGIN
