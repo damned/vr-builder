@@ -67,7 +67,8 @@ AFRAME.registerComponent('grabber', {
     self.secondGrabHandlers = []
     self.releaseHandlers = []
     self.onSecondGrab = (handler) => { self.secondGrabHandlers.push(handler) }      
-    self.onRelease = (handler) => { self.releaseHandlers.push(handler) }      
+    self.onRelease = (handler) => { self.releaseHandlers.push(handler) }
+    host.addEventListener('grasp', self.grasp.)
   },
   update: function(oldData) {
     console.log('this.data', this.data)

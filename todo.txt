@@ -102,6 +102,8 @@
     - object actions
     - animated takeover for clarity - square flips?
 [ ] clog to cope with multiple log lines of different categories
+    - hold buffer and use scroller
+    - have tabs vertically on left that take the first arg as group, allow activate toggle
 [ ] alternative actions
     - ambiguous inputs
     - clear and easy way to choose intent:
