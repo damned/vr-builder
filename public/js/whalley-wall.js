@@ -44,12 +44,13 @@ let VrCardViewFactory = function(vrWall, $wall) {
     const TEXT_TOP_MARGIN = 0.008
     let cardTextEntityWidth = data.width * 10 * CARD_TO_METRES_SCALE
     let textOffsetY = (height / 2) - TEXT_TOP_MARGIN
+    let font = 'mozillavr' // sourcecodepro default monoid
     
     let $card
     setTimeout(() => {
       $card = $(`<a-box data-aabb-collider-dynamic color="${data.colour}" whalley-card class="touchable" follower-constraint="axis-lock: z; lock: rotation"` 
                  + `position="${getX(data)} ${getY(data)} ${z}" width="${width}" height="${height}" depth="0.01">`
-                     + `<a-text position="0 ${textOffsetY} 0.01" wrap-count="${getTextWrapCount(data)}" width="${cardTextEntityWidth}"`
+                     + `<a-text font="${font}" position="0 ${textOffsetY} 0.01" wrap-count="${getTextWrapCount(data)}" width="${cardTextEntityWidth}"`
                         + `align="center" baseline="top" scale="${TEXT_SCALE} ${TEXT_SCALE} ${TEXT_SCALE}" value="${getText(data)}" color="black">`
                     + '</a-box>')
       $card.appendTo($wall)
