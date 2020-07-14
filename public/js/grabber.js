@@ -98,7 +98,9 @@ AFRAME.registerComponent('grabber', {
       let self = this
       debugColor(host, 'black')
       if (self.toucher.isTouching()) {
+        clog('grasp', "it thinks we're touching")
         let tograb = self.toucher.closest()
+        clog('grasp', 'closest', tograb)
         if (tograb.currentlyGrabbed) {
           let otherGrabber = tograb.currentGrabber
           clog('grasp', 'about to call second grab handlers')

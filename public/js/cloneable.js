@@ -7,7 +7,7 @@ function copyableComponents(el) {
 function copyComponentsState(source, target) {
   afterCreation(() => {
     copyableComponents(source).forEach((sourceComponent) => {
-      clog('copying component', sourceComponent.name)
+      // clog('copying component', sourceComponent.name)
       sourceComponent.copyTo(target.components[sourceComponent.name]) 
     })
   })
