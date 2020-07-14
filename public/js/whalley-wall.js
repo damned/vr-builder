@@ -39,12 +39,14 @@ let VrCardViewFactory = function(vrWall, $wall) {
       }
       return DEFAULT_EMPTY_TEXT_THAT_CREATES_BOUNDING_BOX_FOR_COLLIDER
     }
+
     let getTextWrapCount = (data) => data.width / 8
     const TEXT_SCALE = 0.1
     const TEXT_TOP_MARGIN = 0.008
+    let font = 'exo2semibold' // roboto mozillavr dejavu monoid sourcecodepro default  aileronsemibold
+    
     let cardTextEntityWidth = data.width * 10 * CARD_TO_METRES_SCALE
     let textOffsetY = (height / 2) - TEXT_TOP_MARGIN
-    let font = 'mozillavr' // sourcecodepro default monoid
     
     let $card
     setTimeout(() => {
