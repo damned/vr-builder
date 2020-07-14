@@ -146,6 +146,11 @@ let VrWall = function(logical_wall, wallEntity) {
   return external
 }
 
+function allowMovementWithoutRotation(entity) {
+  entity.classList.add('touchable')
+  entity.setAttribute('follower-constraint', 'lock: rotation')  
+}
+
 AFRAME.registerComponent('whalley-wall', {
   schema: {type: 'string', default: ''},
   init: function() {
@@ -153,6 +158,8 @@ AFRAME.registerComponent('whalley-wall', {
     let host = self.el
     
     whalley.host = 'https://damned-whalley.glitch.me'
+    
+    allowMovementWithoutRotation(host)
 
     self.update = function(oldData) {
       let wallId = self.data
