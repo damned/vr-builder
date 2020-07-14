@@ -23,7 +23,7 @@ function addDebugColor(el, color) {
 }
 
 function removeDebugColor(el) {
-  if (el.hasAttribute('data-original-color')) {
+  if (el && el.hasAttribute('data-original-color')) {
     el.setAttribute('color', el.getAttribute('data-original-color'))
   }
 }
