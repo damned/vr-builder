@@ -5,11 +5,12 @@ AFRAME.registerComponent('user-mover', {
     let host = self.el
     let host3d = host.object3D
     
-    let user = document.getElementById('user')
+    let user3d = document.getElementById('user').object3D
     
     let moving = false
+    let vector3 = new THREE.Vector3()
     let worldAnchorPoint = new THREE.Vector3()
-    let worldOffset = new THREE.Vector3()
+    let worldOffsetFromAnchor = new THREE.Vector3()
     
     host.addEventListener('grasp', () => {
       host3d.getWorldPosition(worldAnchorPoint)
@@ -21,7 +22,11 @@ AFRAME.registerComponent('user-mover', {
     })
     
     self.tick = () => {
-      
+      if (moving) {
+        worldOffsetFromAnchor.subVectors(worldAnchorPoint, host3d.getWorldPosition(vector3))
+        user3d.translateX(worldOffsetFromAnchor.x)
+        user3d.translateZ(worldOffsetFromAnchor.z)
+      }
     }
   }
 })
