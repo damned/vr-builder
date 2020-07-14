@@ -18,22 +18,23 @@ AFRAME.registerComponent('user-mover', {
       moving = true
     })
     
-    host.addEventListener('release',  () => {
-      clog('user-mover', 'release')      
+    host.addEventListener('ungrasp',  () => {
+      clog('user-mover', 'ungrasp')      
       moving = false
     })
     
     let translateHorizontallyToMatchAnchor = () => {
       worldOffsetFromAnchor.subVectors(worldAnchorPoint, host3d.getWorldPosition(vector3))
+      worldOffsetFromAnchor.y = 0
       clog('user-mover', 'translating', worldOffsetFromAnchor)
-      user3d.translateX(worldOffsetFromAnchor.x)
-      user3d.translateZ(worldOffsetFromAnchor.z)
+      user3d.position.add(worldOffsetFromAnchor)
     }
     
-    self.tick = () => {
+    self.tickHandler = () => {
       if (moving) {
         translateHorizontallyToMatchAnchor()
       }
     }
+    self.tick = AFRAME.utils.throttleTick(self.tickHandler, 100, self);
   }
 })

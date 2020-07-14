@@ -89,9 +89,11 @@ var Hand = function($hand, options) {
 
   var grabHandler = function(event) {
     grabber.grasp()
+    model.emit('grasp')
   }
   var triggerReleaseHandler = function(event) {
     grabber.release()
+    model.emit('ungrasp')
   }
 
   //debug('i am tne hand')
