@@ -12,7 +12,7 @@ AFRAME.registerSystem('monitor', {
     }
     
     self.applyCustomComponentRenderers = (infos, monitored) => {
-      for (let i=0; i < componentRenderers.length; i++) {
+      for (let i=0; i < componentRendererNames.length; i++) {
         let name = componentRendererNames[i]
         if (monitored.components[name]) {
           infos = componentRenderers[name](infos, monitored.components[name], monitored)
@@ -71,7 +71,7 @@ AFRAME.registerComponent('monitor', {
         return
       }
       $touchSourceAncestor.get(0).components['touch-source'].onTouchStart((touched) => {
-        // clog('touch', 'in monitor i got a touch start for: ' + touched.tagName)
+        clog('touch', 'in monitor i got a touch start for: ' + touched.tagName)
         self.monitor(touched)
       })      
     }, 0)
