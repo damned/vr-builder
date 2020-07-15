@@ -6,12 +6,16 @@ AFRAME.registerComponent('remote-toucher', {
     let host = self.el
     
     let dottedLineMaterial = new THREE.LineDashedMaterial({
-      color: 'blue',
-      dashSize: 0.5,
-      gapSize: 0.5
+      color: '#4444ff',
+      dashSize: 1,
+      gapSize: 0.8,
+      linewidth: 4
     })
     
     host.setAttribute('raycaster', 'showLine: true; far: 100; objects: .remote-touchable')
-    host.components.line.getObject3D('mesh').material = dottedLineMaterial
+    let line3d = host.getObject3D('line')
+    line3d.material = dottedLineMaterial
+    line3d.material.needsUpdate = true
+    line3d.computeLineDistances()
   }
 })
