@@ -3,9 +3,17 @@ AFRAME.registerSystem('monitor', {
   init: function () {
     let self = this
     let componentRenderers = {}
+    let componentRendererNames = []
     
     self.registerComponentRenderer = (name, componentRenderer) => {
+      componentRendererNames.push(name)
       componentRenderers[name] = componentRenderer
+    }
+    
+    self.applyCustomComponentRenderers = (infos, monitoredHost) => {
+      for (let i=0; i < componentRenderers.length; i++) {
+        
+      }
     }
   }
 })
@@ -83,6 +91,7 @@ AFRAME.registerComponent('monitor', {
             infos.push(name + extraInfo[name])
           }
         }
+        self.system.applyCustomComponentRenderers(infos, self.monitored)
         self.setOutput(infos.join('\n'))
       }      
     })
