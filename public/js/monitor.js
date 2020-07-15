@@ -6,6 +6,7 @@ AFRAME.registerSystem('monitor', {
     let componentRendererNames = []
     
     self.registerComponentRenderer = (name, componentRenderer) => {
+      
       componentRendererNames.push(name)
       componentRenderers[name] = componentRenderer
     }
@@ -14,7 +15,7 @@ AFRAME.registerSystem('monitor', {
       for (let i=0; i < componentRenderers.length; i++) {
         let name = componentRendererNames[i]
         if (monitored.components[name]) {
-          infos =componentRenderers[name](infos, monitored.components[name], monitored)
+          infos = componentRenderers[name](infos, monitored.components[name], monitored)
         }
       }
       return infos

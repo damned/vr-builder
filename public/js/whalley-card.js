@@ -3,7 +3,7 @@ let monitorInfoRenderer = (infos, cardComponent, cardElement) => [$(cardElement)
 
 AFRAME.registerSystem('whalley-card', {
   init: function () {
-    this.el.systems.monitor.registerComponentRenderer(monitorInfoRenderer)
+    this.el.systems.monitor.registerComponentRenderer('whalley-card', monitorInfoRenderer)
   }
 })
 
