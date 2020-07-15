@@ -10,10 +10,14 @@ AFRAME.registerSystem('monitor', {
       componentRenderers[name] = componentRenderer
     }
     
-    self.applyCustomComponentRenderers = (infos, monitoredHost) => {
+    self.applyCustomComponentRenderers = (infos, monitored) => {
       for (let i=0; i < componentRenderers.length; i++) {
-        
+        let name = componentRendererNames[i]
+        if (monitored.components[name]) {
+          infos =componentRenderers[name](infos, monitored.components[name], monitored)
+        }
       }
+      return infos
     }
   }
 })
@@ -91,7 +95,7 @@ AFRAME.registerComponent('monitor', {
             infos.push(name + extraInfo[name])
           }
         }
-        self.system.applyCustomComponentRenderers(infos, self.monitored)
+        infos = self.system.applyCustomComponentRenderers(infos, self.monitored)
         self.setOutput(infos.join('\n'))
       }      
     })
