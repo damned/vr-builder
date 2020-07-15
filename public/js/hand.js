@@ -34,7 +34,9 @@ var Hand = function($hand, options) {
       flicker: '',
       resizer: '',
       'blind-release': '',
-      debugged: ''
+      debugged: '',
+      raycaster: "showLine: true; far: 100",
+      line: "color: blue; opacity: 0.5"
     })
     return model
   }
