@@ -32,7 +32,7 @@ AFRAME.registerComponent('user-mover', {
     
     self.tickHandler = () => {
       if (moving) {
-        translateHorizontallyToMatchAnchor()
+        // translateHorizontallyToMatchAnchor()
       }
     }
     self.tick = AFRAME.utils.throttleTick(self.tickHandler, 100, self);
