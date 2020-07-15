@@ -27,6 +27,9 @@ AFRAME.registerComponent('whalley-card', {
       isMoving = false
     })
     
+    host.classList.add('touchable')
+    host.classList.add('remote-touchable')
+    
     self.tick = function() {
       if (!isMoving) {
         return

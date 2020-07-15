@@ -35,8 +35,7 @@ var Hand = function($hand, options) {
       resizer: '',
       'blind-release': '',
       debugged: '',
-      raycaster: "showLine: true; far: 100",
-      line: "color: blue; opacity: 0.5"
+      'remote-toucher': ''
     })
     return model
   }
