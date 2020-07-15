@@ -34,6 +34,7 @@
     <script crossorigin src="/js/color.js"></script>
     <script crossorigin src="/js/color-tweaker.js"></script>
     <script crossorigin src="/js/tweaker-home.js"></script>
+    <script crossorigin src="/js/user-move-handle.js"></script>
     <script crossorigin src="/js/user-mover.js"></script>
     <script crossorigin src="/js/hand.js"></script>
     <script crossorigin src="/js/planner.js"></script>
@@ -56,7 +57,7 @@
       <a-assets>
         <img id="sky" src="https://cdn.glitch.com/a0e144b7-dc44-4d24-a07d-26b1afe59bcf%2F1_5m53UGd39unlP9G4-xyigQ.png?v=1591554726157" crossorigin="anonymous" />
         <a-mixin id="letterkey" material="color: gray" geometry="width: 0.12; depth: 0.12; height: 0.1"></a-mixin>
-        <a-mixin id="movehandle" class="" material="color: orange" opacity="0.3" geometry="width: 0.2; depth: 0.2; height: 0.2"></a-mixin>
+        <a-mixin id="movehandle" user-move-handle material="color: orange" opacity="0.3" geometry="width: 0.2; depth: 0.2; height: 0.2"></a-mixin>
       </a-assets>
 
       <a-sky src="#sky" rotation="0 -90 0"></a-sky>
@@ -131,7 +132,14 @@
         </a-entity>
       </a-entity>
 
-      <a-entity id="move-handles" layout="">
+      <a-entity id="move-handles"
+                position="1 1 1"
+                layout="type: box; plane: xz; columns: 3">
+        <a-box mixin="movehandle"></a-box>
+        <a-box mixin="movehandle"></a-box>
+        <a-box mixin="movehandle"></a-box>
+        <a-box mixin="movehandle"></a-box>
+        <a-box mixin="movehandle"></a-box>
         <a-box mixin="movehandle"></a-box>
       </a-entity>
       
