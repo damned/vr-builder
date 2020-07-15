@@ -1,4 +1,10 @@
 /* global AFRAME entityInfo catching clog */
+AFRAME.registerSystem('monitor', {
+  init: function () {
+    let self = this
+    self.
+  }
+});
 let MonitorPart = function(component, host) {
   
   function enableColliderTrackingWhenMoves() {
