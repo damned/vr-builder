@@ -114,6 +114,7 @@ AFRAME.registerComponent('grabber', {
         }
         if (tograb.hasAttribute('user-move-handle')) {
           host.emit('grab')
+          return
         }
         
         debugColor(host, 'white')
