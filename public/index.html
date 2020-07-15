@@ -53,7 +53,7 @@
     <script crossorigin src="https://damned-whalley.glitch.me/lib/client/logical-wall.js"></script>
   </head>
   <body>
-    <a-scene stats>
+    <a-scene>
       <a-assets>
         <img id="sky" src="https://cdn.glitch.com/a0e144b7-dc44-4d24-a07d-26b1afe59bcf%2F1_5m53UGd39unlP9G4-xyigQ.png?v=1591554726157" crossorigin="anonymous" />
         <a-mixin id="letterkey" material="color: gray" geometry="width: 0.12; depth: 0.12; height: 0.1"></a-mixin>
@@ -68,13 +68,12 @@
       
       <a-box class="stock touchable" position="1 0 0" color="brown" width="0.3" depth="0.3" height="0.3"></a-box>
 
-      <a-entity keyboard-space position="0.4 0.55 -1.1">
+<!--       <a-entity keyboard-space position="0.4 0.55 -1.1">
         <a-box typist-hand hand-side="left" class="touchable" position="0.2 0.8 -0.6" width="0.03" depth="0.02" height="0.02">
           <a-sphere fingertip color="red" finger="left" radius="0.012"         position="0.08 -0.12 -0.05"></a-sphere>
           <a-sphere fingertip color="red" finger="middle-left" radius="0.012"  position="0.09 -0.04 -0.05"></a-sphere>
           <a-sphere fingertip color="red" finger="middle-right" radius="0.012" position="0.09  0.04 -0.05"></a-sphere>
           <a-sphere fingertip color="red" finger="right" radius="0.012"        position="0.08  0.12 -0.05"></a-sphere>
-<!--           <a-sphere fingertip color="red" radius="0.012" position="0.07  0.08 0.05"></a-sphere> -->
         </a-box>
 
         <a-box typist-hand hand-side="right" class="touchable" position="0.6 0.8 -0.6" width="0.03" depth="0.02" height="0.02">
@@ -82,7 +81,6 @@
           <a-sphere fingertip color="red" finger="middle-left" radius="0.012"  position="-0.09  0.04 -0.05"></a-sphere>
           <a-sphere fingertip color="red" finger="middle-right" radius="0.012" position="-0.09 -0.04 -0.05"></a-sphere>
           <a-sphere fingertip color="red" finger="right" radius="0.012"        position="-0.08 -0.12 -0.05"></a-sphere>
-<!--           <a-sphere fingertip color="red" finger="thumb" radius="0.012"  position="-0.05  0.06  0.05"></a-sphere> -->
         </a-box>
 
         <a-entity scale="0.52 0.38 0.5">
@@ -131,7 +129,7 @@
           </a-entity>
         </a-entity>
       </a-entity>
-
+ -->
       <a-entity id="move-handles"
                 position="-3 1 -3"
                 layout="type: box; plane: xz; columns: 5">

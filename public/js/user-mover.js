@@ -12,8 +12,8 @@ AFRAME.registerComponent('user-mover', {
     let worldAnchorPoint = new THREE.Vector3()
     let worldOffsetFromAnchor = new THREE.Vector3()
     
-    host.addEventListener('grasp', () => {
-      clog('user-mover', 'grasp')      
+    host.addEventListener('grab', () => {
+      clog('user-mover', 'grab')      
       host3d.getWorldPosition(worldAnchorPoint)
       moving = true
     })
@@ -26,15 +26,15 @@ AFRAME.registerComponent('user-mover', {
     let translateHorizontallyToMatchAnchor = () => {
       worldOffsetFromAnchor.subVectors(worldAnchorPoint, host3d.getWorldPosition(vector3))
       worldOffsetFromAnchor.y = 0
-      clog('user-mover', 'translating', worldOffsetFromAnchor)
+      // clog('user-mover', 'translating', worldOffsetFromAnchor)
       user3d.position.add(worldOffsetFromAnchor)
     }
     
     self.tickHandler = () => {
       if (moving) {
-        // translateHorizontallyToMatchAnchor()
+        translateHorizontallyToMatchAnchor()
       }
     }
-    self.tick = AFRAME.utils.throttleTick(self.tickHandler, 100, self);
+    self.tick = AFRAME.utils.throttleTick(self.tickHandler, 50, self);
   }
 })

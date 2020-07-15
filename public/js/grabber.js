@@ -112,6 +112,10 @@ AFRAME.registerComponent('grabber', {
           })
           return
         }
+        if (tograb.hasAttribute('user-move-handle')) {
+          host.emit('grab')
+        }
+        
         debugColor(host, 'white')
         debugColor(tograb, 'white')
         // host.setAttribute('debugged', `grabbing: ${tograb.tagName} with ${this.grabbedLeaderSpec}`)
