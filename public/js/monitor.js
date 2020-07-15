@@ -2,9 +2,14 @@
 AFRAME.registerSystem('monitor', {
   init: function () {
     let self = this
-    self.
+    let componentRenderers = {}
+    
+    self.registerComponentRenderer = (name, componentRenderer) => {
+      componentRenderers[name] = componentRenderer
+    }
   }
-});
+})
+
 let MonitorPart = function(component, host) {
   
   function enableColliderTrackingWhenMoves() {

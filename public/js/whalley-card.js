@@ -1,4 +1,10 @@
 /* global AFRAME THREE whalley */
+AFRAME.registerSystem('whalley-card', {
+  init: function () {
+    this.el.systems.monitor.registerComponentRenderer(monitorInfoRenderer)
+  }
+})
+
 AFRAME.registerComponent('whalley-card', {
   init: function() {
     let self = this
