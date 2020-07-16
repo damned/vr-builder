@@ -40,7 +40,7 @@ let MonitorPart = function(component, host) {
 }
 AFRAME.registerComponent('monitor', {
   schema: {
-    dynamic: {type: 'boolean', default: false }
+    dynamic: {type: 'boolean', default: true }
   },
   init: function() {
     let self = this
@@ -53,11 +53,13 @@ AFRAME.registerComponent('monitor', {
     let $text
     let monitorType = 'unconfigured'
     self.update = function() {
-      monitorType = self.data.dyamic ? 'DYNAMIC' : 'FIXED'
+      monitorType = self.data.dynamic ? 'DYNAMIC' : 'FIXED'
       $text = $(`<a-text data-aabb-collider-dynamic font="monoid" color="black" baseline="top" width="1" wrap-count="25" position="-0.5 0.5 0.51" value="-${monitorType} monitor-">`)
+      $host.append($text)
+      self.textEl = $text.get(0)
     }
-    $host.append($text)
-    self.textEl = $text.get(0)
+    let touchSource
+    let isDynamic = () => self.data.dynamic
     self.setOutput = function(output) {
       self.textEl.setAttribute('value', output)
     }
@@ -70,15 +72,24 @@ AFRAME.registerComponent('monitor', {
     self.getMonitored = function() {
       return self.monitored
     }
+    self.setTouchSource = function(source) {
+      touchSource = source
+    }
     self.copyTo = function(targetMonitor) {
-      targetMonitor.monitor(self.getMonitored())
+      if (isDynamic()) {
+        targetMonitor.setTouchSource(touchSource)
+      }
+      else {
+        targetMonitor.monitor(self.getMonitored())        
+      }
     }
     setTimeout(() => {
       let $touchSourceAncestor = $host.closest('[touch-source]')
       if ($touchSourceAncestor.length == 0) {
         return
       }
-      $touchSourceAncestor.get(0).components['touch-source'].onTouchStart((touched) => {
+      touchSource = $touchSourceAncestor.get(0).components['touch-source']
+      touchSource.onTouchStart((touched) => {
         clog('touch', 'in monitor i got a touch start for: ' + touched.tagName)
         self.monitor(touched)
       })      
