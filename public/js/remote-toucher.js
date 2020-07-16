@@ -1,4 +1,4 @@
-/* global AFRAME THREE clog */
+/* global AFRAME THREE clog catching */
 AFRAME.registerComponent('remote-touchable', {
   init: function() {
     let self = this
@@ -16,9 +16,11 @@ AFRAME.registerComponent('remote-touchable', {
     })
     
     function tickHandler() {
-      if (remoteToucher) {
-        host.emit('remotetouchedmove', { toucher: remoteToucher, worldPosition: remoteToucher.getTouchWorldPosition(host) })
-      }
+      catching(() => {
+        if (remoteToucher) {
+          host.emit('remotetouchedmove', { toucher: remoteToucher, worldPosition: remoteToucher.getTouchWorldPosition(host) })
+        }        
+      })
     }
     
     self.tick = AFRAME.utils.throttleTick(tickHandler, 50, self)
