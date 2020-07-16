@@ -29,6 +29,12 @@ AFRAME.registerComponent('remote-toucher', {
   init: function() {
     let self = this
     let host = self.el
+    let grabberElement = $(host).find('[grabber]').get(0)
+    let grabber
+    
+    if (grabberElement) {
+      grabber = grabberElement.components.grabber
+    }
     
     let raycaster
     let touchedEl = null
@@ -50,7 +56,7 @@ AFRAME.registerComponent('remote-toucher', {
     let touchStart = (touched) => {
       touchedEl = touched
       host.emit('remotetouchstart', { touched: touched })
-      touched.emit('remotetouched', { toucher: self, toucherHost: host })
+      touched.emit('remotetouched', { toucher: self, toucherHost: host, toucherGrabber: grabber })
     }
     
     host.addEventListener('raycaster-intersection', function (event) {

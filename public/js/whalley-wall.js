@@ -134,7 +134,7 @@ let VrWall = function(logical_wall, wallEntity) {
     $wall.attr('color', 'red')
     catching(() => {
       let toucherHost = event.detail.toucherHost
-      let toucherGrabber = toucherHost.components.grabber
+      let toucherGrabber = event.detail.toucherGrabber
       if (!toucherGrabber) {
         clog('got remote touch but toucher has no grabber')
         return
@@ -143,21 +143,28 @@ let VrWall = function(logical_wall, wallEntity) {
         clog('got remote touch but nothing grabbed')
         return
       }
-      let position = event.detail.position
       let grabbed = toucherGrabber.grabbed
-      if (!grabbed.hasAttribute('whalley-card')) {
+      let isOnThisWall = $(grabbed).closest($wall).length > 0
+      if (isOnThisWall) {
+        clog('got remote touch for grabbed card, but from this wall already')
+        return
+      }
+      let grabbedCardComponent = grabbed.components['whalley-card']
+      if (!grabbedCardComponent) {
         clog('not grabbing a card')
         return        
       }
+      let grabbedCardData = grabbedCardComponent.card.data()
+      let remoteTouchPosition = event.detail.position
       cards_api.add({
         id: Date.now().toString(),
         x: 50,
         y: 50,
-        width: 30,
-        height: 20,
+        width: grabbedCardData.width,
+        height: grabbedCardData.height,
         colour: 'orange',
         type: 'text',
-        text: 'copying...\n' + toucherGrabber.grabbed.tagName
+        text: 'copying...\n' + grabbedCardData.text
       })
       $wall.attr('color', 'orange')
       setTimeout(() => {
