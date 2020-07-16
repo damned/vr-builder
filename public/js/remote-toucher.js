@@ -56,7 +56,8 @@ AFRAME.registerComponent('remote-toucher', {
     let touchStart = (touched) => {
       touchedEl = touched
       host.emit('remotetouchstart', { touched: touched })
-      touched.emit('remotetouched', { toucher: self, toucherHost: host, toucherGrabber: grabber })
+      let intersection = raycaster.getIntersection(touched)
+      touched.emit('remotetouched', { toucher: self, toucherHost: host, toucherGrabber: grabber, worldPosition: intersection.point })
     }
     
     host.addEventListener('raycaster-intersection', function (event) {

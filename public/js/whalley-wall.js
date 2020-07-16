@@ -1,4 +1,4 @@
-/* global AFRAME whalley clog catching */
+/* global AFRAME THREE whalley clog catching */
 var whalley = whalley || {}
 whalley.log = {
   level: 'info',
@@ -97,6 +97,7 @@ let VrCardViewFactory = function(vrWall, $wall) {
 let VrWall = function(logical_wall, wallEntity) {
   let self = this
   let $wall = $(wallEntity)
+  let wall3d = wallEntity.object3D
   
   var wall_view_api = {
     create_card_view: function(card) {
@@ -130,6 +131,8 @@ let VrWall = function(logical_wall, wallEntity) {
     builder(cards_api);
   }
   
+  let remoteTouchPosition = new THREE.Vector3()
+  
   function remoteTouchHandler(event) {
     $wall.attr('color', 'red')
     catching(() => {
@@ -155,7 +158,16 @@ let VrWall = function(logical_wall, wallEntity) {
         return        
       }
       let grabbedCardData = grabbedCardComponent.card.data()
-      let remoteTouchPosition = event.detail.position
+      
+      let remoteTouchWorldPosition = event.detail.worldPosition
+      let getCardCoordinatesOfWorldTouchPosition = (touchWorldPosition) => {
+        remoteTouchPosition.copy(touchWorldPosition)
+        wall3d.worldToLocal(remoteTouchPosition)
+        return 
+      }
+
+      let coords = getCardCoordinatesOfWorldTouchPosition(event.detail.worldPosition)
+      
       cards_api.add({
         id: Date.now().toString(),
         x: 50,
