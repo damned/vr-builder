@@ -93,6 +93,17 @@ let VrCardViewFactory = function(vrWall, $wall) {
 let VrWall = function(logical_wall, wallEntity) {
   let self = this
   let $wall = $(wallEntity)
+  
+  function configureWallModel() {
+    $wall.attr('remote-touchable', '')
+    $wall.on('remotetouched', () => {
+      $wall.attr('color', 'red')
+      setTimeout(() => {
+        $wall.attr('color', 'lightgray')
+      }, 1000)
+    })
+  }
+
   var wall_view_api = {
     create_card_view: function(card) {
       return VrCardViewFactory(self, $wall).create_card_view(card)
@@ -105,7 +116,6 @@ let VrWall = function(logical_wall, wallEntity) {
       console.warn('VrWall', 'show_card - NYI - doing nothing')
     }
   }
-
   
   function CardsApi(logical_cards_api) {
     return {
@@ -125,7 +135,9 @@ let VrWall = function(logical_wall, wallEntity) {
     cards_api.clear();
     builder(cards_api);
   }
-
+  
+  configureWallModel()
+  
   let external = {
     build: build,
     
