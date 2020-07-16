@@ -42,9 +42,9 @@ AFRAME.registerComponent('reacher', {
         let from = fromElement3d.position
         fromPoint.set(from.x, fromPointHeight, from.z)
         let distance = fromPoint.distanceTo(host3d.position)
-        clog('reacher', 'distance', distance)
+        // clog('reacher', 'distance', distance)
         if (!reaching && distance > reachDistance) {
-          clog('reacher', 'reach!!!!!')
+          // clog('reacher', 'reach!!!!!')
           reaching = true
           playComponents(true)
         }
