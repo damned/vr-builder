@@ -24,6 +24,7 @@ var Hand = function($hand, options) {
   let side = $hand.attr('hand-side')
   let hand = $hand.get(0)
   let handId = $hand.attr('id')
+  
   let modelSize = 0.03
   function createHandModel(side) {
     let model = createEntity('a-box', 'hand-model', modelSize, modelSize, modelSize)
@@ -34,8 +35,7 @@ var Hand = function($hand, options) {
       flicker: '',
       resizer: '',
       'blind-release': '',
-      debugged: '',
-      'remote-toucher': ''
+      debugged: ''
     })
     return model
   }
@@ -101,6 +101,8 @@ var Hand = function($hand, options) {
   
   $hand.attr('oculus-touch-controls', 'hand: ' + side + '; model: false')
   $hand.addClass('hand')
+  
+  hand.setAttribute('remote-toucher', '')
   
   $hand.on('triggerdown', grabHandler)
        .on('triggerup', triggerReleaseHandler)
