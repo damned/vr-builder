@@ -177,7 +177,7 @@ let VrWall = function(logical_wall, wallEntity) {
       
       let coords = getCardCoordinatesOfWorldTouchPosition(event.detail.worldPosition)
       
-      cards_api.add({
+      let avatarCardData = {
         id: Date.now().toString(),
         x: coords.x,
         y: coords.y,
@@ -186,7 +186,12 @@ let VrWall = function(logical_wall, wallEntity) {
         colour: 'orange',
         type: 'text',
         text: 'copying...\n' + grabbedCardData.text
-      })
+      }
+      var fake_logical_card = {
+        data: () => cardlike
+      }
+      wall_view_api.create_card_view(logical_card);
+
       $wall.attr('color', 'orange')
       setTimeout(() => {
         $wall.attr('color', 'lightgray')
