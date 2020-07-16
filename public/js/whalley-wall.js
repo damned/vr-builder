@@ -252,7 +252,7 @@ AFRAME.registerComponent('whalley-wall', {
       let spaceId = self.data.spaceId
       let idSuffix = self.data.idSuffix
       let wallId = spaceId + idSuffix
-      if (!wallId) {
+      if (!spaceId) {
         return
       }
       let logical_wall = new whalley.LogicalWall()
