@@ -96,11 +96,22 @@ let VrWall = function(logical_wall, wallEntity) {
   
   function configureWallModel() {
     $wall.attr('remote-touchable', '')
-    $wall.on('remotetouched', () => {
+    $wall.on('remotetouched', (event) => {
       $wall.attr('color', 'red')
-      setTimeout(() => {
-        $wall.attr('color', 'lightgray')
-      }, 1000)
+      catching(() => {
+        let position = event.detail.position
+        cards_api.add({
+          x: 50,
+          y: 50,
+          colour: 'orange',
+          type: 'text',
+          text: 'copied to source'
+        })
+        $wall.attr('color', 'orange')
+        setTimeout(() => {
+          $wall.attr('color', 'lightgray')
+        }, 1000)        
+      })
     })
     $wall.on('remoteuntouched', () => {
       $wall.attr('color', 'blue')

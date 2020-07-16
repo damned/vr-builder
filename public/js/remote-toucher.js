@@ -17,7 +17,7 @@ AFRAME.registerComponent('remote-touchable', {
     
     function tickHandler() {
       if (remoteToucher) {
-        host.emit('remotetouchmove', { toucher: toucher, position: {}})
+        host.emit('remotetouchmove', { toucher: remoteToucher, position: {}})
       }
     }
     
@@ -58,6 +58,7 @@ AFRAME.registerComponent('remote-toucher', {
     });
 
     host.addEventListener('raycaster-intersection-cleared', function (event) {
+      if (!touchedEl) return
       touchedEl.emit('remoteuntouched', { toucher: self, toucherHost: host })
       touchedEl = null
       clog('cleared')
