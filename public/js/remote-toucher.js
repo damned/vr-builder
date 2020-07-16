@@ -17,7 +17,7 @@ AFRAME.registerComponent('remote-touchable', {
     
     function tickHandler() {
       if (remoteToucher) {
-        host.emit('remotetouchmove', { toucher: remoteToucher, position: {}})
+        host.emit('remotetouchedmove', { toucher: remoteToucher, worldPosition: remoteToucher.getTouchWorldPosition(host) })
       }
     }
     
@@ -56,8 +56,7 @@ AFRAME.registerComponent('remote-toucher', {
     let touchStart = (touched) => {
       touchedEl = touched
       host.emit('remotetouchstart', { touched: touched })
-      let intersection = raycaster.getIntersection(touched)
-      touched.emit('remotetouched', { toucher: self, toucherHost: host, toucherGrabber: grabber, worldPosition: intersection.point })
+      touched.emit('remotetouched', { toucher: self, toucherHost: host, toucherGrabber: grabber, worldPosition: self.getTouchWorldPosition(touched) })
     }
     
     host.addEventListener('raycaster-intersection', function (event) {
@@ -84,6 +83,8 @@ AFRAME.registerComponent('remote-toucher', {
       raycaster.pause()
       line3d.visible = false
     }
+    
+    self.getTouchWorldPosition = (touched) => raycaster.getIntersection(touched).point
     
     setTimeout(() => {
       raycaster = host.components.raycaster

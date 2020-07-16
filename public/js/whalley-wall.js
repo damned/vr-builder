@@ -94,6 +94,9 @@ let VrCardViewFactory = function(vrWall, $wall) {
     return {
       remove: () => {
         $card.remove()
+      },
+      moveToPosition: () => {
+        
       }
     }
   }
@@ -116,6 +119,7 @@ let VrWall = function(logical_wall, wallEntity) {
   let $wall = $(wallEntity)
   let wall3d = wallEntity.object3D
   let cardViewFactory = VrCardViewFactory(self, $wall)
+  let avatarCardView = null
   
   var wall_view_api = {
     create_card_view: function(card) {
@@ -150,6 +154,7 @@ let VrWall = function(logical_wall, wallEntity) {
   }
   
   let remoteTouchPosition = new THREE.Vector3()
+  
   let getCardCoordinatesOfWorldTouchPosition = (touchWorldPosition) => {
     remoteTouchPosition.copy(touchWorldPosition)
     let localTouchPosition = wall3d.worldToLocal(remoteTouchPosition)
@@ -209,10 +214,11 @@ let VrWall = function(logical_wall, wallEntity) {
           })
         }
       }
-      let avatarCardView = wall_view_api.create_card_view(avatarLogicalCard);
+      avatarCardView = wall_view_api.create_card_view(avatarLogicalCard);
 
       let avatarSolidifier = () => {
         avatarCardView.remove()
+        avatarCardView = null
         cards_api.add(avatarLogicalCard.copyData())
         toucherHost.removeEventListener('ungrasp', avatarSolidifier)
       }
@@ -230,11 +236,20 @@ let VrWall = function(logical_wall, wallEntity) {
       $wall.attr('color', 'lightgray')
     }, 1000)
   }
+
+  function remoteTouchedMoveHandler(event) {
+    if (avatarCardView) {
+      remoteTouchPosition.copy(event.detail.worldPosition)
+      let localPosition = wall3d.worldToLocal(remoteTouchPosition)
+      avatarCardView.moveToWorldPosition(event.detail.worldPosition)
+    }
+  }
   
   function configureWallModel() {
     $wall.attr('remote-touchable', '')
     $wall.on('remotetouched', remoteTouchHandler)
     $wall.on('remoteuntouched', remoteUntouchHandler)
+    $wall.on('remotetouchedmove', remoteTouchedMoveHandler)
   }
 
   configureWallModel()
