@@ -152,7 +152,10 @@ function allowMovementWithoutRotation(entity) {
 }
 
 AFRAME.registerComponent('whalley-wall', {
-  schema: {type: 'string', default: ''},
+  schema: {
+    spaceId: {type: 'string', default: ''},
+    idSuffix: {type: 'string', default: ''},
+  },
   init: function() {
     let self = this
     let host = self.el
@@ -162,7 +165,10 @@ AFRAME.registerComponent('whalley-wall', {
     allowMovementWithoutRotation(host)
 
     self.update = function(oldData) {
-      let wallId = self.data
+      console.log(self.data)
+      let spaceId = self.data.spaceId
+      let idSuffix = self.data.idSuffix
+      let wallId = spaceId + idSuffix
       if (!wallId) {
         return
       }
