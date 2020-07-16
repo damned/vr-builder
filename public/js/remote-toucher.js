@@ -3,7 +3,25 @@ AFRAME.registerComponent('remote-touchable', {
   init: function() {
     let self = this
     let host = self.el
-    host.classList.add('remote-touchable')    
+    
+    let remoteToucher = null
+    
+    host.classList.add('remote-touchable')
+    
+    host.addEventListener('remotetouched', (event) => {
+      remoteToucher = event.detail.toucher
+    })
+    host.addEventListener('remoteuntouched', () => {
+      remoteToucher = null
+    })
+    
+    function tickHandler() {
+      if (remoteToucher) {
+        host.emit('remotetouchmove', { toucher: toucher, position: {}})
+      }
+    }
+    
+    self.tick = AFRAME.utils.throttleTick(tickHandler, 50, self)
   }
 })
 
@@ -59,13 +77,6 @@ AFRAME.registerComponent('remote-toucher', {
       line3d.visible = false
     }
     
-    let tickHandler = () => {
-      if (touchedEl) {
-      
-      }
-    }
-    
-    self.tick = AFRAME.utils.throttleTick(tickHandler, 200, self)
     setTimeout(() => {
       raycaster = host.components.raycaster
       self.pause()
