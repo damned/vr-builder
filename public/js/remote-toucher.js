@@ -23,5 +23,20 @@ AFRAME.registerComponent('remote-toucher', {
       clog('remote-toucher', 'got an intersection')
       host.emit('remotetouchstart', { touched: event.detail.els[0] })
     });
+
+    setTimeout(() => {
+      host.components.raycaster.data.showLine = false
+      line3d.visible = false
+    }, 2000)
+    self.play = () => {
+      clog('remote-toucher', 'play')
+      host.components.raycaster.play()
+      line3d.visible = true
+    }
+    self.pause = () => {
+      clog('remote-toucher', 'pause')
+      host.components.raycaster.pause()
+      line3d.visible = false
+    }
   }
 })

@@ -24,6 +24,19 @@ AFRAME.registerComponent('reacher', {
       reachDistance = self.data.distance
       fromPointHeight = self.data.fromPointHeight
     }
+    
+    let playComponents = (play) => {
+      componentsToPlay.forEach((name) => {
+        let component = host.components[name]
+        if (play) {
+          component.play()
+        }
+        else {
+          component.pause()
+        }
+      })
+    }
+    
     let tickHandler = () => {
       catching(() => {
         let from = fromElement3d.position
@@ -33,10 +46,12 @@ AFRAME.registerComponent('reacher', {
         if (!reaching && distance > reachDistance) {
           clog('reacher', 'reach!!!!!')
           reaching = true
+          playComponents(true)
         }
         if (reaching && distance < reachDistance) {
           clog('reacher', 'unreach!!!!!')
           reaching = false
+          playComponents(false)
         }        
       })
     }
