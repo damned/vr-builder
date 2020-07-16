@@ -200,7 +200,10 @@ let VrWall = function(logical_wall, wallEntity) {
         on_position_value_changed: () => {},
         move_started: () => {},
         move_completed: () => {},
-        move_happening: () => {}
+        move_happening: () => {},
+        copyData: () => {
+          return Object.assign(avatarCardData, { avatar: false, text: grabbedCardData.text })
+        }
       }
       let avatarCardView = wall_view_api.create_card_view(avatarLogicalCard);
 
