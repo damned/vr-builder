@@ -11,7 +11,9 @@ AFRAME.registerComponent('remote-toucher', {
   init: function() {
     let self = this
     let host = self.el
+    
     let raycaster
+    let touchedEl = null
     
     let dottedLineMaterial = new THREE.LineDashedMaterial({
       color: '#6666ff',
@@ -27,24 +29,43 @@ AFRAME.registerComponent('remote-toucher', {
     line3d.material.needsUpdate = true
     line3d.computeLineDistances()
     
-    host.addEventListener('raycaster-intersection', function (event) {
-      let touched = event.detail.els[0]
+    let touchStart = (touched) => {
+      touchedEl = touched
       host.emit('remotetouchstart', { touched: touched })
       touched.emit('remotetouched', { toucher: self, toucherHost: host })
+    }
+    
+    host.addEventListener('raycaster-intersection', function (event) {
+      touchStart(event.detail.els[0])
+    });
+
+    host.addEventListener('raycaster-intersection-cleared', function (event) {
+      touchedEl.emit('remoteuntouched', { toucher: self, toucherHost: host })
+      touchedEl = null
+      clog('cleared')
     });
 
     self.play = () => {
+      if (!raycaster) return
       clog('remote-toucher', 'play')
-      host.components.raycaster.play()
+      raycaster.play()
       line3d.visible = true
-      if ()
     }
     
     self.pause = () => {
+      if (!raycaster) return
       clog('remote-toucher', 'pause')
-      host.components.raycaster.pause()
+      raycaster.pause()
       line3d.visible = false
     }
+    
+    let tickHandler = () => {
+      if (touchedEl) {
+      
+      }
+    }
+    
+    self.tick = AFRAME.utils.throttleTick(tickHandler, 200, self)
     setTimeout(() => {
       raycaster = host.components.raycaster
       self.pause()

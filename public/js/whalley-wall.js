@@ -102,6 +102,12 @@ let VrWall = function(logical_wall, wallEntity) {
         $wall.attr('color', 'lightgray')
       }, 1000)
     })
+    $wall.on('remoteuntouched', () => {
+      $wall.attr('color', 'blue')
+      setTimeout(() => {
+        $wall.attr('color', 'lightgray')
+      }, 1000)
+    })
   }
 
   var wall_view_api = {
