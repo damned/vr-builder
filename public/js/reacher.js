@@ -3,7 +3,7 @@
 AFRAME.registerComponent('reacher', {
   schema: {
     componentsToPlay: {type: 'array', default: []},
-    distance: {type: 'number', default: 0.75 },
+    distance: {type: 'number', default: 0.6 },
     fromPointHeight: {type: 'number', default: 1 }
   },
 
@@ -49,12 +49,12 @@ AFRAME.registerComponent('reacher', {
           playComponents(true)
         }
         if (reaching && distance < reachDistance) {
-          clog('reacher', 'unreach!!!!!')
+          // clog('reacher', 'unreach!!!!!')
           reaching = false
           playComponents(false)
         }        
       })
     }
-    self.tick = AFRAME.utils.throttleTick(tickHandler, 1000, self)
+    self.tick = AFRAME.utils.throttleTick(tickHandler, 200, self)      
   }
 })
