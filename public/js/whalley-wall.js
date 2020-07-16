@@ -18,16 +18,21 @@ whalley.log = {
 const DEFAULT_EMPTY_TEXT_THAT_CREATES_BOUNDING_BOX_FOR_COLLIDER = '.'
 
 let VrCardViewFactory = function(vrWall, $wall) {
+  const CARD_TO_METRES_SCALE = 0.002
+  
   let wallHeight = parseFloat($wall.attr('height'))
   let wallWidth = parseFloat($wall.attr('width'))
   let wallTop = wallHeight / 2
   let wallLeft = -wallWidth / 2
+  
+  let getCardX = (position) => Math.floor((position.x - wallLeft) / CARD_TO_METRES_SCALE)
+  let getCardY = (position) => Math.floor(-(position.y - wallTop) / CARD_TO_METRES_SCALE)
+
+  let getLocalX = (data) => wallLeft + (data.x * CARD_TO_METRES_SCALE)
+  let getLocalY = (data) => wallTop - (data.y  * CARD_TO_METRES_SCALE)
+  let z = 0.1
 
   let VrCardView = function(logical) {
-    let CARD_TO_METRES_SCALE = 0.002
-    let getX = (data) => wallLeft + (data.x * CARD_TO_METRES_SCALE)
-    let getY = (data) => wallTop - (data.y  * CARD_TO_METRES_SCALE)
-    let z = 0.1
         
     let data = logical.data()
     let height = data.height * CARD_TO_METRES_SCALE
@@ -51,7 +56,7 @@ let VrCardViewFactory = function(vrWall, $wall) {
     let $card
     setTimeout(() => {
       $card = $(`<a-box data-aabb-collider-dynamic color="${data.colour}" whalley-card follower-constraint="axis-lock: z; lock: rotation"` 
-                 + `position="${getX(data)} ${getY(data)} ${z}" width="${width}" height="${height}" depth="0.01">`
+                 + `position="${getLocalX(data)} ${getLocalY(data)} ${z}" width="${width}" height="${height}" depth="0.01">`
                      + `<a-text font="${font}" position="0 ${textOffsetY} 0.01" wrap-count="${getTextWrapCount(data)}" width="${cardTextEntityWidth}"`
                         + `align="center" baseline="top" scale="${TEXT_SCALE} ${TEXT_SCALE} ${TEXT_SCALE}" value="${getText(data)}" color="black">`
                     + '</a-box>')
@@ -65,14 +70,13 @@ let VrCardViewFactory = function(vrWall, $wall) {
         let data = logical.data()
         // setTimeout(() => {
         //   clog('card move', 'move_completed() called!!!!')
-        //   clog('card move', `logical: ${data.x}, ${data.y}`, `calculated: ${getX(data)}, ${getY(data)}`)
+        //   clog('card move', `logical: ${data.x}, ${data.y}`, `calculated: ${getLocalX(data)}, ${getLocalY(data)}`)
         //   clog('card move', `wall basics: height ${wallHeight}, width ${wallWidth}, left ${wallLeft}, top ${wallTop}`)
         // }, 0)
       })
       $card.on('move', (event) => {
         let position = event.detail.position
-        logical.move_happening(Math.floor((position.x - wallLeft) / CARD_TO_METRES_SCALE),
-                               Math.floor(-(position.y - wallTop) / CARD_TO_METRES_SCALE))
+        logical.move_happening(getCardX(position), getCardY(position))
       })
       
       setTimeout(() => {
@@ -82,7 +86,7 @@ let VrCardViewFactory = function(vrWall, $wall) {
     
     logical.on_position_value_changed(() => {
       let dataAfterMove = logical.data()
-      $card.get(0).object3D.position.set(getX(dataAfterMove), getY(dataAfterMove), z)
+      $card.get(0).object3D.position.set(getLocalX(dataAfterMove), getLocalY(dataAfterMove), z)
     })
     
   }
@@ -90,6 +94,12 @@ let VrCardViewFactory = function(vrWall, $wall) {
   return {
     create_card_view: function(card) {
       return VrCardView(card)    
+    },
+    localPositionToCardCoords: function(position) {
+      return {
+        x: getCardX(position), 
+        y: getCardY(position)
+      }
     }
   }
 }
@@ -98,10 +108,11 @@ let VrWall = function(logical_wall, wallEntity) {
   let self = this
   let $wall = $(wallEntity)
   let wall3d = wallEntity.object3D
+  let cardViewFactory = VrCardViewFactory(self, $wall)
   
   var wall_view_api = {
     create_card_view: function(card) {
-      return VrCardViewFactory(self, $wall).create_card_view(card)
+      return cardViewFactory.create_card_view(card)
     },
     group: function(width, height) {
       console.warn('VrWall', 'group - NYI - doing nothing')
@@ -132,7 +143,12 @@ let VrWall = function(logical_wall, wallEntity) {
   }
   
   let remoteTouchPosition = new THREE.Vector3()
-  
+  let getCardCoordinatesOfWorldTouchPosition = (touchWorldPosition) => {
+    remoteTouchPosition.copy(touchWorldPosition)
+    let localTouchPosition = wall3d.worldToLocal(remoteTouchPosition)
+    return cardViewFactory.localPositionToCardCoords(localTouchPosition)
+  }
+
   function remoteTouchHandler(event) {
     $wall.attr('color', 'red')
     catching(() => {
@@ -159,19 +175,12 @@ let VrWall = function(logical_wall, wallEntity) {
       }
       let grabbedCardData = grabbedCardComponent.card.data()
       
-      let remoteTouchWorldPosition = event.detail.worldPosition
-      let getCardCoordinatesOfWorldTouchPosition = (touchWorldPosition) => {
-        remoteTouchPosition.copy(touchWorldPosition)
-        wall3d.worldToLocal(remoteTouchPosition)
-        return 
-      }
-
       let coords = getCardCoordinatesOfWorldTouchPosition(event.detail.worldPosition)
       
       cards_api.add({
         id: Date.now().toString(),
-        x: 50,
-        y: 50,
+        x: coords.x,
+        y: coords.y,
         width: grabbedCardData.width,
         height: grabbedCardData.height,
         colour: 'orange',
