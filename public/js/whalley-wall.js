@@ -40,7 +40,7 @@ let VrCardViewFactory = function(vrWall, $wall) {
       return DEFAULT_EMPTY_TEXT_THAT_CREATES_BOUNDING_BOX_FOR_COLLIDER
     }
 
-    let getTextWrapCount = (data) => data.width / 8
+    let getTextWrapCount = (data) => data.width / 7
     const TEXT_SCALE = 0.1
     const TEXT_TOP_MARGIN = 0.008
     let font = '' // roboto dejavu mozillavr monoid sourcecodepro exo2bold aileronsemibold kelsonsans exo2semibold
