@@ -40,6 +40,7 @@ let MonitorPart = function(component, host) {
 }
 AFRAME.registerComponent('monitor', {
   schema: {
+    wrapCount: {type: 'number', default: 25 },
     dynamic: {type: 'boolean', default: true }
   },
   init: function() {
@@ -54,7 +55,7 @@ AFRAME.registerComponent('monitor', {
     let monitorType = 'unconfigured'
     self.update = function() {
       monitorType = self.data.dynamic ? 'DYNAMIC' : 'FIXED'
-      $text = $(`<a-text data-aabb-collider-dynamic font="monoid" color="black" baseline="top" width="1" wrap-count="25" position="-0.5 0.5 0.51" value="-${monitorType} monitor-">`)
+      $text = $(`<a-text data-aabb-collider-dynamic font="monoid" color="black" baseline="top" width="1" wrap-count="${self.data.wrapCount}" position="-0.5 0.5 0.51" value="-${monitorType} monitor-">`)
       $host.append($text)
       self.textEl = $text.get(0)
     }
