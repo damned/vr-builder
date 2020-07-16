@@ -53,9 +53,11 @@ let VrCardViewFactory = function(vrWall, $wall) {
     let cardTextEntityWidth = data.width * 10 * CARD_TO_METRES_SCALE
     let textOffsetY = (height / 2) - TEXT_TOP_MARGIN
     
+    let avatar = data.avatar ? true : false
+    
     let $card
     setTimeout(() => {
-      $card = $(`<a-box data-aabb-collider-dynamic color="${data.colour}" whalley-card follower-constraint="axis-lock: z; lock: rotation"` 
+      $card = $(`<a-box data-aabb-collider-dynamic color="${data.colour}" whalley-card="avatar: ${avatar}" follower-constraint="axis-lock: z; lock: rotation"` 
                  + `position="${getLocalX(data)} ${getLocalY(data)} ${z}" width="${width}" height="${height}" depth="0.01">`
                      + `<a-text font="${font}" position="0 ${textOffsetY} 0.01" wrap-count="${getTextWrapCount(data)}" width="${cardTextEntityWidth}"`
                         + `align="center" baseline="top" scale="${TEXT_SCALE} ${TEXT_SCALE} ${TEXT_SCALE}" value="${getText(data)}" color="black">`
@@ -149,6 +151,8 @@ let VrWall = function(logical_wall, wallEntity) {
     return cardViewFactory.localPositionToCardCoords(localTouchPosition)
   }
 
+  let avatarLogicalCard = null
+  
   function remoteTouchHandler(event) {
     $wall.attr('color', 'red')
     catching(() => {
@@ -178,6 +182,7 @@ let VrWall = function(logical_wall, wallEntity) {
       let coords = getCardCoordinatesOfWorldTouchPosition(event.detail.worldPosition)
       
       let avatarCardData = {
+        avatar: true,
         id: Date.now().toString(),
         x: coords.x,
         y: coords.y,
@@ -187,10 +192,14 @@ let VrWall = function(logical_wall, wallEntity) {
         type: 'text',
         text: 'copying...\n' + grabbedCardData.text
       }
-      var fake_logical_card = {
-        data: () => cardlike
+      avatarLogicalCard = {
+        data: () => avatarCardData,
+        on_position_value_changed: () => {},
+        move_started: () => {},
+        move_completed: () => {},
+        move_happening: () => {}
       }
-      wall_view_api.create_card_view(logical_card);
+      wall_view_api.create_card_view(avatarLogicalCard);
 
       $wall.attr('color', 'orange')
       setTimeout(() => {
@@ -204,6 +213,9 @@ let VrWall = function(logical_wall, wallEntity) {
     setTimeout(() => {
       $wall.attr('color', 'lightgray')
     }, 1000)
+    if (avatarLogicalCard) {
+      cards_api.add(avatarLogicalCard.copyData())
+    }
   }
   
   function configureWallModel() {

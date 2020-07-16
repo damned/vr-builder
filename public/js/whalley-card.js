@@ -8,6 +8,9 @@ AFRAME.registerSystem('whalley-card', {
 })
 
 AFRAME.registerComponent('whalley-card', {
+  schema: {
+    avatar: {type: 'boolean', default: false}
+  },
   init: function() {
     let self = this
     let host = self.el
@@ -27,8 +30,13 @@ AFRAME.registerComponent('whalley-card', {
       isMoving = false
     })
     
-    host.classList.add('touchable')
-    host.classList.add('remote-touchable')
+    
+    self.update = () => {
+      if (!self.data.avatar) {
+        host.classList.add('touchable')
+        host.classList.add('remote-touchable')
+      }
+    }
     
     self.tick = function() {
       if (!isMoving) {
