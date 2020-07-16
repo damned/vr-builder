@@ -18,5 +18,9 @@ AFRAME.registerComponent('remote-toucher', {
     line3d.material = dottedLineMaterial
     line3d.material.needsUpdate = true
     line3d.computeLineDistances()
+    
+    host.addEventListener('raycaster-intersection', function (event) {
+      host.emit('remotetouchstart', { touched: event.detail.els[0] })
+    });
   }
 })

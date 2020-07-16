@@ -73,11 +73,17 @@ AFRAME.registerComponent('monitor', {
     self.getMonitored = function() {
       return self.monitored
     }
+    let touchHandler = (touched) => {
+      clog('touch', 'in monitor i got a touch start for: ' + touched.tagName)
+      self.monitor(touched)
+    }
     self.setTouchSource = function(source) {
       touchSource = source
-      touchSource.onTouchStart((touched) => {
-        clog('touch', 'in monitor i got a touch start for: ' + touched.tagName)
-        self.monitor(touched)
+      touchSource.onTouchStart(touchHan)
+      touchSource.el.on('remotetouchstart', (event) => {
+        let touched = event.detail.touched
+        clog('touch', 'in monitor i got a remote touch start')
+        touchHandler(touched)
       })
     }
     self.copyTo = function(targetMonitor) {
