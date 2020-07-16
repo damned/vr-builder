@@ -19,7 +19,10 @@ function placeInDefaultPosition(hand, side) {
 }
 
 var Hand = function($hand, options) {
-  options = Object.assign({stock: true}, options)
+  options = Object.assign({
+    flickClone : false, 
+    stock: true
+  }, options)
   
   let side = $hand.attr('hand-side')
   let hand = $hand.get(0)
@@ -37,6 +40,11 @@ var Hand = function($hand, options) {
       'blind-release': '',
       debugged: ''
     })
+    if (options.flickClone) {
+      addProps(model, {
+        flicker: ''
+      })      
+    }
     return model
   }
   function createSleeve(side) {
@@ -69,11 +77,15 @@ var Hand = function($hand, options) {
   let model = createHandModel(side)
   let $model = $(model)
   $model.appendTo($hand)
-  afterCreation(() => model.components.flicker.onFlick(() => {
-    model.setAttribute('color', 'orange')
-    model.components.grabber.cloneGrabbed()
-    setTimeout(() => model.setAttribute('color', 'yellow'), 1000)
-  }))
+  
+  if (options.flickClone) {
+    afterCreation(() => model.components.flicker.onFlick(() => {
+      model.setAttribute('color', 'orange')
+      model.components.grabber.cloneGrabbed()
+      setTimeout(() => model.setAttribute('color', 'yellow'), 1000)
+    }))
+  }
+  
   model.addEventListener('blind-release', event => {
     let released = event.detail.released
     clog('blind-release', 'released', released)
