@@ -202,7 +202,11 @@ let VrWall = function(logical_wall, wallEntity) {
         move_completed: () => {},
         move_happening: () => {},
         copyData: () => {
-          return Object.assign(avatarCardData, { avatar: false, text: grabbedCardData.text })
+          return Object.assign(avatarCardData, { 
+            avatar: false, 
+            colour: grabbedCardData.colour,
+            text: grabbedCardData.text 
+          })
         }
       }
       let avatarCardView = wall_view_api.create_card_view(avatarLogicalCard);
