@@ -91,6 +91,11 @@ let VrCardViewFactory = function(vrWall, $wall) {
       $card.get(0).object3D.position.set(getLocalX(dataAfterMove), getLocalY(dataAfterMove), z)
     })
     
+    return {
+      remove: () => {
+        $card.remove()
+      }
+    }
   }
   
   return {
@@ -151,8 +156,6 @@ let VrWall = function(logical_wall, wallEntity) {
     return cardViewFactory.localPositionToCardCoords(localTouchPosition)
   }
 
-  let avatarLogicalCard = null
-  
   function remoteTouchHandler(event) {
     $wall.attr('color', 'red')
     catching(() => {
@@ -192,15 +195,21 @@ let VrWall = function(logical_wall, wallEntity) {
         type: 'text',
         text: 'copying...\n' + grabbedCardData.text
       }
-      avatarLogicalCard = {
+      let avatarLogicalCard = {
         data: () => avatarCardData,
         on_position_value_changed: () => {},
         move_started: () => {},
         move_completed: () => {},
         move_happening: () => {}
       }
-      wall_view_api.create_card_view(avatarLogicalCard);
+      let avatarCardView = wall_view_api.create_card_view(avatarLogicalCard);
 
+      let avatarSolidifier = () => {
+        avatarCardView.remove()
+        cards_api.add(avatarLogicalCard.copyData())
+        toucherHost.removeEventListener('ungrasp', avatarSolidifier)
+      }
+      toucherHost.addEventListener('ungrasp', avatarSolidifier)
       $wall.attr('color', 'orange')
       setTimeout(() => {
         $wall.attr('color', 'lightgray')
@@ -213,9 +222,6 @@ let VrWall = function(logical_wall, wallEntity) {
     setTimeout(() => {
       $wall.attr('color', 'lightgray')
     }, 1000)
-    if (avatarLogicalCard) {
-      cards_api.add(avatarLogicalCard.copyData())
-    }
   }
   
   function configureWallModel() {
