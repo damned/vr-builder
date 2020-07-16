@@ -20,6 +20,7 @@ AFRAME.registerComponent('remote-toucher', {
     line3d.computeLineDistances()
     
     host.addEventListener('raycaster-intersection', function (event) {
+      clog('remote-toucher', 'got an intersection')
       host.emit('remotetouchstart', { touched: event.detail.els[0] })
     });
   }

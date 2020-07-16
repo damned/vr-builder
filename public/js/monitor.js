@@ -79,8 +79,8 @@ AFRAME.registerComponent('monitor', {
     }
     self.setTouchSource = function(source) {
       touchSource = source
-      touchSource.onTouchStart(touchHan)
-      touchSource.el.on('remotetouchstart', (event) => {
+      touchSource.onTouchStart(touchHandler)
+      touchSource.el.addEventListener('remotetouchstart', (event) => {
         let touched = event.detail.touched
         clog('touch', 'in monitor i got a remote touch start')
         touchHandler(touched)
