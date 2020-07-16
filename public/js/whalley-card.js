@@ -1,5 +1,5 @@
 /* global AFRAME THREE whalley */
-let monitorInfoRenderer = (infos, cardComponent, cardElement) => [$(cardElement).find('a-text').attr('value')]
+let monitorInfoRenderer = (infos, cardComponent, cardElement) => [ cardComponent.card.data().text ]
 
 AFRAME.registerSystem('whalley-card', {
   init: function () {

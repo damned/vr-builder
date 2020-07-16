@@ -74,6 +74,10 @@ let VrCardViewFactory = function(vrWall, $wall) {
         logical.move_happening(Math.floor((position.x - wallLeft) / CARD_TO_METRES_SCALE),
                                Math.floor(-(position.y - wallTop) / CARD_TO_METRES_SCALE))
       })
+      
+      setTimeout(() => {
+        $card.get(0).components['whalley-card'].card = logical
+      }, 0)
     }, 100)
     
     logical.on_position_value_changed(() => {
@@ -131,7 +135,11 @@ let VrWall = function(logical_wall, wallEntity) {
     catching(() => {
       let toucherHost = event.detail.toucherHost
       let toucherGrabber = toucherHost.components.grabber
-      if (!toucherGrabber || toucherGrabber.grabbed == null) {
+      if (!toucherGrabber) {
+        clog('got remote touch but toucher has no grabber')
+        return
+      }
+      if (toucherGrabber.grabbed == null) {
         clog('got remote touch but nothing grabbed')
         return
       }
