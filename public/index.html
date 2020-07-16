@@ -171,7 +171,7 @@
       $(window).on('load', function() {
         determineSpaceId((spaceId) => {
           console.log('space id determined: ' + spaceId)
-          $('[whalley-wall]').attr('whalley-wall', `space-id: spaceId`)
+          $('[whalley-wall]').attr('whalley-wall', `space-id: ${spaceId}`)
           $('a-scene').attr('space-id', spaceId)
         })
         var vr_builder = VrBuilder($('a-scene'), Hand($('#left-hand')), Hand($('#right-hand'), { stock: false }))
