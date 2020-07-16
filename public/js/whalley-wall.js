@@ -31,6 +31,14 @@ let VrCardViewFactory = function(vrWall, $wall) {
   let getLocalX = (data) => wallLeft + (data.x * CARD_TO_METRES_SCALE)
   let getLocalY = (data) => wallTop - (data.y  * CARD_TO_METRES_SCALE)
   let z = 0.1
+  
+  let localPositionToCardCoords = function(position) {
+    return {
+      x: getCardX(position), 
+      y: getCardY(position)
+    }
+  }
+
 
   let VrCardView = function(logical) {
         
@@ -100,7 +108,8 @@ let VrCardViewFactory = function(vrWall, $wall) {
         if (!$card) return
         
         $card.get(0).object3D.position.set(position.x, position.y, z)
-      }
+      },
+      getCardCoords: () => localPositionToCardCoords($card.get(0).object3D.position)
     }
   }
   
@@ -108,12 +117,7 @@ let VrCardViewFactory = function(vrWall, $wall) {
     create_card_view: function(card) {
       return VrCardView(card)    
     },
-    localPositionToCardCoords: function(position) {
-      return {
-        x: getCardX(position), 
-        y: getCardY(position)
-      }
-    }
+    localPositionToCardCoords: localPositionToCardCoords
   }
 }
 
@@ -210,8 +214,11 @@ let VrWall = function(logical_wall, wallEntity) {
         move_completed: () => {},
         move_happening: () => {},
         copyData: () => {
+          let finalAvatarCoords = avatarCardView.getCardCoords()
           return Object.assign(avatarCardData, { 
-            avatar: false, 
+            avatar: false,
+            x: finalAvatarCoords.x,
+            y: finalAvatarCoords.y,
             colour: grabbedCardData.colour,
             text: grabbedCardData.text 
           })
@@ -220,9 +227,9 @@ let VrWall = function(logical_wall, wallEntity) {
       avatarCardView = wall_view_api.create_card_view(avatarLogicalCard);
 
       let avatarSolidifier = () => {
+        cards_api.add(avatarLogicalCard.copyData())
         avatarCardView.remove()
         avatarCardView = null
-        cards_api.add(avatarLogicalCard.copyData())
         toucherHost.removeEventListener('ungrasp', avatarSolidifier)
       }
       toucherHost.addEventListener('ungrasp', avatarSolidifier)
