@@ -8,10 +8,11 @@ AFRAME.registerComponent('monitor-home', {
     console.log('this.data (side)', side)
     let direction = (side == 'left') ? -1 : 1
     let $self = $(this.el)
-    let createMonitor = (dynamic, sc) => {
-      $(`<a-box monitor cloneable position="0 0 0.2" rotation="0 ${-90 * direction} ${90 * direction}" scale="0.2 0.2 0.02" color="white">`)
+    let createMonitor = (scale, offset, dynamic) => {
+      return $(`<a-box monitor="dynamic: ${dynamic}" cloneable position="0 ${offset} 0.2" rotation="0 ${-90 * direction} ${90 * direction}" scale="0.2 0.2 0.02" color="white">`)
     }
-    $self.append()
+    $self.append(createMonitor(0.2, 0.12, false))
+    $self.append(createMonitor(0.2, -0.12, false))
   }
 
 });

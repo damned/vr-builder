@@ -40,11 +40,11 @@ var Hand = function($hand, options) {
     return model
   }
   function createSleeve(side) {
-    let sleeve = createEntity('a-cylinder', 'sleeve', 1, 1, 1)    
+    let sleeve = createEntity('a-cylinder', 'sleeve', 0.5, 0.5, 0.5)    
     addProps(sleeve, {
       height: '0.3',
       radius: '0.04',
-      position: '0 0 0.25',
+      position: '0 0 0.12',
       rotation: '90 0 0',
       'monitor-home': side,
       'tweaker-home': side
