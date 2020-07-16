@@ -101,6 +101,7 @@ let VrWall = function(logical_wall, wallEntity) {
       catching(() => {
         let position = event.detail.position
         cards_api.add({
+          id: Date.now().toString(),
           x: 50,
           y: 50,
           colour: 'orange',
