@@ -94,34 +94,6 @@ let VrWall = function(logical_wall, wallEntity) {
   let self = this
   let $wall = $(wallEntity)
   
-  function configureWallModel() {
-    $wall.attr('remote-touchable', '')
-    $wall.on('remotetouched', (event) => {
-      $wall.attr('color', 'red')
-      catching(() => {
-        let position = event.detail.position
-        cards_api.add({
-          id: Date.now().toString(),
-          x: 50,
-          y: 50,
-          colour: 'orange',
-          type: 'text',
-          text: 'copied to source'
-        })
-        $wall.attr('color', 'orange')
-        setTimeout(() => {
-          $wall.attr('color', 'lightgray')
-        }, 1000)        
-      })
-    })
-    $wall.on('remoteuntouched', () => {
-      $wall.attr('color', 'blue')
-      setTimeout(() => {
-        $wall.attr('color', 'lightgray')
-      }, 1000)
-    })
-  }
-
   var wall_view_api = {
     create_card_view: function(card) {
       return VrCardViewFactory(self, $wall).create_card_view(card)
@@ -154,6 +126,51 @@ let VrWall = function(logical_wall, wallEntity) {
     builder(cards_api);
   }
   
+  function remoteTouchHandler(event) {
+    $wall.attr('color', 'red')
+    catching(() => {
+      let toucherHost = event.detail.toucherHost
+      let toucherGrabber = toucherHost.components.grabber
+      if (!toucherGrabber || toucherGrabber.grabbed == null) {
+        clog('got remote touch but nothing grabbed')
+        return
+      }
+      let position = event.detail.position
+      let grabbed = toucherGrabber.grabbed
+      if (!grabbed.hasAttribute('whalley-card')) {
+        clog('not grabbing a card')
+        return        
+      }
+      cards_api.add({
+        id: Date.now().toString(),
+        x: 50,
+        y: 50,
+        width: 30,
+        height: 20,
+        colour: 'orange',
+        type: 'text',
+        text: 'copying...\n' + toucherGrabber.grabbed.tagName
+      })
+      $wall.attr('color', 'orange')
+      setTimeout(() => {
+        $wall.attr('color', 'lightgray')
+      }, 1000)        
+    })
+  }
+  
+  function remoteUntouchHandler() {
+    $wall.attr('color', 'blue')
+    setTimeout(() => {
+      $wall.attr('color', 'lightgray')
+    }, 1000)
+  }
+  
+  function configureWallModel() {
+    $wall.attr('remote-touchable', '')
+    $wall.on('remotetouched', remoteTouchHandler)
+    $wall.on('remoteuntouched', remoteUntouchHandler)
+  }
+
   configureWallModel()
   
   let external = {
