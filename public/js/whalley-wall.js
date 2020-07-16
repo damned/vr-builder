@@ -93,10 +93,13 @@ let VrCardViewFactory = function(vrWall, $wall) {
     
     return {
       remove: () => {
+        if (!$card) return
         $card.remove()
       },
-      moveToPosition: () => {
+      moveToPosition: (position) => {
+        if (!$card) return
         
+        $card.get(0).object3D.position.set(position.x, position.y, z)
       }
     }
   }
@@ -241,7 +244,7 @@ let VrWall = function(logical_wall, wallEntity) {
     if (avatarCardView) {
       remoteTouchPosition.copy(event.detail.worldPosition)
       let localPosition = wall3d.worldToLocal(remoteTouchPosition)
-      avatarCardView.moveToWorldPosition(event.detail.worldPosition)
+      avatarCardView.moveToPosition(localPosition)
     }
   }
   
