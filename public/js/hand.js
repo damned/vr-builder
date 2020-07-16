@@ -44,7 +44,7 @@ var Hand = function($hand, options) {
     addProps(sleeve, {
       height: '0.3',
       radius: '0.04',
-      position: '0 0 0.12',
+      position: '0 0 0.2',
       rotation: '90 0 0',
       'monitor-home': side,
       'tweaker-home': side

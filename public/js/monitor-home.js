@@ -11,8 +11,8 @@ AFRAME.registerComponent('monitor-home', {
     let createMonitor = (scale, offset, dynamic) => {
       return $(`<a-box monitor="dynamic: ${dynamic}" cloneable position="0 ${offset} 0.2" rotation="0 ${-90 * direction} ${90 * direction}" scale="0.2 0.2 0.02" color="white">`)
     }
-    $self.append(createMonitor(0.2, 0.12, false))
-    $self.append(createMonitor(0.2, -0.12, true))
+    $self.append(createMonitor(0.2, 0.2, false))
+    $self.append(createMonitor(0.2, -0.05, true))
   }
 
 });

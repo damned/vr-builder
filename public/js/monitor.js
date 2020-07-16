@@ -74,6 +74,10 @@ AFRAME.registerComponent('monitor', {
     }
     self.setTouchSource = function(source) {
       touchSource = source
+      touchSource.onTouchStart((touched) => {
+        clog('touch', 'in monitor i got a touch start for: ' + touched.tagName)
+        self.monitor(touched)
+      })
     }
     self.copyTo = function(targetMonitor) {
       if (isDynamic()) {
@@ -88,11 +92,7 @@ AFRAME.registerComponent('monitor', {
       if ($touchSourceAncestor.length == 0) {
         return
       }
-      touchSource = $touchSourceAncestor.get(0).components['touch-source']
-      touchSource.onTouchStart((touched) => {
-        clog('touch', 'in monitor i got a touch start for: ' + touched.tagName)
-        self.monitor(touched)
-      })      
+      self.setTouchSource($touchSourceAncestor.get(0).components['touch-source'])
     }, 0)
   },
   tick: function(time, timeDelta) {
