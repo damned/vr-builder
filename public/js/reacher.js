@@ -2,8 +2,8 @@
 
 AFRAME.registerComponent('reacher', {
   schema: {
-    componentsToPlay: {type: 'array'},
-    distance: {type: 'number', default: 0.8 },
+    componentsToPlay: {type: 'array', default: []},
+    distance: {type: 'number', default: 0.75 },
     fromPointHeight: {type: 'number', default: 1 }
   },
 
@@ -12,23 +12,24 @@ AFRAME.registerComponent('reacher', {
     let host = self.el
     let host3d = host.object3D
     let fromPointHeight
-    let fromElement3d = host.sceneEl.camera
+    let fromElement3d = $('a-camera').get(0).object3D
+    let fromPoint = new THREE.Vector3()
     
     let componentsToPlay
     let reachDistance
     let reaching = false
     
-    self.update(() => {
+    self.update = () => {
       componentsToPlay = self.data.componentsToPlay
       reachDistance = self.data.distance
-       
       fromPointHeight = self.data.fromPointHeight
-    })
+    }
     let tickHandler = () => {
       catching(() => {
-        let fromPoint = fromElement3d.position
+        let from = fromElement3d.position
+        fromPoint.set(from.x, fromPointHeight, from.z)
         let distance = fromPoint.distanceTo(host3d.position)
-        clog('reacher', distance)
+        clog('reacher', 'distance', distance)
         if (!reaching && distance > reachDistance) {
           clog('reacher', 'reach!!!!!')
           reaching = true
