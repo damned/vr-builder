@@ -102,6 +102,7 @@ var Hand = function($hand, options) {
   $hand.attr('oculus-touch-controls', 'hand: ' + side + '; model: false')
   $hand.addClass('hand')
   
+  hand.setAttribute('reacher', 'activate: remote-toucher')
   hand.setAttribute('remote-toucher', '')
   
   $hand.on('triggerdown', grabHandler)
