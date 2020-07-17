@@ -198,6 +198,7 @@
   - needs common way of dealing with for e.g. events, finding other components on logical entity
     - some sort of redirector component - how does that work?
     - components and/or entities can have logical entity pojso reference? (which has components)
+    - components have a logical selector (.. for parent?)
     
 [ ] complex interactions and responsibility, flow of info:
   - e.g. grab card on one wall with hand, raycast to another wall which receives card but wants to
@@ -209,6 +210,15 @@
     - or perhaps, there is some complex-gesture object that gets attached that refers to second hand?
       - an "interaction" object e.g. right hand grab of object, left hand holding modifier on right hand sleeve
                                      as drops by ungrasp onto raycasted object
+                                     
+[ ] dom events vs javascript custom listeners
+  - started with latter, now trialling custom dom events where i can
+
+[ ] split of responsibility in interaction between actor (hand) and object (grabbed, touched)
+
+[ ] adding component dynamically and controlling interaction on object - e.g. follower and follower-constraint
+    maybe should be more inactivated follower, with constraints, gets play-ed if "added", pause-d if "removed"
+    again?
 
 ### unit testing components
 
