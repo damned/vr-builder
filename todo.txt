@@ -191,6 +191,24 @@
       without using so much rope/chain length
 [ ] visual debug gauge to show scalars
 
+### code design
+
+[ ] fracture of logical entity between a-frame entities and components - e.g. hand entity and model
+  - aframe components map to aframe entities so need another level - straight up pojso e.g. Hand?
+  - needs common way of dealing with for e.g. events, finding other components on logical entity
+    - some sort of redirector component - how does that work?
+    - components and/or entities can have logical entity pojso reference? (which has components)
+    
+[ ] complex interactions and responsibility, flow of info:
+  - e.g. grab card on one wall with hand, raycast to another wall which receives card but wants to
+    know about grab info
+    - currently destination is querying hand components for grab info on drop
+    - perhaps add a context info object to save lookup? perf hit? unnecessary?
+  - what happens when need to know info from second hand too?
+    - in same model, hand has ref to other hand
+    - or perhaps, there is some complex-gesture object that gets attached that refers to second hand?
+      - an "interaction" object e.g. right hand grab of object, left hand holding modifier on right hand sleeve
+                                     as drops by ungrasp onto raycasted object
 
 ### unit testing components
 
