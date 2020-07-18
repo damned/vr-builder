@@ -160,6 +160,7 @@ let VrWall = function(logical_wall, wallEntity) {
     builder(cards_api);
   }
   
+  let lastRemoteTouchGrabId = null
   let remoteTouchPosition = new THREE.Vector3()
   
   let getCardCoordinatesOfWorldTouchPosition = (touchWorldPosition) => {
@@ -181,6 +182,11 @@ let VrWall = function(logical_wall, wallEntity) {
         clog('got remote touch but nothing grabbed')
         return
       }
+      if (toucherGrabber.grabId == lastRemoteTouchGrabId) {
+        clog('already dealt with remote touch for this grab event (by grabId)')
+        return
+      }
+      lastRemoteTouchGrabId = toucherGrabber.grabId
       let grabbed = toucherGrabber.grabbed
       let isOnThisWall = $(grabbed).closest($wall).length > 0
       if (isOnThisWall) {
@@ -230,6 +236,7 @@ let VrWall = function(logical_wall, wallEntity) {
         cards_api.add(avatarLogicalCard.copyData())
         avatarCardView.remove()
         avatarCardView = null
+        lastRemoteTouchGrabId = null
         toucherHost.removeEventListener('ungrasp', avatarSolidifier)
       }
       toucherHost.addEventListener('ungrasp', avatarSolidifier)

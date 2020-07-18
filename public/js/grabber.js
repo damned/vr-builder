@@ -129,7 +129,7 @@ AFRAME.registerComponent('grabber', {
         }
         tograb.setAttribute('follower', 'leader: ' + this.grabbedLeaderSpec)
         this.grabbed = tograb
-        this.graspInfo
+        this.grabId = graspInfo.graspId
         this.grabbed.currentlyGrabbed = true
         this.grabbed.currentGrabber = host
         this.grabbed.emit('movestart')
@@ -167,6 +167,7 @@ AFRAME.registerComponent('grabber', {
       removeDebugColor(this.grabbed)
       removeDebugColor(this.el)
       this.grabbed = null
+      this.grabId = null
       this.el.setAttribute('opacity', 1)      
     })
   }
