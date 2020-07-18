@@ -146,3 +146,5 @@ const getCircularReplacer = () => {
 var safeStringify = (obj, indent = 2) => {
   return JSON.stringify(obj, getCircularReplacer(), indent)
 }
+
+let newId = () => Date.now().toString()

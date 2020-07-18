@@ -1,4 +1,4 @@
-/* global AFRAME clog afterCreation */
+/* global AFRAME clog afterCreation newId */
 
 function addProps(el, props) {
   for (let name in props) {
@@ -101,8 +101,9 @@ var Hand = function($hand, options) {
   }
 
   var grabHandler = function(event) {
-    grabber.grasp()
-    model.emit('grasp')
+    let graspInfo = { graspId: newId() }
+    grabber.grasp(graspInfo)
+    model.emit('grasp', graspInfo)
   }
   var triggerReleaseHandler = function(event) {
     grabber.release()

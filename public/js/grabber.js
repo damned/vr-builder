@@ -64,6 +64,7 @@ AFRAME.registerComponent('grabber', {
     }, 0)
     self.ticks = 0
     self.grabbed = null
+    self.grabId = null
     self.secondGrabHandlers = []
     self.releaseHandlers = []
     self.onSecondGrab = (handler) => { self.secondGrabHandlers.push(handler) }      
@@ -92,7 +93,7 @@ AFRAME.registerComponent('grabber', {
       }      
     })
   },
-  grasp: function(event) {
+  grasp: function(graspInfo) {
     catching(function (){
       let host = this.el
       let self = this
@@ -128,6 +129,7 @@ AFRAME.registerComponent('grabber', {
         }
         tograb.setAttribute('follower', 'leader: ' + this.grabbedLeaderSpec)
         this.grabbed = tograb
+        this.graspInfo
         this.grabbed.currentlyGrabbed = true
         this.grabbed.currentGrabber = host
         this.grabbed.emit('movestart')
