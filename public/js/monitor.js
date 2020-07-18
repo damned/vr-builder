@@ -22,7 +22,7 @@ AFRAME.registerSystem('monitor', {
     }
   }
 })
-
+const DEFAULT_TEXT_SO_NEVER_EMPTY = '-'
 let MonitorPart = function(component, host) {
   
   function enableColliderTrackingWhenMoves() {
@@ -62,10 +62,18 @@ AFRAME.registerComponent('monitor', {
     let touchSource
     let isDynamic = () => self.data.dynamic
     self.setOutput = function(output) {
-      self.textEl.setAttribute('value', output)
+      let safeOutput = output
+      if (!safeOutput) {
+        safeOutput = DEFAULT_TEXT_SO_NEVER_EMPTY
+      }
+      self.textEl.setAttribute('value', safeOutput)
     }
     self.getOutput = function(output) {
-      return self.textEl.getAttribute('value')
+      let realValue = self.textEl.getAttribute('value')
+      if (realValue == DEFAULT_TEXT_SO_NEVER_EMPTY) {
+        realValue = ''
+      }
+      return realValue
     }
     self.monitor = function(tomonitor) {
       self.monitored = tomonitor
