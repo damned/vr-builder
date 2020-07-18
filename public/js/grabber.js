@@ -1,4 +1,4 @@
-/* global AFRAME THREE colorFromEntityRotation collider clog catching addDebugColor removeDebugColor cloneEntity positionRelativeTo reparent */
+/* global AFRAME THREE colorFromEntityRotation collider clog catching addDebugColor removeDebugColor cloneEntity reparent */
 let debug = { useColor: false }
 var options = { 
   colorTwist: false,
@@ -92,6 +92,9 @@ AFRAME.registerComponent('grabber', {
         cloned.removeAttribute('follower')
       }      
     })
+  },
+  cancelGrabbedMovement: function() {
+    self.grabbed.follower.unfollow()
   },
   grasp: function(graspInfo) {
     catching(function (){
