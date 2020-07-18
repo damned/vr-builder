@@ -50,7 +50,6 @@ AFRAME.registerComponent('monitor', {
     part.init()
     self.ticks = 0
     let $host = $(host)
-    $host.addClass('touchable')
     let $text
     let monitorType = 'unconfigured'
     self.update = function() {
@@ -58,6 +57,7 @@ AFRAME.registerComponent('monitor', {
       $text = $(`<a-text data-aabb-collider-dynamic font="monoid" color="black" baseline="top" width="1" wrap-count="${self.data.wrapCount}" position="-0.5 0.5 0.51" value="-${monitorType} monitor-">`)
       $host.append($text)
       self.textEl = $text.get(0)
+      $host.addClass('touchable')
     }
     let touchSource
     let isDynamic = () => self.data.dynamic
