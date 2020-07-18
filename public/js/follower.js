@@ -43,7 +43,12 @@ AFRAME.registerComponent('follower', {
     this.lock = lock
   },
   unfollow: function() {
-    
+    this.pause()
+    if (this.positionBeforeFollow) {
+      let followerObject3d = this.el.object3D
+      followerObject3d.position.copy(positionBeforeFollow)
+      followerObject3d.rotation.copy(rotationBeforeFollow)
+    }
   },
   tick: function() {
     this.tickCount++
