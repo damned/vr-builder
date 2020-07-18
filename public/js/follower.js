@@ -42,6 +42,9 @@ AFRAME.registerComponent('follower', {
     this.leader = leader
     this.lock = lock
   },
+  unfollow: function() {
+    
+  },
   tick: function() {
     this.tickCount++
     if (this.leader == null || this.leader == undefined) {

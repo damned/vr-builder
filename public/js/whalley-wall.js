@@ -198,7 +198,9 @@ let VrWall = function(logical_wall, wallEntity) {
         clog('not grabbing a card')
         return        
       }
+      clog('remote card clone to wall really happening')
       let grabbedCardData = grabbedCardComponent.card.data()
+      toucherGrabber.cancelGrabbedMovement()
       
       let coords = getCardCoordinatesOfWorldTouchPosition(event.detail.worldPosition)
       
