@@ -94,7 +94,8 @@ AFRAME.registerComponent('grabber', {
     })
   },
   cancelGrabbedMovement: function() {
-    self.grabbed.follower.unfollow()
+    let follower = this.grabbed.components.follower
+    if (follower) follower.unfollow()
   },
   grasp: function(graspInfo) {
     catching(function (){
