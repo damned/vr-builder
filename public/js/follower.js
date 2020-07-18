@@ -1,5 +1,24 @@
 /* global AFRAME THREE clog catching */
 
+function savePlacementBeforeFollow(follower) {
+  if (!follower.positionBeforeFollow) {
+    let followerObject3d = follower.el.object3D
+    follower.positionBeforeFollow = new THREE.Vector3()
+    follower.rotationBeforeFollow = new THREE.Euler()
+    follower.positionBeforeFollow.copy(followerObject3d.position)
+    follower.rotationBeforeFollow.copy(followerObject3d.rotation)
+  }  
+}
+function resetToPlacementBeforeFollow(follower) {
+  if (follower.positionBeforeFollow) {
+    let followerObject3d = follower.el.object3D
+    followerObject3d.position.copy(follower.positionBeforeFollow)
+    followerObject3d.rotation.copy(follower.rotationBeforeFollow)
+    follower.positionBeforeFollow = null
+    follower.rotationBeforeFollow = null
+  }
+}
+
 AFRAME.registerComponent('follower', {
   schema: {
     leader: {type: 'string', default: ''},
@@ -44,11 +63,7 @@ AFRAME.registerComponent('follower', {
   },
   unfollow: function() {
     this.pause()
-    if (this.positionBeforeFollow) {
-      let followerObject3d = this.el.object3D
-      followerObject3d.position.copy(positionBeforeFollow)
-      followerObject3d.rotation.copy(rotationBeforeFollow)
-    }
+    resetToPlacementBeforeFollow(this)
   },
   tick: function() {
     this.tickCount++
@@ -56,6 +71,7 @@ AFRAME.registerComponent('follower', {
       return;
     }
     catching(() => {
+      savePlacementBeforeFollow(this)
       let followerObject3d = this.el.object3D
       let leaderPos = followerObject3d.parent.worldToLocal(this.leader.object3D.getWorldPosition(new THREE.Vector3()))
       // clog('follower', 'got leader pos:', leaderPos)
