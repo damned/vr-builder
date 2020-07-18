@@ -182,7 +182,7 @@ let VrWall = function(logical_wall, wallEntity) {
   }
   
   function remoteTouchHandler(event) {
-    $wall.attr('color', 'red')
+    // $wall.attr('color', 'red')
     catching(() => {
       let toucherHost = event.detail.toucherHost
       let toucherGrabber = event.detail.toucherGrabber
@@ -254,18 +254,18 @@ let VrWall = function(logical_wall, wallEntity) {
         toucherHost.removeEventListener('ungrasp', avatarSolidifier)
       }
       toucherHost.addEventListener('ungrasp', avatarSolidifier)
-      $wall.attr('color', 'orange')
-      setTimeout(() => {
-        $wall.attr('color', 'lightgray')
-      }, 1000)        
+      // $wall.attr('color', 'orange')
+      // setTimeout(() => {
+      //   $wall.attr('color', 'lightgray')
+      // }, 1000)        
     })
   }
   
   function remoteUntouchHandler() {
-    $wall.attr('color', 'blue')
-    setTimeout(() => {
-      $wall.attr('color', 'lightgray')
-    }, 1000)
+    // $wall.attr('color', 'blue')
+    // setTimeout(() => {
+    //   $wall.attr('color', 'lightgray')
+    // }, 1000)
   }
 
   function remoteTouchedMoveHandler(event) {
