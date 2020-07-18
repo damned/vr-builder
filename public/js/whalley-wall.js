@@ -169,6 +169,15 @@ let VrWall = function(logical_wall, wallEntity) {
     return cardViewFactory.localPositionToCardCoords(localTouchPosition)
   }
 
+  let addSourceRelationData(sourceCardData, cardData) {
+    if (!cardData.relation) {
+      cardData.relation = {}
+    }
+    let source = {
+      id: sourceCardData.id
+    }
+    cardData.relation.source = source
+  }
   function remoteTouchHandler(event) {
     $wall.attr('color', 'red')
     catching(() => {
@@ -223,13 +232,13 @@ let VrWall = function(logical_wall, wallEntity) {
         move_happening: () => {},
         copyData: () => {
           let finalAvatarCoords = avatarCardView.getCardCoords()
-          return Object.assign(avatarCardData, { 
+          return Object.assign(avatarCardData, addSourceRelationData(grabbedCardData, { 
             avatar: false,
             x: finalAvatarCoords.x,
             y: finalAvatarCoords.y,
             colour: grabbedCardData.colour,
-            text: grabbedCardData.text 
-          })
+            text: grabbedCardData.text
+          }))
         }
       }
       avatarCardView = wall_view_api.create_card_view(avatarLogicalCard);
