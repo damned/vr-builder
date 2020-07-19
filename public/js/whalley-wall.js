@@ -15,6 +15,18 @@ whalley.log = {
   }
 };
 
+let sourceIdOf = function(cardData) {
+  let relation = cardData.relation
+  if (relation) {
+    let source = relation.source
+    if (source && source.id) {
+      return source.id
+    }
+  }
+  return null
+}
+
+const HIGHLIGHT_DURATION_MS = 3000
 const DEFAULT_EMPTY_TEXT_THAT_CREATES_BOUNDING_BOX_FOR_COLLIDER = '.'
 
 let VrCardViewFactory = function(vrWall, $wall) {
@@ -74,7 +86,12 @@ let VrCardViewFactory = function(vrWall, $wall) {
       
       $card.attr('remote-touchable', '')
       $card.on('remotetouched', () => {
-        vrWall.highlightCardsOnAllWalls([data.id])
+        let relatedIds = [data.id]
+        let sourceId = sourceIdOf(data)
+        if (sourceId) {
+          relatedIds.push(sourceId)
+        }
+        vrWall.highlightCardsOnAllWalls(relatedIds)
       })
       
       $card.on('movestart', () => {
@@ -119,7 +136,7 @@ let VrCardViewFactory = function(vrWall, $wall) {
         $card.attr('color', 'red')
         setTimeout(() => {
           $card.attr('color', data.colour)
-        }, 2000)
+        }, HIGHLIGHT_DURATION_MS)
       }
     }
   }
@@ -168,9 +185,9 @@ let VrWall = function(logical_wall, wallEntity) {
         let logicalCard = logical_cards_api.add(cardlike);
         let visibleCard = wall_view_api.create_card_view(logicalCard);
         visibleCards[cardlike.id] = visibleCard
-        let relation = cardlike.relation
-        if (relation && relation.source && relation.source.id) {
-          visibleCards[relation.source.id] = visibleCard
+        let sourceId = sourceIdOf(cardlike)
+        if (sourceId) {
+          visibleCards[sourceId] = visibleCard
         }
         return logicalCard;
       },
