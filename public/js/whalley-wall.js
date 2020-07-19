@@ -310,6 +310,13 @@ function allowMovementWithoutRotation(entity) {
   entity.setAttribute('follower-constraint', 'lock: rotation')  
 }
 
+AFRAME.registerSystem('whalley-wall', {
+  init: function() {
+    let self = this
+    self.
+  }
+})
+
 AFRAME.registerComponent('whalley-wall', {
   schema: {
     spaceId: {type: 'string', default: ''},
