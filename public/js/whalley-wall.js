@@ -72,6 +72,11 @@ let VrCardViewFactory = function(vrWall, $wall) {
                     + '</a-box>')
       $card.appendTo($wall)
       
+      $card.attr('remote-touchable', '')
+      $card.on('remotetouched', () => {
+        
+      })
+      
       $card.on('movestart', () => {
         logical.move_started()
       })
@@ -111,7 +116,10 @@ let VrCardViewFactory = function(vrWall, $wall) {
       },
       getCardCoords: () => localPositionToCardCoords($card.get(0).object3D.position),
       highlight: function() {
-
+        $card.attr('color', 'red')
+        setTimeout(() => {
+          $card.attr('color', data.colour)
+        }, 2000)
       }
     }
   }
@@ -298,7 +306,7 @@ let VrWall = function(logical_wall, wallEntity) {
 
   configureWallModel()
   
-  let external = {
+  external = {
     build: build,
     
     cards: function() {
@@ -331,6 +339,13 @@ AFRAME.registerSystem('whalley-wall', {
     let walls = []
     self.registerWall = function(wall) {
       walls.push(wall)
+    }
+    self.highlightCards = function (cardIds) {
+      walls.forEach((wall) => {
+        if (wall) {
+          wall.highlightCards(cardIds)
+        }
+      })
     }
   }
 })
@@ -369,8 +384,10 @@ AFRAME.registerComponent('whalley-wall', {
       });
     }
     
-    self.highlightCards(cardIds) {
+    self.highlightCards = function (cardIds) {
       visibleWall.highlightCards(cardIds)
     }
+    
+    self.system.registerWall(self)
   }
 });
