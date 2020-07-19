@@ -109,7 +109,10 @@ let VrCardViewFactory = function(vrWall, $wall) {
         
         $card.get(0).object3D.position.set(position.x, position.y, z)
       },
-      getCardCoords: () => localPositionToCardCoords($card.get(0).object3D.position)
+      getCardCoords: () => localPositionToCardCoords($card.get(0).object3D.position),
+      highlight: function() {
+
+      }
     }
   }
   
@@ -141,13 +144,23 @@ let VrWall = function(logical_wall, wallEntity) {
     }
   }
   
+  let visibleCards = {}
+
+  let highlightCards = function(cardIds) {
+    cardIds.forEach((id) => {
+      let card = visibleCards[id]
+      if (card) card.highlight()
+    })
+  }  
+
   function CardsApi(logical_cards_api) {
     return {
       add: function (cardlike) {
         console.log('adding card: ' + cardlike)
-        var logical_card = logical_cards_api.add(cardlike);
-        wall_view_api.create_card_view(logical_card);
-        return logical_card;
+        let logicalCard = logical_cards_api.add(cardlike);
+        let visibleCard = wall_view_api.create_card_view(logicalCard);
+        visibleCards[cardlike.id] = visibleCard
+        return logicalCard;
       },
       clear: logical_cards_api.clear
     }
@@ -297,6 +310,8 @@ let VrWall = function(logical_wall, wallEntity) {
 
     move_card: logical_wall.move_card,
     add_card: cards_api.add,
+    
+    highlightCards: highlightCards,
 
     on_card_add: logical_wall.on_card_add,
     on_card_moving: logical_wall.on_card_moving,
@@ -313,7 +328,10 @@ function allowMovementWithoutRotation(entity) {
 AFRAME.registerSystem('whalley-wall', {
   init: function() {
     let self = this
-    self.
+    let walls = []
+    self.registerWall = function(wall) {
+      walls.push(wall)
+    }
   }
 })
 
@@ -330,6 +348,8 @@ AFRAME.registerComponent('whalley-wall', {
     
     allowMovementWithoutRotation(host)
 
+    let visibleWall
+    
     self.update = function(oldData) {
       console.log(self.data)
       let spaceId = self.data.spaceId
@@ -339,14 +359,18 @@ AFRAME.registerComponent('whalley-wall', {
         return
       }
       let logical_wall = new whalley.LogicalWall()
-      let visible_wall = VrWall(logical_wall, host);
-      let sync_client = whalley.SocketIoSyncClient(visible_wall); // NB tied to visible wall at mo because visible wall needs to create view
+      visibleWall = VrWall(logical_wall, host);
+      let sync_client = whalley.SocketIoSyncClient(visibleWall); // NB tied to visible wall at mo because visible wall needs to create view
                                                                   // when it forwards card add to logical wall
                                                                   // could tie directly to logical wall if made wall view create card view
                                                                   // in response to "card created" event
       sync_client.load_wall(wallId, () => {
         host.setAttribute('color', 'white')
       });
+    }
+    
+    self.highlightCards(cardIds) {
+      visibleWall.highlightCards(cardIds)
     }
   }
 });
