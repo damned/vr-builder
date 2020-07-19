@@ -18,7 +18,10 @@ AFRAME.registerComponent('remote-touchable', {
     function tickHandler() {
       catching(() => {
         if (remoteToucher) {
-          host.emit('remotetouchedmove', { toucher: remoteToucher, worldPosition: remoteToucher.getTouchWorldPosition(host) })
+          let touchPosition = remoteToucher.getTouchWorldPosition(host)
+          if (touchPosition) {
+            host.emit('remotetouchedmove', { toucher: remoteToucher, worldPosition: touchPosition })
+          }
         }        
       })
     }
@@ -89,7 +92,13 @@ AFRAME.registerComponent('remote-toucher', {
       line3d.visible = false
     }
     
-    self.getTouchWorldPosition = (touched) => raycaster.getIntersection(touched).point
+    self.getTouchWorldPosition = (touched) => {
+      let intersection = raycaster.getIntersection(touched)
+      if (intersection) {
+        return intersection.point
+      }
+      return null
+    }
     
     setTimeout(() => {
       raycaster = host.components.raycaster

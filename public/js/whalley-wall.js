@@ -331,7 +331,7 @@ let VrWall = function(logical_wall, wallEntity) {
     highlightCards: highlightCards,
     highlightCardsOnAllWalls: highlightCardsOnAllWalls,
 
-    on_card_add: logical_wall.on_card_add,
+    on_new_card: logical_wall.on_new_card,
     on_card_moving: logical_wall.on_card_moving,
     on_card_changed: logical_wall.on_card_changed
   })
