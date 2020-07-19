@@ -74,7 +74,7 @@ let VrCardViewFactory = function(vrWall, $wall) {
       
       $card.attr('remote-touchable', '')
       $card.on('remotetouched', () => {
-        
+        vrWall.highlightCardsOnAllWalls([data.id])
       })
       
       $card.on('movestart', () => {
@@ -133,10 +133,10 @@ let VrCardViewFactory = function(vrWall, $wall) {
 }
 
 let VrWall = function(logical_wall, wallEntity) {
-  let self = this
+  let external = {}
   let $wall = $(wallEntity)
   let wall3d = wallEntity.object3D
-  let cardViewFactory = VrCardViewFactory(self, $wall)
+  let cardViewFactory = VrCardViewFactory(external, $wall)
   let avatarCardView = null
   
   var wall_view_api = {
@@ -168,6 +168,10 @@ let VrWall = function(logical_wall, wallEntity) {
         let logicalCard = logical_cards_api.add(cardlike);
         let visibleCard = wall_view_api.create_card_view(logicalCard);
         visibleCards[cardlike.id] = visibleCard
+        let relation = cardlike.relation
+        if (relation && relation.source && relation.source.id) {
+          visibleCards[relation.source.id] = visibleCard
+        }
         return logicalCard;
       },
       clear: logical_cards_api.clear
@@ -200,6 +204,11 @@ let VrWall = function(logical_wall, wallEntity) {
     }
     cardData.relation.source = source
     return cardData
+  }
+  
+  let wallSystem = wallEntity.sceneEl.systems['whalley-wall']
+  let highlightCardsOnAllWalls = function(cardIds) {
+    wallSystem.highlightCards(cardIds)
   }
   
   function remoteTouchHandler(event) {
@@ -306,7 +315,7 @@ let VrWall = function(logical_wall, wallEntity) {
 
   configureWallModel()
   
-  external = {
+  Object.assign(external, {
     build: build,
     
     cards: function() {
@@ -320,11 +329,12 @@ let VrWall = function(logical_wall, wallEntity) {
     add_card: cards_api.add,
     
     highlightCards: highlightCards,
+    highlightCardsOnAllWalls: highlightCardsOnAllWalls,
 
     on_card_add: logical_wall.on_card_add,
     on_card_moving: logical_wall.on_card_moving,
     on_card_changed: logical_wall.on_card_changed
-  }
+  })
   return external
 }
 
