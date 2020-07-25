@@ -47,6 +47,30 @@ describe('functional testing with aframe', function() {
         done()
       })
     })
+  })
 
+  describe('grabber component', () => {
+    it('should allow grab to move an object', (done) => {
+      let grabber = $('<a-box id="grabber" position="0 0 0" scale="0.1 0.1 0.1" ></a-box>').get(0)
+      let moveable = $('<a-sphere id="moveable" position="-1 1 -1" color="red" opacity="0.2" radius="0.2"></a-sphere>').get(0)
+      
+      scene.append(grabber)
+      scene.append(moveable)
+
+      let grabberPos
+      let moveablePos
+      scene.actions(() => {
+        grabberPos = grabber.object3D.position
+        moveablePos = moveable.object3D.position
+      },
+      () => {
+        expect(moveablePos).to.shallowDeepEqual(grabberPos)
+        grabberPos.set(2, 2, 2)
+      },
+      () => {
+        expect(moveablePos).to.shallowDeepEqual({x: 2, y: 2, z: 2})
+        done()
+      })
+    })
   })
 })
