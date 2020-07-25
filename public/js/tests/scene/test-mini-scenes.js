@@ -14,19 +14,17 @@ describe('functional testing with aframe', function() {
     let scene = $scene.get(0)
     let startHandler = null
     
+    let isAframeInternalEntity = entity => entity.hasAttribute('aframe-injected')
+    
     let getSceneEntities = () => {
-      let entities = []
-      Array.from(scene.object3D.children).forEach(child => {
+      return Array.from(scene.object3D.children).map(child => {
         if (child.el) {
-          if (child.el.hasAttribute('aframe-injected')) {
-            console.log('omitting', child.el)
-          }
-          else {
-            entities.push(child.el)          
+          if (!isAframeInternalEntity(child.el)) {
+            return child.el
           }
         }
-      })
-      return entities
+        return null
+      }).filter(child => child.el)
     }
 
     let cleanUp = () => {
@@ -48,11 +46,17 @@ describe('functional testing with aframe', function() {
     return {
       $scene: $scene,
       scene: scene,
+      append: (html) => {
+        $scene.append(html)
+      },
       cleanUp: cleanUp,
-      whenReady: (handler) => {
+      apply: (handler) => {
         if (scene.renderStarted) {
           console.log('render already started!')
-          handler()
+          setTimeout(() => {
+            handler()
+            cleanUp()
+          }, 0)
         }
         else {
           startHandler = handler
@@ -63,18 +67,15 @@ describe('functional testing with aframe', function() {
   }
   const colors = ['yellow', 'red', 'blue', 'green', 'lightyellow', 'pink', 'lightgreen', 'white']
   
-  let sceneFixture = createSceneFixture()
+  let scene = createSceneFixture()
   
   for (let i=0; i < 50; i++) {
     it('load up aframe: ' + i, (done) => {
       let color = colors[i % colors.length]
-      sceneFixture.$scene.append(`<a-box color="${color}" position="0 1 -2"></a-box>`)
-      sceneFixture.whenReady(() => {
-        expect(sceneFixture.scene.renderStarted).to.eql(true)
-        sceneFixture.cleanUp()
-        setTimeout(() => {
-          done()
-        }, 0)
+      scene.append(`<a-box color="${color}" position="0 1 -2"></a-box>`)
+      scene.apply(() => {
+        expect(scene.scene.renderStarted).to.eql(true)
+        done()
       })
     })
   }
