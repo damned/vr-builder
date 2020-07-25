@@ -48,35 +48,51 @@ describe('functional testing with aframe', function() {
       })
     })
   })
+  
+  let testable = (entity, componentName) => {
+    let position = () => entity.object3D.position
+    let api = {
+      moveTo: pos => {
+        position().copy(pos)
+      },
+      get position() {
+        return position()
+      }
+    }
+    if (componentName) {
+      api[componentName] = () => entity.components[componentName]
+    }
+    return api
+  }
 
   describe('grabber component', () => {
     it('should allow grab to move an object', function(done) {
-      let mover = $('<a-box id="mover" grabber="#mover" position="0 0 0" scale="0.1 0.1 0.1" ></a-box>').get(0)
-      let moveable = $('<a-sphere id="moveable" class="touchable" position="-1 1 -1" color="red" opacity="0.2" radius="0.2"></a-sphere>').get(0)
+      let moverEl = $('<a-box id="mover" grabber="#mover" position="0 0 0" scale="0.1 0.1 0.1" ></a-box>').get(0)
+      let moveableEl = $('<a-sphere id="moveable" class="touchable" position="-1 1 -1" color="red" opacity="0.2" radius="0.2"></a-sphere>').get(0)
       
-      scene.append(mover)
-      scene.append(moveable)
+      scene.append(moverEl)
+      scene.append(moveableEl)
 
-      let moverPos
-      let grabber
-      let moveablePos
+      let mover = testable(moverEl, 'grabber')
+      let moveable = testable(moveableEl)
       
       let finalPos = {x: 2, y: 2, z: -2}
-      
+
+      scene.setActionDelay(100)
       scene.actions(() => {
-        moverPos = mover.object3D.position
-        moveablePos = moveable.object3D.position
-        grabber = mover.components.grabber
       },
       () => {
-        moverPos.copy(moveablePos)
+        mover.moveTo(moveable.position)
       },
       () => {
-        grabber.grasp({})
-        moverPos.copy(finalPos)
+        mover.grabber().grasp({})
+      },
+      () => {
+        mover.moveTo(finalPos)
+        
         setTimeout(() => {
-          expect(grabber.grabbed).to.not.be.null
-          expect(moveablePos).to.shallowDeepEqual(finalPos)
+          expect(mover.grabber.grabbed).to.not.be.null
+          expect(moveable.position).to.shallowDeepEqual(finalPos)
           done()
         }, 100)
       })
