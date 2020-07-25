@@ -1,3 +1,20 @@
+let testable = (entity, componentName) => {
+  let position = () => entity.object3D.position
+  let api = {
+    moveTo: pos => {
+      position().copy(pos)
+    },
+    get position() {
+      return position()
+    }
+  }
+  if (componentName) {
+    api[componentName] = () => entity.components[componentName]
+  }
+  return api
+}
+
+
 function createSceneFixture(options) {
   console.log('loading up aframe')
   options = options || { stats: true }
