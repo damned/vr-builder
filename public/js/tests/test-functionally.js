@@ -6,8 +6,8 @@ describe('functional testing with aframe', () => {
   
   it('load up aframe', (done) => {
     console.log('loading up aframe')
-    let scene = '<a-scene embedded style="height: 100px; width: 300px;">' 
-      +   '<a-box color="yellow" position="0 0 -1"></a-box>'
+    let scene = '<a-scene embedded style="height: 400px; width: 600px;">' 
+      +   '<a-box color="gray" position="0 1 -2"></a-box>'
       + '</a-scene>'
     let $scene = $(scene)
     $scene.appendTo($('#aframe-container'))
