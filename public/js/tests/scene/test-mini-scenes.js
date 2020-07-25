@@ -3,11 +3,11 @@ var chai = chai || {}
 var expect = chai.expect
 
 describe('functional testing with aframe', function() {
-  this.timeout(10000)
-
-  function createSceneFixture() {
+  function createSceneFixture(options) {
     console.log('loading up aframe')
-    let sceneHtml = '<a-scene stats embedded style="height: 400px; width: 600px;"></a-scene>'
+    options = options || { stats: true }
+    let statsSpec = options.stats ? 'stats' : ''
+    let sceneHtml = `<a-scene ${statsSpec} embedded style="height: 400px; width: 600px;"></a-scene>`
     let $scene = $(sceneHtml)
     $scene.appendTo($('#aframe-container'))
 
@@ -17,14 +17,9 @@ describe('functional testing with aframe', function() {
     let isAframeInternalEntity = entity => entity.hasAttribute('aframe-injected')
     
     let getSceneEntities = () => {
-      return Array.from(scene.object3D.children).map(child => {
-        if (child.el) {
-          if (!isAframeInternalEntity(child.el)) {
-            return child.el
-          }
-        }
-        return null
-      }).filter(child => child.el)
+      return Array.from(scene.object3D.children)
+        .filter(child => (child.el && !isAframeInternalEntity(child.el)))
+        .map(child => child.el)
     }
 
     let cleanUp = () => {
@@ -67,7 +62,7 @@ describe('functional testing with aframe', function() {
   }
   const colors = ['yellow', 'red', 'blue', 'green', 'lightyellow', 'pink', 'lightgreen', 'white']
   
-  let scene = createSceneFixture()
+  let scene = createSceneFixture({stats: false})
   
   for (let i=0; i < 50; i++) {
     it('load up aframe: ' + i, (done) => {
