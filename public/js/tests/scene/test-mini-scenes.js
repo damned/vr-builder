@@ -2,56 +2,51 @@
 var chai = chai || {}
 var expect = chai.expect
 
-describe('functional testing with aframe', () => {
-  
-  function createSceneFixture(done) {
+describe('functional testing with aframe', function() {
+  this.timeout(10000)
+
+  function createSceneFixture() {
     console.log('loading up aframe')
-    let sceneHtml = '<a-scene embedded style="height: 400px; width: 600px;">' 
-      +   '<a-box color="gray" position="0 1 -2"></a-box>'
-      + '</a-scene>'
+    let sceneHtml = '<a-scene embedded style="height: 400px; width: 600px;"></a-scene>'
     let $scene = $(sceneHtml)
     $scene.appendTo($('#aframe-container'))
 
     let scene = $scene.get(0)
+    let startHandler = null
     
-    let startupHandler() => {
-      expect(scene.renderStarted).to.eql(true)
+    let cleanUp = () => {
       scene.pause()
       $scene.remove()
       scene = null
-      $scene = null
-      done()
+      $scene = null        
     }
-    let startHandlers = []
-    $scene.on('renderstart', )
+    
+    let onRenderStartHandler = () => {
+      startHandler()
+    }
+    
+    $scene.on('renderstart', onRenderStartHandler)
+    
     return {
       $scene: $scene,
       scene: scene,
-      cleanUp: () => {
-        
-      },
+      cleanUp: cleanUp,
       onStart: (handler) => {
-        startHandlers.
+        startHandler = handler
       }
     }
   }
   
   for (let i=0; i < 20; i++) {
     it('load up aframe: ' + i, (done) => {
-      console.log('loading up aframe')
-      let sceneHtml = '<a-scene embedded style="height: 400px; width: 600px;">' 
-        +   '<a-box color="gray" position="0 1 -2"></a-box>'
-        + '</a-scene>'
-      let $scene = $(sceneHtml)
-      $scene.appendTo($('#aframe-container'))
-      let scene = $scene.get(0)
-      $scene.on('renderstart', () => {
-        expect(scene.renderStarted).to.eql(true)
-        scene.pause()
-        $scene.remove()
-        scene = null
-        $scene = null
-        done()
+      let sceneFixture = createSceneFixture()
+      sceneFixture.$scene.append('<a-box color="yellow" position="0 1 -2"></a-box>')
+      sceneFixture.onStart(() => {
+        expect(sceneFixture.scene.renderStarted).to.eql(true)
+        setTimeout(() => {
+          sceneFixture.cleanUp()
+          done()
+        }, 100)
       })
     })
   }
