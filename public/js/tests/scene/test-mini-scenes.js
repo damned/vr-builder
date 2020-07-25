@@ -13,19 +13,31 @@ describe('functional testing with aframe', function() {
 
     let scene = $scene.get(0)
     let startHandler = null
+    
+    let keepEntities = ['camera', 'a-light']
+    let getSceneEntities = (entitiesToOmit) => {
+      let entities = []
+      Array.from(scene.object3D.children).forEach(child => {
+        if (child.el) {
+          if (!entitiesToOmit.includes(child.el)) {
+            entities.push(child.el)          
+          }
+          else {
+            console.log('omitting', child.el, child.el.tagName)
+          }
+        }
+      })
+      return entities
+    }
 
     let cleanUp = () => {
       if (startHandler) {
         scene.removeEventListener('renderstart', onRenderStartHandler)
         startHandler = null
       }
-      Array.from(scene.object3D.children).forEach(child => {
-        if (child.el) {
-          let entity = child.el
-          console.log(entity, entity  .tagName)
-          entity.pause()
-        }
-        // scene.removeChild(child)
+      getSceneEntities(initialEntities).forEach(entity => {
+        console.log('removing', entity, entity.tagName)
+        scene.removeChild(entity)
       })
     }
         
