@@ -45,7 +45,6 @@ function createSceneFixture(options) {
         // console.log('render already started!')
         setTimeout(() => {
           handler()
-          cleanUp()
         }, 0)
       }
       else {
