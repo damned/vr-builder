@@ -36,7 +36,7 @@ function createSceneFixture(options) {
   let applyAction = (handler) => {
     if (scene.renderStarted) {
       // console.log('render already started!')
-      setTimeout(() => {
+      setTimeout(() => { // maybe really should be waiting for next render cycle (or complete this and another?)
         handler()
       }, 0)
     }
@@ -45,9 +45,14 @@ function createSceneFixture(options) {
       scene.addEventListener('renderstart', onRenderStartHandler)
     }
   }
-  let applyActions = () => {
+  let applyActions = function(handler) {
     let handlers = Array.from(arguments)
-    applyAction(handlers[0])
+    applyAction(() => {
+      handlers[0]()
+      if (handlers.length > 1) {
+        applyActions(handlers.slice(1))
+      }
+    })
   }
   return {
     $scene: $scene,

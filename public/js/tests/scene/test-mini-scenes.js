@@ -32,19 +32,19 @@ describe('functional testing with aframe', function() {
       scene.append(leader)
       scene.append(follower)
 
+      let leaderPos
+      let followerPos
       scene.actions(() => {
-        let leaderPos = leader.object3D.position
-        let followerPos = follower.object3D.position
-
-        setTimeout(() => {
-          expect(followerPos).to.shallowDeepEqual(leaderPos)        
-          leaderPos.set(2, 2, 2)
-
-          setTimeout(() => {
-            expect(followerPos).to.shallowDeepEqual({x: 2, y: 2, z: 2})
-            done()
-          }, 50) // have something that actually waits for next render cycle rather than guessing like this
-        }, 50)
+        leaderPos = leader.object3D.position
+        followerPos = follower.object3D.position
+      },
+      () => {
+        expect(followerPos).to.shallowDeepEqual(leaderPos)        
+        leaderPos.set(2, 2, 2)
+      },
+      () => {
+        expect(followerPos).to.shallowDeepEqual({x: 2, y: 2, z: 2})
+        done()
       })
     })
 
