@@ -14,16 +14,15 @@ describe('functional testing with aframe', function() {
     let scene = $scene.get(0)
     let startHandler = null
     
-    let keepEntities = ['camera', 'a-light']
-    let getSceneEntities = (entitiesToOmit) => {
+    let getSceneEntities = () => {
       let entities = []
       Array.from(scene.object3D.children).forEach(child => {
         if (child.el) {
-          if (!entitiesToOmit.includes(child.el)) {
-            entities.push(child.el)          
+          if (child.el.hasAttribute('aframe-injected')) {
+            console.log('omitting', child.el)
           }
           else {
-            console.log('omitting', child.el, child.el.tagName)
+            entities.push(child.el)          
           }
         }
       })
@@ -35,7 +34,7 @@ describe('functional testing with aframe', function() {
         scene.removeEventListener('renderstart', onRenderStartHandler)
         startHandler = null
       }
-      getSceneEntities(initialEntities).forEach(entity => {
+      getSceneEntities().forEach(entity => {
         console.log('removing', entity, entity.tagName)
         scene.removeChild(entity)
       })
@@ -66,17 +65,16 @@ describe('functional testing with aframe', function() {
   
   let sceneFixture = createSceneFixture()
   
-  for (let i=0; i < 20; i++) {
+  for (let i=0; i < 50; i++) {
     it('load up aframe: ' + i, (done) => {
       let color = colors[i % colors.length]
-      sceneFixture.scene.play()
       sceneFixture.$scene.append(`<a-box color="${color}" position="0 1 -2"></a-box>`)
       sceneFixture.whenReady(() => {
         expect(sceneFixture.scene.renderStarted).to.eql(true)
+        sceneFixture.cleanUp()
         setTimeout(() => {
-          sceneFixture.cleanUp()
           done()
-        }, 500)
+        }, 0)
       })
     })
   }
