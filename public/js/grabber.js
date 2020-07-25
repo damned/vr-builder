@@ -1,5 +1,5 @@
 /* global AFRAME THREE colorFromEntityRotation collider clog catching addDebugColor removeDebugColor cloneEntity reparent */
-let debug = { useColor: false }
+let debug = { useColor: true }
 var options = { 
   colorTwist: false,
   groupOnTouch: false

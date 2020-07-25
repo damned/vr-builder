@@ -52,31 +52,35 @@ describe('functional testing with aframe', function() {
   describe('grabber component', () => {
     it('should allow grab to move an object', function(done) {
       this.timeout(10000)
-      let grabber = $('<a-box id="grabber" grabber position="0 0 0" scale="0.1 0.1 0.1" ></a-box>').get(0)
+      scene.setActionDelay(20)
+
+      let mover = $('<a-box id="mover" grabber="#mover" position="0 0 0" scale="0.1 0.1 0.1" ></a-box>').get(0)
       let moveable = $('<a-sphere id="moveable" class="touchable" position="-1 1 -1" color="red" opacity="0.2" radius="0.2"></a-sphere>').get(0)
       
-      scene.append(grabber)
+      scene.append(mover)
       scene.append(moveable)
 
-      let grabberPos
+      let moverPos
+      let grabber
       let moveablePos
-      scene.setActionDelay(1000)
+      
+      let finalPos = {x: 2, y: 2, z: -2}
+      
       scene.actions(() => {
-        grabberPos = grabber.object3D.position
+        moverPos = mover.object3D.position
         moveablePos = moveable.object3D.position
+        grabber = mover.components.grabber
       },
       () => {
-        grabberPos.set(moveablePos.x, moveablePos.y, moveablePos.z)
+        moverPos.copy(moveablePos)
       },
       () => {
-        grabber.components.grabber.grasp({})
+        grabber.grasp({})
+        moverPos.copy(finalPos)
       },
       () => {
-        grabberPos.set(2, 2, 2)
-      },
-      () => {
-        expect(grabber.components.grabber.grabbed).to.not.be.null
-        expect(moveablePos).to.shallowDeepEqual({x: 2, y: 2, z: 2})
+        expect(grabber.grabbed).to.not.be.null
+        expect(moveablePos).to.shallowDeepEqual(finalPos)
         done()
       })
     })
