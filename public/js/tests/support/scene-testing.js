@@ -33,12 +33,13 @@ function createSceneFixture(options) {
       startHandler()
     }
   }
+  let actionDelayMs = 20
   let applyAction = (handler) => {
     if (scene.renderStarted) {
       // console.log('render already started!')
       setTimeout(() => { // maybe really should be waiting for next render cycle (or complete this and another?)
         handler()
-      }, 20)
+      }, actionDelayMs)
     }
     else {
       startHandler = handler
@@ -61,6 +62,7 @@ function createSceneFixture(options) {
       $scene.append(html)
     },
     cleanUp: cleanUp,
-    actions: applyActions
+    actions: applyActions,
+    setActionDelay: delayMs => actionDelayMs = delayMs
   }
 }
