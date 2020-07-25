@@ -19,18 +19,16 @@ describe('functional testing with aframe', function() {
         scene.removeEventListener('renderstart', onRenderStartHandler)
         startHandler = null
       }
-      scene.innerHtml = ''
+      Array.from(scene.object3D.children).forEach(child => {
+        if (child.el) {
+          let entity = child.el
+          console.log(entity, entity  .tagName)
+          entity.pause()
+        }
+        // scene.removeChild(child)
+      })
     }
-    
-    let stats
-    
-    function loadedHandler() {
-      stats = scene.components.stats      
-      scene.removeEventListener('loaded', loadedHandler)
-    }
-    scene.addEventListener('loaded', loadedHandler)
-
-    
+        
     let onRenderStartHandler = () => {
       if (startHandler) {
         startHandler()
@@ -49,8 +47,7 @@ describe('functional testing with aframe', function() {
           startHandler = handler
           scene.addEventListener('renderstart', onRenderStartHandler)
         }
-      },
-      get entityCount() { return stats.value }
+      }
     }
   }
   const colors = ['yellow', 'red', 'blue', 'green', 'lightyellow', 'pink', 'lightgreen', 'white']
@@ -64,7 +61,6 @@ describe('functional testing with aframe', function() {
       sceneFixture.$scene.append(`<a-box color="${color}" position="0 1 -2"></a-box>`)
       sceneFixture.whenReady(() => {
         expect(sceneFixture.scene.renderStarted).to.eql(true)
-        expect(sceneFixture.entityCount).to.eql(1)
         setTimeout(() => {
           sceneFixture.cleanUp()
           done()
