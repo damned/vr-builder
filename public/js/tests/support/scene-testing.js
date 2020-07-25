@@ -32,7 +32,23 @@ function createSceneFixture(options) {
     if (startHandler) {
       startHandler()
     }
-  }    
+  }
+  let applyAction = (handler) => {
+    if (scene.renderStarted) {
+      // console.log('render already started!')
+      setTimeout(() => {
+        handler()
+      }, 0)
+    }
+    else {
+      startHandler = handler
+      scene.addEventListener('renderstart', onRenderStartHandler)
+    }
+  }
+  let applyActions = () => {
+    let handlers = Array.from(arguments)
+    applyAction(handlers[0])
+  }
   return {
     $scene: $scene,
     scene: scene,
@@ -40,17 +56,6 @@ function createSceneFixture(options) {
       $scene.append(html)
     },
     cleanUp: cleanUp,
-    apply: (handler) => {
-      if (scene.renderStarted) {
-        // console.log('render already started!')
-        setTimeout(() => {
-          handler()
-        }, 0)
-      }
-      else {
-        startHandler = handler
-        scene.addEventListener('renderstart', onRenderStartHandler)
-      }
-    }
+    actions: applyActions
   }
 }

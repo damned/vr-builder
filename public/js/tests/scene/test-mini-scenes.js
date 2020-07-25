@@ -16,7 +16,7 @@ describe('functional testing with aframe', function() {
       it('does this scene test: ' + i, (done) => {
         let color = colors[i % colors.length]
         scene.append(`<a-box color="${color}" position="0 1 -2"></a-box>`)
-        scene.apply(() => {
+        scene.actions(() => {
           expect(scene.scene.renderStarted).to.eql(true)
           done()
         })
@@ -32,7 +32,7 @@ describe('functional testing with aframe', function() {
       scene.append(leader)
       scene.append(follower)
 
-      scene.apply(() => {
+      scene.actions(() => {
         let leaderPos = leader.object3D.position
         let followerPos = follower.object3D.position
 
