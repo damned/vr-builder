@@ -15,33 +15,47 @@ describe('functional testing with aframe', function() {
     let startHandler = null
     
     let cleanUp = () => {
+      if (startHandler) {
+        scene.removeEventListener('renderstart', onRenderStartHandler)
+        startHandler = null
+      }
       scene.pause()
-      $scene.remove()
-      scene = null
-      $scene = null        
+      $scene.empty()
     }
     
     let onRenderStartHandler = () => {
       startHandler()
     }
     
-    $scene.on('renderstart', onRenderStartHandler)
+    scene.addEventListener('renderstart', onRenderStartHandler)
     
     return {
       $scene: $scene,
       scene: scene,
       cleanUp: cleanUp,
-      onStart: (handler) => {
-        startHandler = handler
+      whenReady: (handler) => {
+        if (scene.renderStarted) {
+          scene.play()
+          handler()
+        }
+        else {
+          startHandler = handler
+        }
       }
     }
   }
+  const colors = ['yellow', 'red', 'blue', 'green', 'lightyellow', 'pink', 'lightgreen', 'white']
+  
+  let sceneFixture
+  before(() => {
+    sceneFixture = createSceneFixture()
+  })
   
   for (let i=0; i < 20; i++) {
     it('load up aframe: ' + i, (done) => {
-      let sceneFixture = createSceneFixture()
-      sceneFixture.$scene.append('<a-box color="yellow" position="0 1 -2"></a-box>')
-      sceneFixture.onStart(() => {
+      let color = colors[i % colors.length]
+      sceneFixture.$scene.append(`<a-box color="${color}" position="0 1 -2"></a-box>`)
+      sceneFixture.whenReady(() => {
         expect(sceneFixture.scene.renderStarted).to.eql(true)
         setTimeout(() => {
           sceneFixture.cleanUp()
