@@ -7,27 +7,29 @@ describe('functional testing with aframe', function() {
 
   function createSceneFixture() {
     console.log('loading up aframe')
-    let sceneHtml = '<a-scene embedded style="height: 400px; width: 600px;"></a-scene>'
+    let sceneHtml = '<a-scene stats embedded style="height: 400px; width: 600px;"></a-scene>'
     let $scene = $(sceneHtml)
     $scene.appendTo($('#aframe-container'))
 
     let scene = $scene.get(0)
     let startHandler = null
-    
+
     let cleanUp = () => {
       if (startHandler) {
         scene.removeEventListener('renderstart', onRenderStartHandler)
         startHandler = null
       }
-      scene.pause()
-      $scene.empty()
+      scene.innerHtml = ''
     }
+    
+    let stats = scene.components.stats
     
     let onRenderStartHandler = () => {
-      startHandler()
+      if (startHandler) {
+        startHandler()
+      }
     }
     
-    scene.addEventListener('renderstart', onRenderStartHandler)
     
     return {
       $scene: $scene,
@@ -35,32 +37,33 @@ describe('functional testing with aframe', function() {
       cleanUp: cleanUp,
       whenReady: (handler) => {
         if (scene.renderStarted) {
-          scene.play()
+          console.log('render already started!')
           handler()
         }
         else {
           startHandler = handler
+          scene.addEventListener('renderstart', onRenderStartHandler)
         }
-      }
+      },
+      entityCount: () => stats.entityCount
     }
   }
   const colors = ['yellow', 'red', 'blue', 'green', 'lightyellow', 'pink', 'lightgreen', 'white']
   
-  let sceneFixture
-  before(() => {
-    sceneFixture = createSceneFixture()
-  })
+  let sceneFixture = createSceneFixture()
   
   for (let i=0; i < 20; i++) {
     it('load up aframe: ' + i, (done) => {
       let color = colors[i % colors.length]
+      sceneFixture.scene.play()
       sceneFixture.$scene.append(`<a-box color="${color}" position="0 1 -2"></a-box>`)
       sceneFixture.whenReady(() => {
         expect(sceneFixture.scene.renderStarted).to.eql(true)
+        expect(sceneFixture.entityCount().to.eql(1)
         setTimeout(() => {
           sceneFixture.cleanUp()
           done()
-        }, 100)
+        }, 500)
       })
     })
   }
