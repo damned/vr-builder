@@ -51,9 +51,6 @@ describe('functional testing with aframe', function() {
 
   describe('grabber component', () => {
     it('should allow grab to move an object', function(done) {
-      this.timeout(10000)
-      scene.setActionDelay(20)
-
       let mover = $('<a-box id="mover" grabber="#mover" position="0 0 0" scale="0.1 0.1 0.1" ></a-box>').get(0)
       let moveable = $('<a-sphere id="moveable" class="touchable" position="-1 1 -1" color="red" opacity="0.2" radius="0.2"></a-sphere>').get(0)
       
@@ -77,11 +74,11 @@ describe('functional testing with aframe', function() {
       () => {
         grabber.grasp({})
         moverPos.copy(finalPos)
-      },
-      () => {
-        expect(grabber.grabbed).to.not.be.null
-        expect(moveablePos).to.shallowDeepEqual(finalPos)
-        done()
+        setTimeout(() => {
+          expect(grabber.grabbed).to.not.be.null
+          expect(moveablePos).to.shallowDeepEqual(finalPos)
+          done()
+        }, 100)
       })
     })
   })
