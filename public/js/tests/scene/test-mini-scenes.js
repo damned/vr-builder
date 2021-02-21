@@ -13,8 +13,8 @@ describe('functional testing with aframe', function() {
   
   describe('perf test aframe scene test', () => {
     for (let i=0; i < TEST_PERF_TEST_COUNT; i++) {
-      it('does this scene test: ' + i, (done) => {
-        let color = colors[i % colors.length]
+      let color = colors[i % colors.length]
+      it('checks a scene renders: ' + color, (done) => {
         scene.append(`<a-box color="${color}" position="0 1 -2"></a-box>`)
         scene.actions(() => {
           expect(scene.scene.renderStarted).to.eql(true)
