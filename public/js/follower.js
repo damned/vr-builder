@@ -1,4 +1,4 @@
-/* global AFRAME THREE clog catching */
+ /* global AFRAME THREE clog catching */
 
 function savePlacementBeforeFollow(follower) {
   if (!follower.positionBeforeFollow) {
