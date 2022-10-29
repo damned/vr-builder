@@ -58,7 +58,7 @@ function entityInfo(entity) {
 
 var clogPrefix = null
 function clog(...args) {
-  console.log(args[0]);
+  console.log(...args);
   let formatted = [];
   args.forEach(arg => {
     let argType = typeof arg
