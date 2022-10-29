@@ -1,5 +1,4 @@
 /* global AFRAME clog afterCreation newId */
-
 function addProps(el, props) {
   for (let name in props) {
     el.setAttribute(name, props[name])  
