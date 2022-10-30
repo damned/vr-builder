@@ -17,7 +17,7 @@ let testable = (entity, componentName) => {
 
 function createSceneFixture(options) {
   console.log('loading up aframe')
-  options = options || { stats: true }
+  options = options || { stats: false }
   let statsSpec = options.stats ? 'stats' : ''
   let sceneHtml = `<a-scene ${statsSpec} embedded style="height: 400px; width: 600px;"></a-scene>`
   let $scene = $(sceneHtml)

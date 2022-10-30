@@ -5,7 +5,7 @@ var expect = chai.expect
 describe('functional testing with aframe', function() {
   const colors = ['yellow', 'red', 'blue', 'green', 'lightyellow', 'pink', 'lightgreen', 'white']
   
-  let scene = createSceneFixture({stats: true})
+  let scene = createSceneFixture({stats: false})
   
   // afterEach(() => scene.cleanUp())
   

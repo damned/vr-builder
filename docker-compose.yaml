@@ -1,0 +1,9 @@
+version: "2.2"
+services:
+  vr-builder:
+    build: .
+    working_dir: /work
+    volumes:
+      - .:/work
+    ports:
+      - "8080:8080"
